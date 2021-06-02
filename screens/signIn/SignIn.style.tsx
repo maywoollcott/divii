@@ -17,16 +17,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 58,
-    marginBottom: '1%',
-  },
-  subtext: {
-    color: COLORS.ghostWhite,
-    fontSize: 22,
-    fontFamily: 'Roboto',
     marginBottom: '15%',
   },
   formContainer: {
-    width: '80%',
+    width: '100%',
+    alignItems: 'center',
   },
   input: {
     color: COLORS.ghostWhite,
@@ -34,8 +29,31 @@ export default StyleSheet.create({
     borderWidth: 3,
     borderRadius: 10,
     height: 50,
-    fontSize: 22,
+    fontSize: 18,
     paddingLeft: 15,
     marginBottom: 15,
+    width: '80%',
+  },
+  basicButton: {
+    backgroundColor: COLORS.lavenderBlue,
+    width: 170,
+    height: 50,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '5%',
+    marginBottom: '15%',
+  },
+  buttonText: {
+    fontSize: 18,
+    color: COLORS.gunmetal,
+  },
+  centeredTextContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rerouteText: {
+    fontSize: 18,
+    color: COLORS.ghostWhite,
   },
 });
