@@ -14,7 +14,7 @@ import { COLORS } from '../../globalStyles';
 
 const SignIn: React.FC = () => {
   const [loginData, setLoginData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -35,11 +35,9 @@ const SignIn: React.FC = () => {
         </View>
         <View style={styles.formContainer}>
           <TextInput
-            placeholder='Username'
+            placeholder='Email'
             placeholderTextColor='gray'
-            onChangeText={(text) =>
-              setLoginData({ ...loginData, username: text })
-            }
+            onChangeText={(text) => setLoginData({ ...loginData, email: text })}
             style={styles.input}
           />
           <TextInput

@@ -17,7 +17,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 58,
-    marginBottom: '15%',
+    marginBottom: '10%',
   },
   formContainer: {
     width: '100%',
@@ -31,8 +31,8 @@ export default StyleSheet.create({
     height: 50,
     fontSize: 18,
     paddingLeft: 15,
-    marginBottom: 15,
-    width: '80%',
+    marginBottom: '5%',
+    width: '75%',
   },
   basicButton: {
     backgroundColor: COLORS.lavenderBlue,
@@ -42,7 +42,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '5%',
-    marginBottom: '15%',
   },
   buttonText: {
     fontSize: 18,
@@ -55,5 +54,14 @@ export default StyleSheet.create({
   rerouteText: {
     fontSize: 18,
     color: COLORS.ghostWhite,
+  },
+  passwordForm: {
+    flexDirection: 'row',
+    position: 'relative',
+  },
+  icon: {
+    position: 'absolute',
+    marginLeft: '66%',
+    marginTop: '3.3%',
   },
 });
