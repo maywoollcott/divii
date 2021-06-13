@@ -11,8 +11,11 @@ import {
 } from 'react-native';
 import styles from './SignIn.style';
 import { COLORS } from '../../globalStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const SignIn: React.FC = () => {
+  const navigation = useNavigation();
+
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
@@ -58,7 +61,7 @@ const SignIn: React.FC = () => {
         </View>
         <View style={styles.centeredTextContainer}>
           <Text style={styles.rerouteText}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => console.log('reroute to sign up')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
             <Text style={styles.rerouteText}> Sign up here.</Text>
           </TouchableOpacity>
         </View>

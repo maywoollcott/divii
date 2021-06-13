@@ -47,14 +47,6 @@ export default StyleSheet.create({
     fontSize: 18,
     color: COLORS.gunmetal,
   },
-  centeredTextContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rerouteText: {
-    fontSize: 18,
-    color: COLORS.ghostWhite,
-  },
   passwordForm: {
     flexDirection: 'row',
     position: 'relative',

@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
-import SignIn from './screens/signIn/SignIn';
-import Registration from './screens/registration/Registration';
+import RootNavigator from './navigation/RootNavigator';
 import AppLoading from './screens/AppLoading/AppLoading';
 
 export default function App() {
@@ -13,6 +12,6 @@ export default function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
-    return <Registration />;
+    return <RootNavigator />;
   }
 }
