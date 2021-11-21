@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import RootNavigator from './navigation/RootNavigator';
 import AppLoading from './screens/AppLoading/AppLoading';
+import { Provider } from './Context';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -12,6 +13,10 @@ export default function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
-    return <RootNavigator />;
+    return (
+      <Provider>
+        <RootNavigator />
+      </Provider>
+    );
   }
 }

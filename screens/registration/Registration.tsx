@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -10,12 +10,19 @@ import {
   Platform,
   Alert,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styles from './Registration.style';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { COLORS } from '../../globalStyles';
+import { register } from '../../apiService/loginFlow';
+import { determineAstrologicalSign } from './utils';
+import { Context } from '../../Context';
 
 const Registration: React.FC = () => {
+  const navigation = useNavigation();
+  const context = useContext(Context);
+
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -24,23 +31,39 @@ const Registration: React.FC = () => {
     birthdate: '',
   });
 
-  const signUpHandler = () => {
+  const signUpHandler = async () => {
     if (
       formData.email.length < 1 ||
       formData.name.length < 1 ||
       formData.birthdate.length < 1
     ) {
       Alert.alert('Try again!', 'Please fill in all required fields.');
+      return;
     }
     if (formData.password.length < 6) {
       Alert.alert(
         'Try again!',
         'Please choose a password with at least 6 characters.'
       );
+      return;
     }
     if (formData.password !== formData.passwordCheck) {
       Alert.alert('Try again!', 'Please make sure your passwords match.');
+      return;
     }
+
+    const userForm = {
+      email: formData.email.toLowerCase(),
+      name: formData.name,
+      birthdate: formData.birthdate,
+      password: formData.password,
+      sign: determineAstrologicalSign(formData.birthdate),
+      dateJoined: Date.now().toString(),
+    };
+    const res = await register(userForm);
+    const { authToken, user } = res.data;
+    context.setCurrentUser(user);
+    context.setIsAuthenticated(true);
   };
 
   return (
@@ -57,13 +80,13 @@ const Registration: React.FC = () => {
           <TextInput
             style={styles.input}
             placeholder='Email'
-            placeholderTextColor='gray'
+            placeholderTextColor={COLORS.parchment}
             onChangeText={(text) => setFormData({ ...formData, email: text })}
           />
           <TextInput
             style={styles.input}
             placeholder='Nickname'
-            placeholderTextColor='gray'
+            placeholderTextColor={COLORS.parchment}
             onChangeText={(text) => setFormData({ ...formData, name: text })}
           />
           <View style={styles.passwordForm}>
@@ -71,7 +94,7 @@ const Registration: React.FC = () => {
               style={styles.input}
               placeholder='Password'
               secureTextEntry={true}
-              placeholderTextColor='gray'
+              placeholderTextColor={COLORS.parchment}
               onChangeText={(text) =>
                 setFormData({ ...formData, password: text })
               }
@@ -79,7 +102,7 @@ const Registration: React.FC = () => {
             {formData.password.length >= 6 && (
               <View style={styles.icon}>
                 <FontAwesomeIcon
-                  color={COLORS.lavenderBlue}
+                  color={COLORS.parchment}
                   size={25}
                   icon={faCheckCircle}
                 />
@@ -91,7 +114,7 @@ const Registration: React.FC = () => {
               style={styles.input}
               placeholder='Confirm Password'
               secureTextEntry={true}
-              placeholderTextColor='gray'
+              placeholderTextColor={COLORS.parchment}
               onChangeText={(text) =>
                 setFormData({ ...formData, passwordCheck: text })
               }
@@ -100,7 +123,7 @@ const Registration: React.FC = () => {
               formData.password.length >= 6 && (
                 <View style={styles.icon}>
                   <FontAwesomeIcon
-                    color={COLORS.lavenderBlue}
+                    color={COLORS.parchment}
                     size={25}
                     icon={faCheckCircle}
                   />
@@ -110,13 +133,17 @@ const Registration: React.FC = () => {
           <TextInput
             style={styles.input}
             placeholder='Birthday (mm/dd)'
-            placeholderTextColor='gray'
+            placeholderTextColor={COLORS.parchment}
             onChangeText={(text) =>
               setFormData({ ...formData, birthdate: text })
             }
           />
           <TouchableOpacity onPress={signUpHandler} style={styles.basicButton}>
             <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <Text style={styles.rerouteText}>Prefer to log in?</Text>
+            <Text style={styles.rerouteText}>Sign in here.</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

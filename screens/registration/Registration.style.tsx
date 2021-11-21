@@ -4,7 +4,7 @@ import { COLORS } from '../../globalStyles';
 export default StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: COLORS.spaceCadetDark,
+    backgroundColor: COLORS.grayBlue,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: '80%',
   },
   header: {
-    color: COLORS.lavenderBlue,
+    color: COLORS.parchment,
     fontSize: 55,
     textAlign: 'center',
     fontFamily: 'made-dillan',
@@ -24,8 +24,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    color: COLORS.ghostWhite,
-    borderColor: COLORS.lavenderBlue,
+    color: COLORS.parchment,
+    borderColor: COLORS.parchment,
     borderWidth: 3,
     borderRadius: 10,
     height: 50,
@@ -35,17 +35,18 @@ export default StyleSheet.create({
     width: '75%',
   },
   basicButton: {
-    backgroundColor: COLORS.lavenderBlue,
+    backgroundColor: COLORS.parchment,
     width: 170,
     height: 50,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '5%',
+    marginBottom: '7%',
   },
   buttonText: {
     fontSize: 18,
-    color: COLORS.gunmetal,
+    color: COLORS.orange,
   },
   passwordForm: {
     flexDirection: 'row',
@@ -55,5 +56,10 @@ export default StyleSheet.create({
     position: 'absolute',
     marginLeft: '66%',
     marginTop: '3.3%',
+  },
+  rerouteText: {
+    fontSize: 18,
+    color: COLORS.parchment,
+    textAlign: 'center',
   },
 });

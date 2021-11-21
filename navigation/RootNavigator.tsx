@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackView } from '@react-navigation/stack';
 import Registration from '../screens/registration/Registration';
 import SignIn from '../screens/signIn/SignIn';
+import { Context } from '../Context';
+import { TabNavigator } from './TabNavigator';
 
 const RootNavigator = () => {
   const PreAuthStack = createStackNavigator();
+  const PostAuthStack = createStackNavigator();
+  const context = useContext(Context);
 
   const PreAuthStackScreen = () => (
     <PreAuthStack.Navigator initialRouteName='SignIn'>
@@ -24,11 +29,22 @@ const RootNavigator = () => {
       />
     </PreAuthStack.Navigator>
   );
-  return (
-    <NavigationContainer>
-      <PreAuthStackScreen />
-    </NavigationContainer>
-  );
+
+  if (!context.isAuthenticated) {
+    return (
+      <NavigationContainer>
+        <PreAuthStackScreen />
+      </NavigationContainer>
+    );
+  }
+
+  if (context.isAuthenticated) {
+    return (
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    );
+  }
 };
 
 export default RootNavigator;

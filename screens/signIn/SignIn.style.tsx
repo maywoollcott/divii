@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
-export default StyleSheet.create({
+export const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: COLORS.spaceCadetDark,
+    backgroundColor: COLORS.grayBlue,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: '80%',
   },
   header: {
-    color: COLORS.lavenderBlue,
+    color: COLORS.parchment,
     fontSize: 55,
     textAlign: 'center',
     fontFamily: 'made-dillan',
@@ -24,8 +24,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    color: COLORS.ghostWhite,
-    borderColor: COLORS.lavenderBlue,
+    color: COLORS.parchment,
+    borderColor: COLORS.parchment,
     borderWidth: 3,
     borderRadius: 10,
     height: 50,
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     width: '80%',
   },
   basicButton: {
-    backgroundColor: COLORS.lavenderBlue,
+    backgroundColor: COLORS.parchment,
     width: 170,
     height: 50,
     borderRadius: 15,
@@ -46,7 +46,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: COLORS.gunmetal,
+    color: COLORS.orange,
   },
   centeredTextContainer: {
     alignItems: 'center',
@@ -54,6 +54,11 @@ export default StyleSheet.create({
   },
   rerouteText: {
     fontSize: 18,
-    color: COLORS.ghostWhite,
+    color: COLORS.parchment,
+    textAlign: 'center',
+  },
+  starImage: {
+    position: 'absolute',
+    zIndex: 0,
   },
 });

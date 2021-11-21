@@ -1,7 +1,5 @@
 export const COLORS = {
-  gunmetal: '#30343f',
-  ghostWhite: '#fafaff',
-  lavenderBlue: '#e4d9ff',
-  spaceCadet: '#273469',
-  spaceCadetDark: '#1e2749',
+  parchment: '#f7efe7',
+  grayBlue: '#8FA2B0',
+  orange: '#E18E3F',
 };
