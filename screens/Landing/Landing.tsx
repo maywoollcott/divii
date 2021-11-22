@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AutoHeightImage from 'react-native-auto-height-image';
+import moment from 'moment';
 import { Context } from '../../Context';
 import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
@@ -22,6 +23,18 @@ import { images } from '../../assets/images/imagesIndex';
 const Landing = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
+  const now = moment();
+  const hour = moment().hour();
+
+  const greeting = () => {
+    if (hour < 12) {
+      return 'morning';
+    } else if (hour < 17) {
+      return 'afternoon';
+    } else {
+      return 'evening';
+    }
+  };
 
   const navigateToCardOfDay = () => {
     navigation.navigate('DailyCard');
@@ -33,8 +46,9 @@ const Landing = () => {
         <View style={styles.headerContainer}>
           <AutoHeightImage source={images.moons} width={250} />
           <Text style={styles.morningGreeting}>
-            Good morning, May. Today is Tuesday, November 4th, 2021. The moon is
-            currently in Jupiter and Mercury is retrograde.
+            Good {greeting()}, {context.currentUser?.name}. Today is{' '}
+            {now.format('dddd, MMMM D, YYYY')}. The moon is currently in Jupiter
+            and Mercury is retrograde.
           </Text>
         </View>
         <View style={styles.actionCardContainer}>

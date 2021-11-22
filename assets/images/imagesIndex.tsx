@@ -5,5 +5,5 @@ export const images = {
 };
 
 export const cardDisplays = {
-  eightOfPentacles: require('./minorArcana/eight-of-pentacles.png'),
+  'Eight of Pentacles': require('./minorArcana/eightPentacles.png'),
 };

@@ -27,7 +27,7 @@ export const TarotCard: React.FC<ITarotProps> = ({
       </View>
       <View style={styles.card}>
         <AutoHeightImage
-          source={cardDisplays.eightOfPentacles}
+          source={cardDisplays['Eight of Pentacles']}
           width={250}
           style={styles.cardContainer}
         />

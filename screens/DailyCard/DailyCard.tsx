@@ -2,39 +2,39 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions,
-  ImageBackground,
   SafeAreaView,
   ScrollView,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AutoHeightImage from 'react-native-auto-height-image';
+import moment from 'moment';
+import { Feather } from '@expo/vector-icons';
 import { Context } from '../../Context';
 import { styles } from './DailyCard.style';
-import { images } from '../../assets/images/imagesIndex';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
+import { arcanaNames } from '../../copy/Cards';
+import { COLORS } from '../../globalStyles';
 
 const DailyCard = () => {
+  const navigation = useNavigation();
   const [displayInfo, setDisplayInfo] = useState<boolean>(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
+  const now = moment();
+
+  const goBack = () => {
+    navigation.goBack();
+  };
   const onCardFlip = () => {
     setDisplayInfo(true);
-    console.log(displayInfo);
   };
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 7000,
+      duration: 5000,
       useNativeDriver: true,
     }).start();
   }, [fadeAnim]);
@@ -42,9 +42,14 @@ const DailyCard = () => {
   return (
     <ScrollView contentContainerStyle={styles.screenContainer}>
       <SafeAreaView style={styles.safeContainer}>
+        <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
+          <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
+        </TouchableOpacity>
         <View style={styles.headerContainer}>
           <Text style={styles.header}>Your Card of the Day</Text>
-          <Text style={styles.secondaryHeader}>Tuesday November 4th, 2021</Text>
+          <Text style={styles.secondaryHeader}>
+            {now.format('dddd, MMMM D, YYYY')}
+          </Text>
         </View>
         <View style={{ height: 413 }}>
           <TarotCard

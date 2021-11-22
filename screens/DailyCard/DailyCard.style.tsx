@@ -10,7 +10,14 @@ export const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
     backgroundColor: COLORS.parchment,
+    width: '100%',
     alignItems: 'center',
+  },
+  backArrowContainer: {
+    position: 'absolute',
+    top: '3%',
+    left: '3%',
+    width: 700,
   },
   headerContainer: {
     display: 'flex',
@@ -18,8 +25,8 @@ export const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '15%',
-    marginTop: '15%',
+    marginBottom: '10%',
+    marginTop: '20%',
   },
   morningGreeting: {
     fontFamily: 'made-dillan',
@@ -61,6 +68,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 22,
     marginLeft: '3%',
+    marginBottom: '20%',
   },
   secondaryHeader: {
     color: COLORS.orange,
