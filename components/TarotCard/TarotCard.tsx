@@ -1,35 +1,49 @@
 import React, { useState } from 'react';
-import { TouchableWithoutFeedback, Animated, View } from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  Animated,
+  View,
+  Text,
+  Image,
+} from 'react-native';
 import FlipCard from 'react-native-flip-card';
 import { styles } from './TarotCard.style';
 import AutoHeightImage from 'react-native-auto-height-image';
-import { images, cardDisplays } from '../../assets/images/imagesIndex';
+import * as Images from '../../assets/images/imagesIndex';
 
 interface ITarotProps {
-  cardName: string;
+  image: string;
   rightSideUp: boolean;
+  width: number;
   onCardFlip: () => void;
 }
 
 export const TarotCard: React.FC<ITarotProps> = ({
-  cardName,
+  image,
   rightSideUp,
   onCardFlip,
+  width,
 }) => {
+  Image.prefetch(image);
   return (
     <FlipCard flipHorizontal={true} flipVertical={false} onFlipEnd={onCardFlip}>
       <View style={styles.card}>
         <AutoHeightImage
-          source={images.sunBack}
-          width={250}
-          style={styles.cardContainer}
+          source={Images.images.sunBack}
+          width={width}
+          style={
+            rightSideUp ? styles.cardContainer : styles.reverseCardContainer
+          }
         />
       </View>
       <View style={styles.card}>
         <AutoHeightImage
-          source={cardDisplays['Eight of Pentacles']}
-          width={250}
-          style={styles.cardContainer}
+          source={{ uri: image }}
+          width={width}
+          style={
+            rightSideUp ? styles.cardContainer : styles.reverseCardContainer
+          }
+          fallbackSource={Images.images.sunBack}
         />
       </View>
     </FlipCard>

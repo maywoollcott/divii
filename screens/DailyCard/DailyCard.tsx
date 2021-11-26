@@ -8,18 +8,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
+import { getCardByNumber } from '../../apiService/data';
+import { pickRandomCard } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './DailyCard.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
-import { arcanaNames } from '../../copy/Cards';
 import { COLORS } from '../../globalStyles';
 
 const DailyCard = () => {
   const navigation = useNavigation();
   const [displayInfo, setDisplayInfo] = useState<boolean>(false);
+  const [dailyCardData, setDailyCardData] = useState<any>(null);
+  const [upright, setUpright] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const now = moment();
@@ -30,21 +32,37 @@ const DailyCard = () => {
   const onCardFlip = () => {
     setDisplayInfo(true);
   };
-
-  useEffect(() => {
+  const animate = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 5000,
       useNativeDriver: true,
     }).start();
+  };
+
+  useEffect(() => {
+    setTimeout(animate, 1000);
   }, [fadeAnim]);
+
+  useEffect(() => {
+    const fetchCard = async () => {
+      const randomCardNumber = pickRandomCard(0, 22);
+      const card = await getCardByNumber(randomCardNumber);
+      setUpright(Math.random() < 0.5);
+      setDailyCardData(card);
+    };
+
+    fetchCard();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.screenContainer}>
       <SafeAreaView style={styles.safeContainer}>
-        <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
-          <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
-        </TouchableOpacity>
+        <View style={styles.touchableContainer}>
+          <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
+            <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
+          </TouchableOpacity>
+        </View>
         <View style={styles.headerContainer}>
           <Text style={styles.header}>Your Card of the Day</Text>
           <Text style={styles.secondaryHeader}>
@@ -52,28 +70,44 @@ const DailyCard = () => {
           </Text>
         </View>
         <View style={{ height: 413 }}>
-          <TarotCard
-            cardName={'cups'}
-            rightSideUp={true}
-            onCardFlip={onCardFlip}
-          />
+          {dailyCardData && (
+            <TarotCard
+              image={dailyCardData.image}
+              rightSideUp={upright}
+              onCardFlip={onCardFlip}
+              width={250}
+            />
+          )}
         </View>
-        {displayInfo && (
+        {displayInfo && dailyCardData && (
           <Animated.View
             style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
           >
-            <Text style={styles.header}>Eight of Pentacles</Text>
+            <Text style={styles.header}>{dailyCardData.name}</Text>
+            <Text style={styles.reversed}>
+              {upright ? 'Upright' : '(Reversed)'}
+            </Text>
             <View style={styles.keyTermsContainer}>
-              <Text style={styles.keyTerms}>Good Fortune</Text>
-              <Text style={styles.keyTerms}>Change</Text>
-              <Text style={styles.keyTerms}>Power in Growth</Text>
+              <Text style={styles.keyTerms}>
+                {upright
+                  ? dailyCardData.uprightKeyTerms[0]
+                  : dailyCardData.reversedKeyTerms[0]}
+              </Text>
+              <Text style={styles.keyTerms}>
+                {upright
+                  ? dailyCardData.uprightKeyTerms[1]
+                  : dailyCardData.reversedKeyTerms[1]}
+              </Text>
+              <Text style={styles.keyTerms}>
+                {upright
+                  ? dailyCardData.uprightKeyTerms[2]
+                  : dailyCardData.reversedKeyTerms[2]}
+              </Text>
             </View>
             <Text style={styles.description}>
-              You’ve drawn the Eight of Pentacles right-side up. Look out for
-              times ahead with lots of potential for change. The promise of good
-              fortune lingers. But remember, not everything is always as it
-              seems. Great change can also bring great power, but with power
-              comes responsibility.
+              {upright
+                ? dailyCardData.uprightDescription
+                : dailyCardData.reversedDescription}
             </Text>
           </Animated.View>
         )}

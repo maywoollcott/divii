@@ -4,6 +4,8 @@ export const images = {
   tassels: require('./tassels.png'),
 };
 
-export const cardDisplays = {
-  'Eight of Pentacles': require('./minorArcana/eightPentacles.png'),
-};
+// export const cardDisplays: { [key: string]: NodeRequire } = {
+//   eightPentacles: require('./minorArcana/eightPentacles.png'),
+// };
+
+export const eightPentacles = require('./arcana/eightPentacles.png');

@@ -17,8 +17,18 @@ export const styles = StyleSheet.create({
         elevation: 2,
       },
     }),
+    margin: 0,
+    padding: 0,
   },
   cardContainer: {
-    borderRadius: 15,
+    borderRadius: 10,
+    margin: 0,
+    padding: 0,
+  },
+  reverseCardContainer: {
+    borderRadius: 10,
+    transform: [{ rotateY: '180deg' }, { rotateX: '180deg' }],
+    margin: 0,
+    padding: 0,
   },
 });

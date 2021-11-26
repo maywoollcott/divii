@@ -40,6 +40,10 @@ const Landing = () => {
     navigation.navigate('DailyCard');
   };
 
+  const navigateToSpreadIndex = () => {
+    navigation.navigate('SpreadIndex');
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.screenContainer}>
@@ -59,7 +63,9 @@ const Landing = () => {
             <Text style={styles.header}>Your Card of the Day</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.touchable}>
-            <Text style={styles.header}>Choose a Spread</Text>
+            <Text style={styles.header} onPress={navigateToSpreadIndex}>
+              Choose a Spread
+            </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.parchment,
     width: '100%',
     alignItems: 'center',
+    display: 'flex',
   },
   touchableContainer: {
     alignSelf: 'flex-start',
@@ -32,21 +33,34 @@ export const styles = StyleSheet.create({
     marginBottom: '10%',
     marginTop: '15%',
   },
-  morningGreeting: {
-    fontFamily: 'made-dillan',
-    color: COLORS.grayBlue,
-    textAlign: 'center',
-    fontSize: 18,
-    marginTop: '5%',
-    marginBottom: '10%',
-  },
-  actionCardContainer: {
-    width: '80%',
+  spreadContainer: {
+    height: 230,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
     alignItems: 'center',
+  },
+  cardContainer: {
+    width: 110,
+    height: 181,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  spreadItemContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 110,
+  },
+  spreadTextContainer: {
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 30,
+    fontSize: 32,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
@@ -66,7 +80,7 @@ export const styles = StyleSheet.create({
   },
   keyTermsContainer: {
     marginVertical: '8%',
-    width: 250,
+    width: '95%',
     borderTopColor: COLORS.grayBlue,
     borderBottomColor: COLORS.grayBlue,
     borderTopWidth: 1,
@@ -93,5 +107,10 @@ export const styles = StyleSheet.create({
     marginTop: '10%',
     alignItems: 'center',
     width: '85%',
+  },
+  spreadCopy: {
+    color: COLORS.orange,
+    fontSize: 17,
+    marginBottom: 5,
   },
 });
