@@ -3,6 +3,8 @@ import React from 'react';
 import Library from '../screens/Library/Library';
 import AllCards from '../screens/Library/AllCards';
 import CardDetails from '../screens/Library/CardDetails';
+import MajorArcana from '../screens/Library/MajorArcana';
+import MinorArcana from '../screens/Library/MinorArcana';
 
 const LibraryStack = createStackNavigator();
 
@@ -18,6 +20,8 @@ export const LibraryNavigator = () => {
       <LibraryStack.Screen name='Library' component={Library} />
       <LibraryStack.Screen name='AllCards' component={AllCards} />
       <LibraryStack.Screen name='CardDetails' component={CardDetails} />
+      <LibraryStack.Screen name='MajorArcana' component={MajorArcana} />
+      <LibraryStack.Screen name='MinorArcana' component={MinorArcana} />
     </LibraryStack.Navigator>
   );
 };

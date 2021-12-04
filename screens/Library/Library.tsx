@@ -75,10 +75,16 @@ const Library = () => {
           >
             <Text style={styles.touchableText}>All Cards</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchable}>
+          <TouchableOpacity
+            style={styles.touchable}
+            onPress={() => navigateTo('MajorArcana')}
+          >
             <Text style={styles.touchableText}>Major Arcana</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchable}>
+          <TouchableOpacity
+            style={styles.touchable}
+            onPress={() => navigateTo('MinorArcana')}
+          >
             <Text style={styles.touchableText}>Minor Arcana</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.touchable}>
