@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AutoHeightImage from 'react-native-auto-height-image';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 import { getAllSpreads, getCardByNumber } from '../../apiService/data';
@@ -15,6 +16,7 @@ import { Context } from '../../Context';
 import { styles } from './SpreadIndex.style';
 import { SpreadTouchable } from '../../components/Spread/SpreadTouchable';
 import { COLORS } from '../../globalStyles';
+import { images } from '../../assets/images/imagesIndex';
 
 const SpreadIndex = () => {
   const navigation = useNavigation();
@@ -47,7 +49,17 @@ const SpreadIndex = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.headerContainer}>
+          <AutoHeightImage
+            source={images.whiteStar}
+            width={69}
+            style={styles.whiteStar}
+          />
           <Text style={styles.header}>Spreads</Text>
+          <AutoHeightImage
+            source={images.whiteStar}
+            width={69}
+            style={styles.whiteStar}
+          />
         </View>
         {spreads &&
           spreads.map((spread) => {

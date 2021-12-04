@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.parchment,
     width: '100%',
     alignItems: 'center',
-    marginBottom: '10%',
+    display: 'flex',
   },
   touchableContainer: {
     alignSelf: 'flex-start',
@@ -26,19 +26,17 @@ export const styles = StyleSheet.create({
   },
   headerContainer: {
     display: 'flex',
-    flexDirection: 'row',
-    width: '90%',
+    flexDirection: 'column',
+    width: '80%',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '10%',
     marginTop: '15%',
   },
-  whiteStar: {
-    marginHorizontal: 10,
-  },
-  actionCardContainer: {
-    width: '80%',
-    alignItems: 'center',
+  cardsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   header: {
     color: COLORS.grayBlue,
@@ -46,22 +44,23 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
-  touchable: {
-    borderWidth: 1.5,
-    borderRadius: 20,
-    borderColor: COLORS.grayBlue,
-    width: 280,
-    height: 130,
-    padding: 20,
-    marginTop: '8%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  spreadText: {
+  input: {
     color: COLORS.grayBlue,
-    fontSize: 24,
-    textAlign: 'center',
-    fontFamily: 'made-dillan',
+    borderColor: COLORS.grayBlue,
+    borderWidth: 2,
+    borderRadius: 30,
+    height: 40,
+    fontSize: 18,
+    paddingLeft: 15,
+    marginTop: 30,
+    width: 260,
+  },
+  inputContainer: {
+    position: 'relative',
+  },
+  searchIcon: {
+    position: 'absolute',
+    bottom: 7,
+    left: 10,
   },
 });

@@ -17,6 +17,7 @@ import { Context } from '../../Context';
 import { styles } from './Spread.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
+import { PastPresentFutureSpread } from '../../components/Spread/pastPresentFutureSpread';
 
 interface ISpreadProps {
   route: SpreadParams;
@@ -90,33 +91,12 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
         <View style={styles.headerContainer}>
           <Text style={styles.header}>{route.params.name}</Text>
         </View>
-        {spreadData.length === 3 && (
-          <View style={styles.spreadContainer}>
-            <View style={styles.cardContainer}>
-              <TarotCard
-                image={spreadData[0].image}
-                rightSideUp={upright[0]}
-                onCardFlip={() => onCardFlip(0)}
-                width={110}
-              />
-            </View>
-            <View style={styles.cardContainer}>
-              <TarotCard
-                image={spreadData[1].image}
-                rightSideUp={upright[1]}
-                onCardFlip={() => onCardFlip(1)}
-                width={110}
-              />
-            </View>
-            <View style={styles.cardContainer}>
-              <TarotCard
-                image={spreadData[2].image}
-                rightSideUp={upright[2]}
-                onCardFlip={() => onCardFlip(2)}
-                width={110}
-              />
-            </View>
-          </View>
+        {spreadData.length >= 3 && (
+          <PastPresentFutureSpread
+            spreadData={spreadData}
+            upright={upright}
+            onCardFlip={onCardFlip}
+          />
         )}
         {currentCard !== null && displayInfo ? (
           <Animated.View

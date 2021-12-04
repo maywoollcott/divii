@@ -10,6 +10,7 @@ import {
 } from '@expo/vector-icons';
 import { COLORS } from '../globalStyles';
 import { LandingNavigator } from './Landing.Navigator';
+import { LibraryNavigator } from './Library.Navigator';
 import Library from '../screens/Library/Library';
 import Study from '../screens/Study/Study';
 import History from '../screens/History/History';
@@ -42,7 +43,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name='Library'
-        component={Library}
+        component={LibraryNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <SimpleLineIcons name='book-open' color={color} size={28} />

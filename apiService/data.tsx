@@ -7,6 +7,11 @@ export const getCardByNumber = async (deckNumber: any) => {
   return data.card;
 };
 
+export const getAllCards = async () => {
+  const { data } = await axios.get(`${BASE_URL}/cards`);
+  return data.cards;
+};
+
 export const getSpreadByNumber = async (spreadNumber: any) => {
   const { data } = await axios.get(`${BASE_URL}/spreadbynumber${spreadNumber}`);
   return data.spread;
