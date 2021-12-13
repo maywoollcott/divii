@@ -11,9 +11,8 @@ import {
 import { COLORS } from '../globalStyles';
 import { LandingNavigator } from './Landing.Navigator';
 import { LibraryNavigator } from './Library.Navigator';
-import Library from '../screens/Library/Library';
+import { HistoryNavigator } from './History.Navigator';
 import Study from '../screens/Study/Study';
-import History from '../screens/History/History';
 import Profile from '../screens/Profile/Profile';
 
 export const TabNavigator = () => {
@@ -61,7 +60,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name='History'
-        component={History}
+        component={HistoryNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='history' color={color} size={30} />

@@ -12,3 +12,10 @@ export type Card = {
   deckNumber: number;
   number?: number;
 };
+
+export type Reading = {
+  date: string;
+  userId: string;
+  spread: string;
+  cards: any;
+};

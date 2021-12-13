@@ -33,6 +33,8 @@ export type Spread = {
   numberOfCards: number;
   spreadNumber: number;
   id: string;
+  date?: string;
+  cards?: any[];
 };
 
 const Spread: React.FC<ISpreadProps> = ({ route }) => {
@@ -64,18 +66,26 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
-    const fetchCard = async () => {
-      const randomCardNumber = pickRandomCard(0, 22);
-      const card = await getCardByNumber(randomCardNumber);
-      const uprightValue = Math.random() < 0.5;
+    if (route.params.cards) {
+      route.params.cards.forEach(async (card) => {
+        const newCard = await getCardByNumber(card.deckNumber);
+        setUpright((upright) => [...upright, card.upright]);
+        setSpreadData((spreadData) => [...spreadData, newCard]);
+      });
+    } else {
+      const fetchCard = async () => {
+        const randomCardNumber = pickRandomCard(0, 78);
+        const card = await getCardByNumber(randomCardNumber);
+        const uprightValue = Math.random() < 0.5;
 
-      setUpright((upright) => [...upright, uprightValue]);
-      setSpreadData((spreadData) => [...spreadData, card]);
-    };
+        setUpright((upright) => [...upright, uprightValue]);
+        setSpreadData((spreadData) => [...spreadData, card]);
+      };
 
-    fetchCard();
-    fetchCard();
-    fetchCard();
+      fetchCard();
+      fetchCard();
+      fetchCard();
+    }
   }, []);
 
   const pastPresFutureCopy = ['Past', 'Present', 'Future'];

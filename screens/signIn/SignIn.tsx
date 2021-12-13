@@ -40,10 +40,10 @@ const SignIn: React.FC = () => {
         loginData.email.toLowerCase(),
         loginData.password
       );
-      const { authToken, user } = res.data;
+      const { user } = res;
       context.setIsAuthenticated(true);
       context.setCurrentUser(user);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message);
     }
   };

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -6,25 +6,44 @@ import {
   ScrollView,
   Animated,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
-import { getCardByNumber } from '../../apiService/data';
+import {
+  getCardByNumber,
+  saveReading,
+  getReadingsByUser,
+} from '../../apiService/data';
 import { pickRandomCard } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './DailyCard.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
 
-const DailyCard = () => {
+interface IDailyCardProps {
+  route?: DailyCardParams;
+}
+
+export type DailyCardParams = {
+  params: {
+    date: string;
+    cards: any[];
+  };
+};
+
+const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
   const navigation = useNavigation();
   const [displayInfo, setDisplayInfo] = useState<boolean>(false);
   const [dailyCardData, setDailyCardData] = useState<any>(null);
+  const [usersReadings, setUsersReadings] = useState<any>(null);
   const [upright, setUpright] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const now = moment();
+  const today = moment().format('yyyy-MM-DD');
+  const context = useContext(Context);
 
   const goBack = () => {
     navigation.goBack();
@@ -46,10 +65,39 @@ const DailyCard = () => {
 
   useEffect(() => {
     const fetchCard = async () => {
-      const randomCardNumber = pickRandomCard(0, 22);
-      const card = await getCardByNumber(randomCardNumber);
-      setUpright(Math.random() < 0.5);
-      setDailyCardData(card);
+      if (route?.params?.cards) {
+        const card = await getCardByNumber(route.params.cards[0].deckNumber);
+        setDailyCardData(card);
+        setUpright(route.params.cards[0].upright);
+        return;
+      }
+
+      const usersCards = await getReadingsByUser(context.currentUser._id);
+      const todaysCard = await usersCards.filter((reading: any) => {
+        return reading.date === today && reading.spread === 'Daily Reading';
+      });
+
+      if (todaysCard?.length) {
+        const card = await getCardByNumber(todaysCard[0].cards[0].deckNumber);
+        setDailyCardData(card);
+        setUpright(todaysCard[0].cards[0].upright);
+      } else {
+        const randomCardNumber = pickRandomCard(0, 78);
+        const card = await getCardByNumber(randomCardNumber);
+        const isUpright = Math.random() < 0.5;
+        setUpright(isUpright);
+        setDailyCardData(card);
+        const reading = {
+          date: today,
+          userId: context.currentUser._id,
+          spread: 'Daily Reading',
+          cards: {
+            deckNumber: randomCardNumber,
+            upright: isUpright,
+          },
+        };
+        saveReading(reading);
+      }
     };
 
     fetchCard();
@@ -66,7 +114,9 @@ const DailyCard = () => {
         <View style={styles.headerContainer}>
           <Text style={styles.header}>Your Card of the Day</Text>
           <Text style={styles.secondaryHeader}>
-            {now.format('dddd, MMMM D, YYYY')}
+            {route?.params
+              ? moment(route.params.date).format('dddd, MMMM D, YYYY')
+              : now.format('dddd, MMMM D, YYYY')}
           </Text>
         </View>
         <View style={{ height: 413 }}>

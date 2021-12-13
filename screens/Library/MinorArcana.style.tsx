@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 32,
+    fontSize: 36,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },

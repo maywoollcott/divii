@@ -1,9 +1,12 @@
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+import { useContext } from 'react';
+import { Context } from '../Context';
 
 const BASE_URL = `http://192.168.1.148:3002`;
 
-export const register = (user: any) => {
-  return axios.post(`${BASE_URL}/register`, {
+export const register = async (user: any) => {
+  const { data } = await axios.post(`${BASE_URL}/register`, {
     name: user.name,
     password: user.password,
     birthdate: user.birthdate,
@@ -11,11 +14,19 @@ export const register = (user: any) => {
     sign: user.sign,
     dateJoined: user.dateJoined,
   });
+
+  await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
+
+  return data;
 };
 
-export const login = (email: string, password: string) => {
-  return axios.post(`${BASE_URL}/login`, {
+export const login = async (email: string, password: string) => {
+  const { data } = await axios.post(`${BASE_URL}/login`, {
     email,
     password,
   });
+
+  await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
+
+  return data;
 };

@@ -87,7 +87,10 @@ const Library = () => {
           >
             <Text style={styles.touchableText}>Minor Arcana</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchable}>
+          <TouchableOpacity
+            style={styles.touchable}
+            onPress={() => navigateTo('Suits')}
+          >
             <Text style={styles.touchableText}>Suits</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.touchable}>

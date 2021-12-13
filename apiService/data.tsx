@@ -21,3 +21,17 @@ export const getAllSpreads = async () => {
   const { data } = await axios.get(`${BASE_URL}/spreads`);
   return data.spreads;
 };
+
+export const getReadingsByUser = async (id: string) => {
+  const { data } = await axios.get(`${BASE_URL}/readingbyid${id}`);
+  return data.readings;
+};
+
+export const saveReading = (reading: any) => {
+  return axios.post(`${BASE_URL}/reading`, {
+    date: reading.date,
+    userId: reading.userId,
+    spread: reading.spread,
+    cards: reading.cards,
+  });
+};

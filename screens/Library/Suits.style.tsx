@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     display: 'flex',
+    marginBottom: '20%',
   },
   touchableContainer: {
     alignSelf: 'flex-start',
@@ -33,10 +34,17 @@ export const styles = StyleSheet.create({
     marginBottom: '10%',
     marginTop: '15%',
   },
+  headerTextContainer: {
+    borderBottomWidth: 1.5,
+    borderBottomColor: COLORS.grayBlue,
+    width: '90%',
+    paddingBottom: 15,
+  },
   cardsContainer: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingRight: 16,
   },
   header: {
     color: COLORS.grayBlue,
@@ -44,16 +52,29 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
-  input: {
+  expandable: {
     color: COLORS.grayBlue,
     borderColor: COLORS.grayBlue,
-    borderWidth: 2,
-    borderRadius: 30,
-    height: 40,
+    borderWidth: 1.5,
+    borderRadius: 15,
     fontSize: 18,
     paddingLeft: 15,
     marginTop: 30,
-    width: 260,
+    width: '85%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  expandableText: {
+    color: COLORS.grayBlue,
+    fontSize: 24,
+    fontFamily: 'made-dillan',
+    marginVertical: 15,
+  },
+  rightArrowIcon: {
+    position: 'absolute',
+    right: 10,
+    top: 20,
   },
   inputContainer: {
     position: 'relative',
@@ -62,5 +83,28 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 7,
     left: 10,
+  },
+  description: {
+    color: COLORS.grayBlue,
+    fontSize: 18,
+    lineHeight: 22,
+    marginLeft: '3%',
+    marginBottom: '5%',
+  },
+  headerDescription: {
+    color: COLORS.grayBlue,
+    fontSize: 18,
+    lineHeight: 22,
+    marginLeft: '3%',
+  },
+  descriptionContainer: {
+    marginTop: '7%',
+    alignItems: 'center',
+    width: '100%',
+  },
+  dividerLine: {
+    backgroundColor: COLORS.grayBlue,
+    height: 1.2,
+    width: 160,
   },
 });

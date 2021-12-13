@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.parchment,
     width: '100%',
     alignItems: 'center',
-    display: 'flex',
+    marginBottom: '10%',
   },
   touchableContainer: {
     alignSelf: 'flex-start',
@@ -27,40 +27,46 @@ export const styles = StyleSheet.create({
   headerContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: '80%',
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '10%',
     marginTop: '15%',
   },
-  cardsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  whiteStar: {
+    marginHorizontal: 10,
+  },
+  actionCardContainer: {
+    width: '80%',
+    alignItems: 'center',
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 36,
+    fontSize: 32,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
-  input: {
-    color: COLORS.grayBlue,
+  touchable: {
+    borderWidth: 1.5,
+    borderRadius: 20,
     borderColor: COLORS.grayBlue,
-    borderWidth: 2,
-    borderRadius: 30,
-    height: 40,
+    width: 280,
+    height: 130,
+    padding: 20,
+    marginTop: '8%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  spreadText: {
+    color: COLORS.grayBlue,
+    fontSize: 24,
+    textAlign: 'center',
+    fontFamily: 'made-dillan',
+  },
+  secondaryHeader: {
+    color: COLORS.orange,
     fontSize: 18,
-    paddingLeft: 15,
-    marginTop: 30,
-    width: 260,
-  },
-  inputContainer: {
-    position: 'relative',
-  },
-  searchIcon: {
-    position: 'absolute',
-    bottom: 7,
-    left: 10,
+    textAlign: 'center',
   },
 });
