@@ -62,6 +62,7 @@ const History = () => {
     });
     return filtered;
   };
+
   const onDateClick = async (day: any) => {
     const readingsOnThisDate = filterReadingsByDate(day.dateString);
     if (readingsOnThisDate?.length) {

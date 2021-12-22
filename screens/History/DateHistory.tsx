@@ -61,6 +61,7 @@ const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
                 onSpreadPress(reading.spread, {
                   date: reading.date,
                   cards: reading.cards,
+                  spreadName: reading.spread,
                 })
               }
               key={index}

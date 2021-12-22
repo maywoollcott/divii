@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,20 @@ import {
   Animated,
   TouchableOpacity,
   Pressable,
+  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
-import { getCardByNumber } from '../../apiService/data';
+import { getCardByNumber, saveReading } from '../../apiService/data';
 import { pickRandomCard } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './Spread.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
 import { PastPresentFutureSpread } from '../../components/Spread/pastPresentFutureSpread';
+import { Reading } from '../../types';
+import { todayString } from 'react-native-calendars/src/expandableCalendar/commons';
 
 interface ISpreadProps {
   route: SpreadParams;
@@ -35,6 +38,7 @@ export type Spread = {
   id: string;
   date?: string;
   cards?: any[];
+  spreadName?: string;
 };
 
 const Spread: React.FC<ISpreadProps> = ({ route }) => {
@@ -44,6 +48,9 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   const [spreadData, setSpreadData] = useState<Array<any>>([]);
   const [upright, setUpright] = useState<Array<any>>([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const context = useContext(Context);
+  const today = moment().format('yyyy-MM-DD');
 
   const goBack = () => {
     navigation.goBack();
@@ -67,19 +74,41 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
 
   useEffect(() => {
     if (route.params.cards) {
-      route.params.cards.forEach(async (card) => {
-        const newCard = await getCardByNumber(card.deckNumber);
-        setUpright((upright) => [...upright, card.upright]);
-        setSpreadData((spreadData) => [...spreadData, newCard]);
-      });
+      const setCardsWithHistory = async () => {
+        if (route.params.cards) {
+          for (const card of route.params.cards) {
+            const newCard = await getCardByNumber(card.deckNumber);
+            setUpright((upright) => [...upright, card.upright]);
+            setSpreadData((spreadData) => [...spreadData, newCard]);
+          }
+        }
+      };
+      setCardsWithHistory();
     } else {
+      let reading: Reading = {
+        date: today,
+        userId: context.currentUser._id,
+        spread: route.params.name,
+        cards: [],
+      };
       const fetchCard = async () => {
         const randomCardNumber = pickRandomCard(0, 78);
         const card = await getCardByNumber(randomCardNumber);
         const uprightValue = Math.random() < 0.5;
 
+        reading.cards.push({
+          deckNumber: randomCardNumber,
+          upright: uprightValue,
+        });
+
+        console.log(reading.cards[0]);
+        console.log(reading.cards.length);
         setUpright((upright) => [...upright, uprightValue]);
         setSpreadData((spreadData) => [...spreadData, card]);
+
+        if (reading.cards.length === 3) {
+          saveReading(reading);
+        }
       };
 
       fetchCard();
@@ -99,7 +128,16 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>{route.params.name}</Text>
+          <Text style={styles.header}>
+            {route.params.spreadName
+              ? route.params.spreadName
+              : route.params.name}
+          </Text>
+          {route.params.date && (
+            <Text style={styles.secondaryHeader}>
+              {moment(route.params.date).format('dddd, MMMM D, YYYY')}
+            </Text>
+          )}
         </View>
         {spreadData.length >= 3 && (
           <PastPresentFutureSpread
