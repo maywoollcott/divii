@@ -32,19 +32,12 @@ const Registration: React.FC = () => {
   });
 
   const signUpHandler = async () => {
-    if (
-      formData.email.length < 1 ||
-      formData.name.length < 1 ||
-      formData.birthdate.length < 1
-    ) {
+    if (formData.email.length < 1 || formData.name.length < 1 || formData.birthdate.length < 1) {
       Alert.alert('Try again!', 'Please fill in all required fields.');
       return;
     }
     if (formData.password.length < 6) {
-      Alert.alert(
-        'Try again!',
-        'Please choose a password with at least 6 characters.'
-      );
+      Alert.alert('Try again!', 'Please choose a password with at least 6 characters.');
       return;
     }
     if (formData.password !== formData.passwordCheck) {
@@ -82,6 +75,7 @@ const Registration: React.FC = () => {
             placeholder='Email'
             placeholderTextColor={COLORS.parchment}
             onChangeText={(text) => setFormData({ ...formData, email: text })}
+            autoCapitalize='none'
           />
           <TextInput
             style={styles.input}
@@ -95,17 +89,12 @@ const Registration: React.FC = () => {
               placeholder='Password'
               secureTextEntry={true}
               placeholderTextColor={COLORS.parchment}
-              onChangeText={(text) =>
-                setFormData({ ...formData, password: text })
-              }
+              onChangeText={(text) => setFormData({ ...formData, password: text })}
+              autoCapitalize='none'
             />
             {formData.password.length >= 6 && (
               <View style={styles.icon}>
-                <FontAwesomeIcon
-                  color={COLORS.parchment}
-                  size={25}
-                  icon={faCheckCircle}
-                />
+                <FontAwesomeIcon color={COLORS.parchment} size={25} icon={faCheckCircle} />
               </View>
             )}
           </View>
@@ -115,28 +104,20 @@ const Registration: React.FC = () => {
               placeholder='Confirm Password'
               secureTextEntry={true}
               placeholderTextColor={COLORS.parchment}
-              onChangeText={(text) =>
-                setFormData({ ...formData, passwordCheck: text })
-              }
+              onChangeText={(text) => setFormData({ ...formData, passwordCheck: text })}
+              autoCapitalize='none'
             />
-            {formData.passwordCheck === formData.password &&
-              formData.password.length >= 6 && (
-                <View style={styles.icon}>
-                  <FontAwesomeIcon
-                    color={COLORS.parchment}
-                    size={25}
-                    icon={faCheckCircle}
-                  />
-                </View>
-              )}
+            {formData.passwordCheck === formData.password && formData.password.length >= 6 && (
+              <View style={styles.icon}>
+                <FontAwesomeIcon color={COLORS.parchment} size={25} icon={faCheckCircle} />
+              </View>
+            )}
           </View>
           <TextInput
             style={styles.input}
             placeholder='Birthday (mm/dd)'
             placeholderTextColor={COLORS.parchment}
-            onChangeText={(text) =>
-              setFormData({ ...formData, birthdate: text })
-            }
+            onChangeText={(text) => setFormData({ ...formData, birthdate: text })}
           />
           <TouchableOpacity onPress={signUpHandler} style={styles.basicButton}>
             <Text style={styles.buttonText}>Sign Up</Text>

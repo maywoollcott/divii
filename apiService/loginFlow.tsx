@@ -1,9 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { useContext } from 'react';
-import { Context } from '../Context';
 
-const BASE_URL = `http://192.168.1.148:3002`;
+const BASE_URL = `https://divii-server.herokuapp.com`;
 
 export const register = async (user: any) => {
   const { data } = await axios.post(`${BASE_URL}/register`, {
@@ -29,4 +27,8 @@ export const login = async (email: string, password: string) => {
   await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
 
   return data;
+};
+
+export const logout = async (key: string) => {
+  await SecureStore.deleteItemAsync(key);
 };
