@@ -51,8 +51,7 @@ const Landing = () => {
           <AutoHeightImage source={images.moons} width={250} />
           <Text style={styles.morningGreeting}>
             Good {greeting()}, {context.currentUser?.name}. Today is{' '}
-            {now.format('dddd, MMMM D, YYYY')}. The moon is currently in Jupiter
-            and Mercury is retrograde.
+            {now.format('dddd, MMMM D, YYYY')}.
           </Text>
         </View>
         <View style={styles.actionCardContainer}>

@@ -19,3 +19,14 @@ export type Reading = {
   spread: string;
   cards: any[];
 };
+
+export type SpreadType = {
+  name: string;
+  generalDescription: string;
+  numberOfCards: number;
+  spreadNumber: number;
+  id: string;
+  date?: string;
+  cards?: any[];
+  spreadName: string;
+};

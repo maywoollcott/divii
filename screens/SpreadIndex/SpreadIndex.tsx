@@ -36,8 +36,6 @@ const SpreadIndex = () => {
 
   const onSpreadPress = (spread: any) => {
     navigation.navigate('Spread', spread);
-    console.log(spread);
-    console.log(spread.name);
   };
 
   return (

@@ -6,8 +6,6 @@ import {
   ScrollView,
   Animated,
   TouchableOpacity,
-  Pressable,
-  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
@@ -16,29 +14,20 @@ import { getCardByNumber, saveReading } from '../../apiService/data';
 import { pickRandomCard } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './Spread.style';
-import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
-import { PastPresentFutureSpread } from '../../components/Spread/pastPresentFutureSpread';
-import { Reading } from '../../types';
-import { todayString } from 'react-native-calendars/src/expandableCalendar/commons';
+import { ThreeCardSpread } from '../../components/Spread/ThreeCardSpread';
+import { Reading, SpreadType } from '../../types';
+import { spreadCopy } from './SpreadCopy';
+import { FourCardSpread } from '../../components/Spread/FourCardSpread';
+import { TwoCardSpread } from '../../components/Spread/TwoCardSpread';
+import { OneCardSpread } from '../../components/Spread/OneCardSpread';
 
 interface ISpreadProps {
   route: SpreadParams;
 }
 
 export type SpreadParams = {
-  params: Spread;
-};
-
-export type Spread = {
-  name: string;
-  generalDescription: string;
-  numberOfCards: number;
-  spreadNumber: number;
-  id: string;
-  date?: string;
-  cards?: any[];
-  spreadName?: string;
+  params: SpreadType;
 };
 
 const Spread: React.FC<ISpreadProps> = ({ route }) => {
@@ -85,6 +74,9 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
       };
       setCardsWithHistory();
     } else {
+      console.log('params');
+      console.log(route.params.numberOfCards);
+      console.log(route.params.name);
       let reading: Reading = {
         date: today,
         userId: context.currentUser._id,
@@ -100,9 +92,6 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
           deckNumber: randomCardNumber,
           upright: uprightValue,
         });
-
-        console.log(reading.cards[0]);
-        console.log(reading.cards.length);
         setUpright((upright) => [...upright, uprightValue]);
         setSpreadData((spreadData) => [...spreadData, card]);
 
@@ -111,13 +100,12 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
         }
       };
 
-      fetchCard();
-      fetchCard();
-      fetchCard();
+      for (let i = 0; i < route.params.numberOfCards; i++) {
+        fetchCard();
+        console.log('fetched');
+      }
     }
   }, []);
-
-  const pastPresFutureCopy = ['Past', 'Present', 'Future'];
 
   return (
     <ScrollView contentContainerStyle={styles.screenContainer}>
@@ -139,8 +127,29 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
             </Text>
           )}
         </View>
-        {spreadData.length >= 3 && (
-          <PastPresentFutureSpread
+        {spreadData.length === 1 && (
+          <OneCardSpread
+            spreadData={spreadData}
+            upright={upright}
+            onCardFlip={onCardFlip}
+          />
+        )}
+        {spreadData.length === 2 && (
+          <TwoCardSpread
+            spreadData={spreadData}
+            upright={upright}
+            onCardFlip={onCardFlip}
+          />
+        )}
+        {spreadData.length === 3 && (
+          <ThreeCardSpread
+            spreadData={spreadData}
+            upright={upright}
+            onCardFlip={onCardFlip}
+          />
+        )}
+        {spreadData.length === 4 && (
+          <FourCardSpread
             spreadData={spreadData}
             upright={upright}
             onCardFlip={onCardFlip}
@@ -151,7 +160,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
             style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
           >
             <Text style={styles.spreadCopy}>
-              {pastPresFutureCopy[currentCard]}:
+              {spreadCopy[route.params.spreadNumber].itemNames[currentCard]}:
             </Text>
             <Text style={styles.header}>{spreadData[currentCard].name}</Text>
             <Text style={styles.reversed}>

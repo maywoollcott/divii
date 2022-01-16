@@ -29,7 +29,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchReadings = async () => {
       console.log(context.currentUser._id);
-      const readings = await getReadingsByUser(context.currentUser._id);
+      const readings = await getReadingsByUser(context.currentUser?._id);
       setUserReadings(readings);
     };
 

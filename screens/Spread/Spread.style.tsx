@@ -112,5 +112,7 @@ export const styles = StyleSheet.create({
     color: COLORS.orange,
     fontSize: 17,
     marginBottom: 5,
+    justifyContent: 'center',
+    textAlign: 'center',
   },
 });
