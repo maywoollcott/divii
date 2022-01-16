@@ -17,5 +17,5 @@ export type Reading = {
   date: string;
   userId: string;
   spread: string;
-  cards: any;
+  cards: any[];
 };

@@ -36,7 +36,10 @@ const SignIn: React.FC = () => {
     Keyboard.dismiss();
     console.log(loginData);
     try {
-      const res = await login(loginData.email.toLowerCase(), loginData.password);
+      const res = await login(
+        loginData.email.toLowerCase(),
+        loginData.password
+      );
       const { user } = res;
       context.setIsAuthenticated(true);
       context.setCurrentUser(user);
@@ -66,12 +69,17 @@ const SignIn: React.FC = () => {
           <TextInput
             placeholder='Password'
             placeholderTextColor={COLORS.parchment}
-            onChangeText={(text) => setLoginData({ ...loginData, password: text })}
+            onChangeText={(text) =>
+              setLoginData({ ...loginData, password: text })
+            }
             style={styles.input}
             secureTextEntry={true}
             autoCapitalize='none'
           />
-          <TouchableOpacity style={styles.basicButton} onPress={loginButtonHandler}>
+          <TouchableOpacity
+            style={styles.basicButton}
+            onPress={loginButtonHandler}
+          >
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
         </View>

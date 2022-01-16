@@ -89,8 +89,8 @@ const History = () => {
           </View>
           <View style={styles.descriptionContainer}>
             <Text style={styles.description}>
-              You have completed 86 readings since joining Divii. Now it’s time
-              for a little reflection.
+              You have completed {userReadings?.length} readings since joining
+              Divii. Now it’s time for a little reflection.
             </Text>
           </View>
         </View>
