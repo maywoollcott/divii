@@ -33,5 +33,6 @@ export const saveReading = (reading: any) => {
     userId: reading.userId,
     spread: reading.spread,
     cards: reading.cards,
+    spreadNumber: reading.spreadNumber,
   });
 };

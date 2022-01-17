@@ -21,6 +21,7 @@ import { spreadCopy } from './SpreadCopy';
 import { FourCardSpread } from '../../components/Spread/FourCardSpread';
 import { TwoCardSpread } from '../../components/Spread/TwoCardSpread';
 import { OneCardSpread } from '../../components/Spread/OneCardSpread';
+import AppLoading from '../AppLoading/AppLoading';
 
 interface ISpreadProps {
   route: SpreadParams;
@@ -62,6 +63,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
+    context.setIsLoading(true);
     if (route.params.cards) {
       const setCardsWithHistory = async () => {
         if (route.params.cards) {
@@ -74,14 +76,12 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
       };
       setCardsWithHistory();
     } else {
-      console.log('params');
-      console.log(route.params.numberOfCards);
-      console.log(route.params.name);
       let reading: Reading = {
         date: today,
         userId: context.currentUser._id,
         spread: route.params.name,
         cards: [],
+        spreadNumber: route.params.spreadNumber,
       };
       const fetchCard = async () => {
         const randomCardNumber = pickRandomCard(0, 78);
@@ -95,7 +95,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
         setUpright((upright) => [...upright, uprightValue]);
         setSpreadData((spreadData) => [...spreadData, card]);
 
-        if (reading.cards.length === 3) {
+        if (reading.cards.length === route.params.numberOfCards) {
           saveReading(reading);
         }
       };
@@ -105,8 +105,14 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
         console.log('fetched');
       }
     }
+    setTimeout(() => {
+      context.setIsLoading(false);
+    }, 500);
   }, []);
 
+  if (context.isLoading) {
+    return <AppLoading />;
+  }
   return (
     <ScrollView contentContainerStyle={styles.screenContainer}>
       <SafeAreaView style={styles.safeContainer}>
@@ -160,7 +166,12 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
             style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
           >
             <Text style={styles.spreadCopy}>
-              {spreadCopy[route.params.spreadNumber].itemNames[currentCard]}:
+              {
+                spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
+                  currentCard
+                ]
+              }
+              :
             </Text>
             <Text style={styles.header}>{spreadData[currentCard].name}</Text>
             <Text style={styles.reversed}>

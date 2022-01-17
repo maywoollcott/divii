@@ -34,15 +34,14 @@ export const styles = StyleSheet.create({
     marginTop: '15%',
   },
   headerTextContainer: {
-    borderBottomWidth: 1.5,
-    borderBottomColor: COLORS.grayBlue,
+    // borderBottomWidth: 1.5,
+    // borderBottomColor: COLORS.grayBlue,
     width: '90%',
     paddingBottom: 15,
   },
   cardsContainer: {
     display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    width: Dimensions.get('window').width,
   },
   header: {
     color: COLORS.grayBlue,

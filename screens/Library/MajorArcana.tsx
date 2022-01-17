@@ -58,7 +58,7 @@ const MajorArcana = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
+    <View style={styles.screenContainer}>
       <SafeAreaView style={styles.safeContainer}>
         <View style={styles.touchableContainer}>
           <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
@@ -70,7 +70,7 @@ const MajorArcana = () => {
             <Text style={styles.header}>Major</Text>
             <Text style={styles.header}>Arcana</Text>
           </View>
-          <View style={styles.descriptionContainer}>
+          {/* <View style={styles.descriptionContainer}>
             <Text style={styles.description}>
               Also known as the Trump Cards, the Major Arcana cards include 21
               numbered cards and 1 unnumbered card (the Fool). The Fool is the
@@ -81,7 +81,7 @@ const MajorArcana = () => {
               Journey and is a helpful way of understanding the story line of
               the Major Arcana Tarot card meanings.
             </Text>
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <TextInput
               onFocus={() => setDisplaySearchIcon(false)}
@@ -100,21 +100,24 @@ const MajorArcana = () => {
           </View>
         </View>
         {allCardsData !== null && (
-          <View style={styles.cardsContainer}>
-            {filteredCards?.map((card) => {
-              return (
-                <NonFlipTarotCard
-                  card={card}
-                  width={170}
-                  key={card.name}
-                  onPress={() => navigateToCard(card)}
-                />
-              );
-            })}
-          </View>
+          <FlatList
+            initialNumToRender={4}
+            data={filteredCards}
+            contentContainerStyle={styles.cardsContainer}
+            keyExtractor={(item) => item.name}
+            numColumns={2}
+            renderItem={({ item, index }) => (
+              <NonFlipTarotCard
+                card={item}
+                width={170}
+                key={index}
+                onPress={() => navigateToCard(item)}
+              />
+            )}
+          ></FlatList>
         )}
       </SafeAreaView>
-    </ScrollView>
+    </View>
   );
 };
 

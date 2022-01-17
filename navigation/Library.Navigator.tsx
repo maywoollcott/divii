@@ -19,11 +19,27 @@ export const LibraryNavigator = () => {
       }}
     >
       <LibraryStack.Screen name='Library' component={Library} />
-      <LibraryStack.Screen name='AllCards' component={AllCards} />
+      <LibraryStack.Screen
+        name='AllCards'
+        component={AllCards}
+        options={{ gestureEnabled: false }}
+      />
       <LibraryStack.Screen name='CardDetails' component={CardDetails} />
-      <LibraryStack.Screen name='MajorArcana' component={MajorArcana} />
-      <LibraryStack.Screen name='MinorArcana' component={MinorArcana} />
-      <LibraryStack.Screen name='Suits' component={Suits} />
+      <LibraryStack.Screen
+        name='MajorArcana'
+        component={MajorArcana}
+        options={{ gestureEnabled: false }}
+      />
+      <LibraryStack.Screen
+        name='MinorArcana'
+        component={MinorArcana}
+        options={{ gestureEnabled: false }}
+      />
+      <LibraryStack.Screen
+        name='Suits'
+        component={Suits}
+        options={{ gestureEnabled: false }}
+      />
     </LibraryStack.Navigator>
   );
 };

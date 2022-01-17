@@ -19,11 +19,7 @@ export const HistoryNavigator = () => {
       <HistoryStack.Screen name='History' component={History} />
       <HistoryStack.Screen name='DateHistory' component={DateHistory} />
       <HistoryStack.Screen name='Daily Reading' component={DailyCard} />
-      <HistoryStack.Screen
-        name='Past, Present, and Future'
-        component={Spread}
-      />
-      <HistoryStack.Screen name='Love and Relationships' component={Spread} />
+      <HistoryStack.Screen name='Spread' component={Spread} />
     </HistoryStack.Navigator>
   );
 };

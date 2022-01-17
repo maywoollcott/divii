@@ -5,6 +5,7 @@ export const images = {
   whiteStar: require('./white-star.png'),
   leftCurtain: require('./left-curtain.png'),
   rightCurtain: require('./right-curtain.png'),
+  spinner: require('./spinner.png'),
 };
 
 // export const cardDisplays: { [key: string]: NodeRequire } = {

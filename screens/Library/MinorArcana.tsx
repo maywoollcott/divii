@@ -58,7 +58,7 @@ const MinorArcana = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
+    <View style={styles.screenContainer}>
       <SafeAreaView style={styles.safeContainer}>
         <View style={styles.touchableContainer}>
           <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
@@ -70,7 +70,7 @@ const MinorArcana = () => {
             <Text style={styles.header}>Minor</Text>
             <Text style={styles.header}>Arcana</Text>
           </View>
-          <View style={styles.descriptionContainer}>
+          {/* <View style={styles.descriptionContainer}>
             <Text style={styles.description}>
               The 56 Minor Arcana cards reflect the trials and tribulations that
               we experience on a daily basis. Even though the Minor Arcana cards
@@ -80,7 +80,7 @@ const MinorArcana = () => {
               how your present situation is affecting you and what steps you
               need to take to manifest your goals.
             </Text>
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <TextInput
               onFocus={() => setDisplaySearchIcon(false)}
@@ -99,21 +99,24 @@ const MinorArcana = () => {
           </View>
         </View>
         {allCardsData !== null && (
-          <View style={styles.cardsContainer}>
-            {filteredCards?.map((card) => {
-              return (
-                <NonFlipTarotCard
-                  card={card}
-                  width={170}
-                  key={card.name}
-                  onPress={() => navigateToCard(card)}
-                />
-              );
-            })}
-          </View>
+          <FlatList
+            initialNumToRender={4}
+            data={filteredCards}
+            contentContainerStyle={styles.cardsContainer}
+            keyExtractor={(item) => item.name}
+            numColumns={2}
+            renderItem={({ item, index }) => (
+              <NonFlipTarotCard
+                card={item}
+                width={170}
+                key={index}
+                onPress={() => navigateToCard(item)}
+              />
+            )}
+          ></FlatList>
         )}
       </SafeAreaView>
-    </ScrollView>
+    </View>
   );
 };
 

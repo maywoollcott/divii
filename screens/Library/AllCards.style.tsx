@@ -35,8 +35,7 @@ export const styles = StyleSheet.create({
   },
   cardsContainer: {
     display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    width: Dimensions.get('window').width,
   },
   header: {
     color: COLORS.grayBlue,

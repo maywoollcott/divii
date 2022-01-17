@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
   spreadCopy: {
     color: COLORS.orange,
     fontSize: 17,
-    marginBottom: 5,
+    marginBottom: '8%',
     justifyContent: 'center',
     textAlign: 'center',
   },

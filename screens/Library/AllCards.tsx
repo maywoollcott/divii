@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   FlatList,
   ListRenderItem,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
@@ -19,6 +20,8 @@ import { getAllCards } from '../../apiService/data';
 import { styles } from './AllCards.style';
 import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
+import AppLoading from '../AppLoading/AppLoading';
+import { Context } from '../../Context';
 
 const AllCards = () => {
   const [allCardsData, setAllCardsData] = useState<Card[] | null>(null);
@@ -27,12 +30,14 @@ const AllCards = () => {
   const [displaySearchIcon, setDisplaySearchIcon] = useState<boolean>(true);
 
   const navigation = useNavigation();
+  const context = useContext(Context);
 
   const goBack = () => {
     navigation.goBack();
   };
 
   useEffect(() => {
+    context.setIsLoading(true);
     const fetchCards = async () => {
       const cards = await getAllCards();
       console.log(cards[0]);
@@ -41,6 +46,9 @@ const AllCards = () => {
     };
 
     fetchCards();
+    setTimeout(() => {
+      context.setIsLoading(false);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -55,8 +63,11 @@ const AllCards = () => {
     navigation.navigate('CardDetails', card);
   };
 
+  if (context.isLoading) {
+    return <AppLoading />;
+  }
   return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
+    <View style={styles.screenContainer}>
       <SafeAreaView style={styles.safeContainer}>
         <View style={styles.touchableContainer}>
           <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
@@ -83,21 +94,25 @@ const AllCards = () => {
           </View>
         </View>
         {allCardsData !== null && (
-          <View style={styles.cardsContainer}>
-            {filteredCards?.map((card) => {
-              return (
-                <NonFlipTarotCard
-                  card={card}
-                  width={170}
-                  key={card.name}
-                  onPress={() => navigateToCard(card)}
-                />
-              );
-            })}
-          </View>
+          <FlatList
+            initialNumToRender={4}
+            data={filteredCards}
+            contentContainerStyle={styles.cardsContainer}
+            keyExtractor={(item) => item.name}
+            numColumns={2}
+            renderItem={({ item, index }) => (
+              <NonFlipTarotCard
+                card={item}
+                width={170}
+                height={281}
+                key={index}
+                onPress={() => navigateToCard(item)}
+              />
+            )}
+          ></FlatList>
         )}
       </SafeAreaView>
-    </ScrollView>
+    </View>
   );
 };
 

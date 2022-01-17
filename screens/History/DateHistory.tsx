@@ -29,14 +29,16 @@ export type DateHistoryParams = {
 
 const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
   const navigation = useNavigation();
-  const [spreads, setSpreads] = useState<Array<any> | null>(null);
 
   const goBack = () => {
     navigation.goBack();
   };
 
   const onSpreadPress = (spread: string, readingInfo: any) => {
-    navigation.navigate(spread, readingInfo);
+    if (spread === 'Daily Reading') {
+      navigation.navigate(spread, readingInfo);
+    }
+    navigation.navigate('Spread', readingInfo);
   };
 
   return (
@@ -62,6 +64,7 @@ const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
                   date: reading.date,
                   cards: reading.cards,
                   spreadName: reading.spread,
+                  spreadNumber: reading.spreadNumber,
                 })
               }
               key={index}

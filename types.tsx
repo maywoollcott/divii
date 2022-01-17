@@ -18,13 +18,14 @@ export type Reading = {
   userId: string;
   spread: string;
   cards: any[];
+  spreadNumber: string;
 };
 
 export type SpreadType = {
   name: string;
   generalDescription: string;
   numberOfCards: number;
-  spreadNumber: number;
+  spreadNumber: string;
   id: string;
   date?: string;
   cards?: any[];

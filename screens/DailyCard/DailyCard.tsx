@@ -95,6 +95,7 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
             deckNumber: randomCardNumber,
             upright: isUpright,
           },
+          spreadNumber: '0',
         };
         saveReading(reading);
       }

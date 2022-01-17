@@ -30,18 +30,16 @@ const RootNavigator = () => {
     </PreAuthStack.Navigator>
   );
 
-  if (!context.isAuthenticated) {
-    return (
-      <NavigationContainer>
-        <PreAuthStackScreen />
-      </NavigationContainer>
-    );
-  }
-
   if (context.isAuthenticated) {
     return (
       <NavigationContainer>
         <TabNavigator />
+      </NavigationContainer>
+    );
+  } else {
+    return (
+      <NavigationContainer>
+        <PreAuthStackScreen />
       </NavigationContainer>
     );
   }

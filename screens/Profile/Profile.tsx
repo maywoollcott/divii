@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
@@ -8,6 +8,7 @@ import { getReadingsByUser, getCardByNumber } from '../../apiService/data';
 import { styles } from './Profile.style';
 import { Context } from '../../Context';
 import { Reading } from '../../types';
+import AppLoading from '../AppLoading/AppLoading';
 
 const Profile = () => {
   const context = React.useContext(Context);
@@ -27,8 +28,8 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    context.setIsLoading(true);
     const fetchReadings = async () => {
-      console.log(context.currentUser._id);
       const readings = await getReadingsByUser(context.currentUser?._id);
       setUserReadings(readings);
     };
@@ -52,6 +53,9 @@ const Profile = () => {
       fetchMostFreqCard(mostFreqCardNumber);
       const mostFreqSpread = getMostFrequent(spreads);
       setMostFrequentSpread(mostFreqSpread);
+      setTimeout(() => {
+        context.setIsLoading(false);
+      }, 500);
     }
   }, [userReadings]);
 
@@ -72,50 +76,62 @@ const Profile = () => {
     const mostFreqCard = await getCardByNumber(cardNumber);
     setMostFrequentCard(mostFreqCard.name);
   };
-
   const dateJoined = moment(context.currentUser?.dateJoined);
-  return (
-    <View style={styles.screenContainer}>
-      <View>
-        <Text style={styles.headerText}>Hi, {context.currentUser?.name}.</Text>
-      </View>
-      <View style={styles.bodyContainer}>
-        <View style={styles.bodyTextSingleContainer}>
-          <Text style={styles.bodyText}>
-            You’ve been divinating since
+
+  if (!context.isLoading && mostFrequentSpread) {
+    return (
+      <View style={styles.screenContainer}>
+        <View>
+          <Text style={styles.headerText}>
+            Hi, {context.currentUser?.name}.
+          </Text>
+        </View>
+        <View style={styles.bodyContainer}>
+          <View style={styles.bodyTextSingleContainer}>
+            <Text style={styles.bodyText}>
+              You’ve been divinating since
+              <Text style={styles.bodyTextHighlight}>
+                {' '}
+                {dateJoined.format('MMMM D, YYYY')}.
+              </Text>
+            </Text>
+          </View>
+          <View style={styles.bodyTextSingleContainer}>
+            <Text style={styles.bodyText}>You’ve completed</Text>
             <Text style={styles.bodyTextHighlight}>
               {' '}
-              {dateJoined.format('MMMM D, YYYY')}.
+              {userReadings?.length}{' '}
             </Text>
-          </Text>
+            <Text style={styles.bodyText}>readings.</Text>
+          </View>
+          <View style={styles.bodyTextSingleContainer}>
+            <Text style={styles.bodyText}>
+              Your most frequently drawn card is the
+              <Text style={styles.bodyTextHighlight}> {mostFrequentCard}.</Text>
+            </Text>
+          </View>
+          <View style={styles.bodyTextSingleContainer}>
+            <Text style={styles.bodyText}>
+              Your favorite spread is the
+              <Text style={styles.bodyTextHighlight}>
+                {' '}
+                {mostFrequentSpread}{' '}
+              </Text>
+              spread.
+            </Text>
+          </View>
         </View>
-        <View style={styles.bodyTextSingleContainer}>
-          <Text style={styles.bodyText}>You’ve completed</Text>
-          <Text style={styles.bodyTextHighlight}> {userReadings?.length} </Text>
-          <Text style={styles.bodyText}>readings.</Text>
-        </View>
-        <View style={styles.bodyTextSingleContainer}>
-          <Text style={styles.bodyText}>
-            Your most frequently drawn card is the
-            <Text style={styles.bodyTextHighlight}> {mostFrequentCard}.</Text>
-          </Text>
-        </View>
-        <View style={styles.bodyTextSingleContainer}>
-          <Text style={styles.bodyText}>
-            Your favorite spread is the
-            <Text style={styles.bodyTextHighlight}> {mostFrequentSpread} </Text>
-            spread.
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={styles.basicButton}
+          onPress={logoutButtonHandler}
+        >
+          <Text style={styles.buttonText}>Log Out</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.basicButton}
-        onPress={logoutButtonHandler}
-      >
-        <Text style={styles.buttonText}>Log Out</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  }
+
+  return <AppLoading />;
 };
 
 export default Profile;

@@ -19,10 +19,9 @@ import { styles } from './History.style';
 import { COLORS } from '../../globalStyles';
 import { Card, Reading } from '../../types';
 import moment, { Moment } from 'moment';
+import AppLoading from '../AppLoading/AppLoading';
 
 const History = () => {
-  const [allCardsData, setAllCardsData] = useState<Card[] | null>(null);
-  const [filteredCards, setFilteredCards] = useState<Card[] | null>(null);
   const [userReadings, setUserReadings] = useState<Reading[] | null>(null);
   const [markedDates, setMarkedDates] = useState<any>(null);
 
@@ -33,6 +32,7 @@ const History = () => {
   const today = moment().format('yyyy-MM-DD');
 
   useEffect(() => {
+    context.setIsLoading(true);
     const fetchReadings = async () => {
       console.log(context.currentUser._id);
       const readings = await getReadingsByUser(context.currentUser._id);
@@ -53,6 +53,9 @@ const History = () => {
     };
     console.log(tempMarkedDates);
     setMarkedDates(tempMarkedDates);
+    setTimeout(() => {
+      context.setIsLoading(false);
+    }, 500);
   }, [userReadings]);
 
   const filterReadingsByDate = (date: string) => {
@@ -80,43 +83,47 @@ const History = () => {
     selectedTextColor: COLORS.charcoal,
   };
 
-  return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
-      <SafeAreaView style={styles.safeContainer}>
-        <View style={styles.headerContainer}>
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.header}>History</Text>
+  if (!context.isLoading && markedDates) {
+    return (
+      <ScrollView contentContainerStyle={styles.screenContainer}>
+        <SafeAreaView style={styles.safeContainer}>
+          <View style={styles.headerContainer}>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.header}>History</Text>
+            </View>
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.description}>
+                You have completed {userReadings?.length} readings since joining
+                Divii. Now it’s time for a little reflection.
+              </Text>
+            </View>
           </View>
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.description}>
-              You have completed {userReadings?.length} readings since joining
-              Divii. Now it’s time for a little reflection.
-            </Text>
-          </View>
-        </View>
-        <Calendar
-          style={{
-            backgroundColor: COLORS.grayBlue,
-            borderRadius: 15,
-            paddingVertical: 10,
-            width: Dimensions.get('screen').width * 0.85,
-          }}
-          theme={{
-            backgroundColor: COLORS.grayBlue,
-            calendarBackground: COLORS.grayBlue,
-            dayTextColor: 'white',
-            monthTextColor: 'white',
-            todayTextColor: COLORS.charcoal,
-            arrowColor: 'white',
-          }}
-          hideExtraDays={true}
-          enableSwipeMonths={true}
-          markedDates={markedDates}
-          onDayPress={onDateClick}
-        />
-      </SafeAreaView>
-    </ScrollView>
-  );
+          <Calendar
+            style={{
+              backgroundColor: COLORS.grayBlue,
+              borderRadius: 15,
+              paddingVertical: 10,
+              width: Dimensions.get('screen').width * 0.85,
+            }}
+            theme={{
+              backgroundColor: COLORS.grayBlue,
+              calendarBackground: COLORS.grayBlue,
+              dayTextColor: 'white',
+              monthTextColor: 'white',
+              todayTextColor: COLORS.charcoal,
+              arrowColor: 'white',
+            }}
+            hideExtraDays={true}
+            enableSwipeMonths={true}
+            markedDates={markedDates}
+            onDayPress={onDateClick}
+          />
+        </SafeAreaView>
+      </ScrollView>
+    );
+  }
+
+  return <AppLoading />;
 };
 
 export default History;
