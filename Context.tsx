@@ -14,7 +14,7 @@ type AppContextValue = {
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   readings: any;
-  setReadings: Dispatch<SetStateAction<null>>;
+  setReadings: Dispatch<SetStateAction<any>>;
 };
 
 const defaultValue: AppContextValue = {

@@ -62,7 +62,6 @@ const Profile = () => {
   }
 
   const fetchMostFreqCard = async (cardNumber: number) => {
-    // const mostFreqCard = await getCardByNumber(cardNumber);
     setMostFrequentCard(arcanaNames[cardNumber]);
   };
   const dateJoined = moment(context.currentUser?.dateJoined);

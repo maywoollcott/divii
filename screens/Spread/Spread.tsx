@@ -97,6 +97,8 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
 
         if (reading.cards.length === route.params.numberOfCards) {
           saveReading(reading);
+          let joined = context.readings.concat(reading);
+          context.setReadings(joined);
         }
       };
 
