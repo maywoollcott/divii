@@ -16,6 +16,7 @@ import { COLORS } from '../../globalStyles';
 import { useNavigation } from '@react-navigation/native';
 import { Context } from '../../Context';
 import { login } from '../../apiService/loginFlow';
+import { getReadingsByUser } from '../../apiService/data';
 import AppLoading from '../AppLoading/AppLoading';
 
 const SignIn: React.FC = () => {
@@ -27,15 +28,8 @@ const SignIn: React.FC = () => {
     password: '',
   });
 
-  const [starStyle, setStarStyle] = useState({
-    size: 100,
-    left: 20,
-    top: 50,
-  });
-
   const loginButtonHandler = async () => {
     Keyboard.dismiss();
-    console.log(loginData);
     try {
       context.setIsLoading(true);
       const res = await login(
@@ -46,6 +40,9 @@ const SignIn: React.FC = () => {
       context.setIsAuthenticated(true);
       context.setCurrentUser(user);
       context.setIsLoading(false);
+      const readings = await getReadingsByUser(user._id);
+      context.setReadings(readings);
+      console.log(readings);
     } catch (err: any) {
       console.error(err.message);
     }

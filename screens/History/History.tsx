@@ -1,28 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  Dimensions,
-  Platform,
-  Button,
-} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Feather } from '@expo/vector-icons';
 import { Calendar } from 'react-native-calendars';
-import { getReadingsByUser } from '../../apiService/data';
 import { Context } from '../../Context';
-import { getAllCards } from '../../apiService/data';
 import { styles } from './History.style';
 import { COLORS } from '../../globalStyles';
-import { Card, Reading } from '../../types';
-import moment, { Moment } from 'moment';
+import { Reading } from '../../types';
+import moment from 'moment';
 import AppLoading from '../AppLoading/AppLoading';
 
 const History = () => {
-  const [userReadings, setUserReadings] = useState<Reading[] | null>(null);
   const [markedDates, setMarkedDates] = useState<any>(null);
 
   const navigation = useNavigation();
@@ -32,19 +19,8 @@ const History = () => {
   const today = moment().format('yyyy-MM-DD');
 
   useEffect(() => {
-    context.setIsLoading(true);
-    const fetchReadings = async () => {
-      console.log(context.currentUser._id);
-      const readings = await getReadingsByUser(context.currentUser._id);
-      setUserReadings(readings);
-    };
-
-    fetchReadings();
-  }, []);
-
-  useEffect(() => {
     let tempMarkedDates = {};
-    userReadings?.forEach((reading) => {
+    context.readings?.forEach((reading: Reading) => {
       Object.assign(tempMarkedDates, { [reading.date]: readingDateFormat });
     });
     tempMarkedDates = {
@@ -53,13 +29,10 @@ const History = () => {
     };
     console.log(tempMarkedDates);
     setMarkedDates(tempMarkedDates);
-    setTimeout(() => {
-      context.setIsLoading(false);
-    }, 500);
-  }, [userReadings]);
+  }, [context.readings]);
 
   const filterReadingsByDate = (date: string) => {
-    const allReadings = userReadings;
+    const allReadings = context.readings;
     const filtered = allReadings?.filter((reading: Reading) => {
       return reading.date == date;
     });
@@ -83,7 +56,7 @@ const History = () => {
     selectedTextColor: COLORS.charcoal,
   };
 
-  if (!context.isLoading && markedDates) {
+  if (!context.isLoading) {
     return (
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
@@ -93,8 +66,8 @@ const History = () => {
             </View>
             <View style={styles.descriptionContainer}>
               <Text style={styles.description}>
-                You have completed {userReadings?.length} readings since joining
-                Divii. Now it’s time for a little reflection.
+                You have completed {context.readings?.length} readings since
+                joining Divii. Now it’s time for a little reflection.
               </Text>
             </View>
           </View>

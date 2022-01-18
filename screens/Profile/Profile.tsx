@@ -9,11 +9,10 @@ import { styles } from './Profile.style';
 import { Context } from '../../Context';
 import { Reading } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
+import { arcanaNames } from '../../copy/Cards';
 
 const Profile = () => {
   const context = React.useContext(Context);
-  const navigate = useNavigation();
-  const [userReadings, setUserReadings] = useState<Reading[]>([]);
   const [mostFrequentCard, setMostFrequentCard] = useState<string>();
   const [mostFrequentSpread, setMostFrequentSpread] = useState<string>();
 
@@ -28,36 +27,26 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    context.setIsLoading(true);
-    const fetchReadings = async () => {
-      const readings = await getReadingsByUser(context.currentUser?._id);
-      setUserReadings(readings);
-    };
-
-    fetchReadings();
-  }, []);
-
-  useEffect(() => {
     let cards: string[] = [];
     let spreads: string[] = [];
-    if (userReadings.length > 0) {
-      for (let i = 0; i < userReadings.length; i++) {
-        let singleReadingCardsObject = userReadings[i];
+    if (context.readings.length > 0) {
+      for (let i = 0; i < context.readings.length; i++) {
+        let singleReadingCardsObject = context.readings[i];
         spreads.push(singleReadingCardsObject.spread);
-        singleReadingCardsObject.cards.forEach((cardObject) => {
+        singleReadingCardsObject.cards.forEach((cardObject: any) => {
           cards.push(cardObject.deckNumber);
         });
       }
       const mostFreqCardNumber = getMostFrequent(cards);
       console.log(`most Freq ${mostFreqCardNumber}`);
-      fetchMostFreqCard(mostFreqCardNumber);
+      fetchMostFreqCard(parseInt(mostFreqCardNumber));
       const mostFreqSpread = getMostFrequent(spreads);
       setMostFrequentSpread(mostFreqSpread);
       setTimeout(() => {
         context.setIsLoading(false);
       }, 500);
     }
-  }, [userReadings]);
+  }, [context.readings]);
 
   function getMostFrequent(arr: any) {
     const hashmap = arr.reduce(
@@ -72,13 +61,13 @@ const Profile = () => {
     );
   }
 
-  const fetchMostFreqCard = async (cardNumber: string) => {
-    const mostFreqCard = await getCardByNumber(cardNumber);
-    setMostFrequentCard(mostFreqCard.name);
+  const fetchMostFreqCard = async (cardNumber: number) => {
+    // const mostFreqCard = await getCardByNumber(cardNumber);
+    setMostFrequentCard(arcanaNames[cardNumber]);
   };
   const dateJoined = moment(context.currentUser?.dateJoined);
 
-  if (!context.isLoading && mostFrequentSpread) {
+  if (!context.isLoading) {
     return (
       <View style={styles.screenContainer}>
         <View>
@@ -100,7 +89,7 @@ const Profile = () => {
             <Text style={styles.bodyText}>You’ve completed</Text>
             <Text style={styles.bodyTextHighlight}>
               {' '}
-              {userReadings?.length}{' '}
+              {context.readings?.length}{' '}
             </Text>
             <Text style={styles.bodyText}>readings.</Text>
           </View>

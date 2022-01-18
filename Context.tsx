@@ -4,6 +4,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react';
+import { Reading } from './types';
 
 type AppContextValue = {
   isAuthenticated: boolean;
@@ -12,6 +13,8 @@ type AppContextValue = {
   setCurrentUser: Dispatch<SetStateAction<null>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  readings: any;
+  setReadings: Dispatch<SetStateAction<null>>;
 };
 
 const defaultValue: AppContextValue = {
@@ -21,6 +24,8 @@ const defaultValue: AppContextValue = {
   setCurrentUser: () => {},
   isLoading: false,
   setIsLoading: () => {},
+  readings: null,
+  setReadings: () => {},
 };
 export const Context = createContext(defaultValue);
 
@@ -28,6 +33,7 @@ export const Provider = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [readings, setReadings] = useState(null);
 
   return (
     <Context.Provider
@@ -38,6 +44,8 @@ export const Provider = (props: any) => {
         setCurrentUser: setCurrentUser,
         isLoading: isLoading,
         setIsLoading: setIsLoading,
+        readings: readings,
+        setReadings: setReadings,
       }}
     >
       {props.children}

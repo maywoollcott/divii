@@ -104,7 +104,6 @@ const AllCards = () => {
               <NonFlipTarotCard
                 card={item}
                 width={170}
-                height={281}
                 key={index}
                 onPress={() => navigateToCard(item)}
               />
