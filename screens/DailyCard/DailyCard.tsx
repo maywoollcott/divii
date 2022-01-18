@@ -97,7 +97,7 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
               upright: isUpright,
             },
           ],
-          spreadNumber: '0',
+          spreadNumber: '8',
         };
         saveReading(reading);
         let joined = context.readings.concat(reading);
