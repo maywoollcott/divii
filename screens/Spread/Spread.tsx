@@ -167,14 +167,16 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
           <Animated.View
             style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
           >
-            <Text style={styles.spreadCopy}>
-              {
-                spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
-                  currentCard
-                ]
-              }
-              :
-            </Text>
+            {route.params.spreadNumber !== '8' && (
+              <Text style={styles.spreadCopy}>
+                {
+                  spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
+                    currentCard
+                  ]
+                }
+                :
+              </Text>
+            )}
             <Text style={styles.header}>{spreadData[currentCard].name}</Text>
             <Text style={styles.reversed}>
               {upright[currentCard] ? 'Upright' : '(Reversed)'}

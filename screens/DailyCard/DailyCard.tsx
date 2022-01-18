@@ -91,13 +91,17 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
           date: today,
           userId: context.currentUser._id,
           spread: 'Daily Reading',
-          cards: {
-            deckNumber: randomCardNumber,
-            upright: isUpright,
-          },
+          cards: [
+            {
+              deckNumber: randomCardNumber,
+              upright: isUpright,
+            },
+          ],
           spreadNumber: '0',
         };
         saveReading(reading);
+        let joined = context.readings.concat(reading);
+        context.setReadings(joined);
       }
     };
 
