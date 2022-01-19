@@ -16,7 +16,7 @@ import {
   saveReading,
   getReadingsByUser,
 } from '../../apiService/data';
-import { pickRandomCard } from '../../utils/pickRandomCard';
+import { getCardNumbers } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './DailyCard.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
@@ -82,8 +82,9 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
         setDailyCardData(card);
         setUpright(todaysCard[0].cards[0].upright);
       } else {
-        const randomCardNumber = pickRandomCard(0, 78);
-        const card = await getCardByNumber(randomCardNumber);
+        const randomCardNumber = getCardNumbers(1);
+        console.log(randomCardNumber);
+        const card = await getCardByNumber(randomCardNumber[0]);
         const isUpright = Math.random() < 0.5;
         setUpright(isUpright);
         setDailyCardData(card);
@@ -93,7 +94,7 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
           spread: 'Daily Reading',
           cards: [
             {
-              deckNumber: randomCardNumber,
+              deckNumber: randomCardNumber[0],
               upright: isUpright,
             },
           ],

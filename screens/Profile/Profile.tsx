@@ -123,7 +123,7 @@ const Profile = () => {
               {' '}
               {context.readings?.length}{' '}
             </Text>
-            <Text style={styles.bodyText}>readings.</Text>
+            <Text style={styles.bodyText}> readings.</Text>
           </View>
           <View style={styles.bodyTextSingleContainer}>
             {renderMostFrequentlyDrawnCard()}
