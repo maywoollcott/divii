@@ -39,38 +39,43 @@ const SpreadIndex = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
-      <SafeAreaView style={styles.safeContainer}>
-        <View style={styles.touchableContainer}>
-          <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
-            <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.headerContainer}>
-          <AutoHeightImage
-            source={images.whiteStar}
-            width={69}
-            style={styles.whiteStar}
-          />
-          <Text style={styles.header}>Spreads</Text>
-          <AutoHeightImage
-            source={images.whiteStar}
-            width={69}
-            style={styles.whiteStar}
-          />
-        </View>
-        {spreads &&
-          spreads.map((spread) => {
-            return (
-              <SpreadTouchable
-                name={spread.name}
-                onPress={() => onSpreadPress(spread)}
-                key={spread.spreadNumber}
-              />
-            );
-          })}
-      </SafeAreaView>
-    </ScrollView>
+    <View style={styles.bounceContainer}>
+      <ScrollView contentContainerStyle={styles.screenContainer}>
+        <SafeAreaView style={styles.safeContainer}>
+          <View style={styles.touchableContainer}>
+            <TouchableOpacity
+              onPress={goBack}
+              style={styles.backArrowContainer}
+            >
+              <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerContainer}>
+            <AutoHeightImage
+              source={images.whiteStar}
+              width={69}
+              style={styles.whiteStar}
+            />
+            <Text style={styles.header}>Spreads</Text>
+            <AutoHeightImage
+              source={images.whiteStar}
+              width={69}
+              style={styles.whiteStar}
+            />
+          </View>
+          {spreads &&
+            spreads.map((spread) => {
+              return (
+                <SpreadTouchable
+                  name={spread.name}
+                  onPress={() => onSpreadPress(spread)}
+                  key={spread.spreadNumber}
+                />
+              );
+            })}
+        </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 };
 

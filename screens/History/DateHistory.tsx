@@ -42,37 +42,42 @@ const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
-      <SafeAreaView style={styles.safeContainer}>
-        <View style={styles.touchableContainer}>
-          <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
-            <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>Readings</Text>
-          <Text style={styles.secondaryHeader}>
-            {moment(route.params[0].date).format('dddd, MMMM D, YYYY')}
-          </Text>
-        </View>
-        {route.params.map((reading, index) => {
-          return (
-            <SpreadTouchable
-              name={reading.spread}
-              onPress={() =>
-                onSpreadPress(reading.spread, {
-                  date: reading.date,
-                  cards: reading.cards,
-                  spreadName: reading.spread,
-                  spreadNumber: reading.spreadNumber,
-                })
-              }
-              key={index}
-            />
-          );
-        })}
-      </SafeAreaView>
-    </ScrollView>
+    <View style={styles.bounceContainer}>
+      <ScrollView contentContainerStyle={styles.screenContainer}>
+        <SafeAreaView style={styles.safeContainer}>
+          <View style={styles.touchableContainer}>
+            <TouchableOpacity
+              onPress={goBack}
+              style={styles.backArrowContainer}
+            >
+              <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerContainer}>
+            <Text style={styles.header}>Readings</Text>
+            <Text style={styles.secondaryHeader}>
+              {moment(route.params[0].date).format('dddd, MMMM D, YYYY')}
+            </Text>
+          </View>
+          {route.params.map((reading, index) => {
+            return (
+              <SpreadTouchable
+                name={reading.spread}
+                onPress={() =>
+                  onSpreadPress(reading.spread, {
+                    date: reading.date,
+                    cards: reading.cards,
+                    spreadName: reading.spread,
+                    spreadNumber: reading.spreadNumber,
+                  })
+                }
+                key={index}
+              />
+            );
+          })}
+        </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 };
 

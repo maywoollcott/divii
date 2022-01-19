@@ -116,97 +116,102 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
     return <AppLoading />;
   }
   return (
-    <ScrollView contentContainerStyle={styles.screenContainer}>
-      <SafeAreaView style={styles.safeContainer}>
-        <View style={styles.touchableContainer}>
-          <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
-            <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>
-            {route.params.spreadName
-              ? route.params.spreadName
-              : route.params.name}
-          </Text>
-          {route.params.date && (
-            <Text style={styles.secondaryHeader}>
-              {moment(route.params.date).format('dddd, MMMM D, YYYY')}
+    <View style={styles.bounceContainer}>
+      <ScrollView contentContainerStyle={styles.screenContainer}>
+        <SafeAreaView style={styles.safeContainer}>
+          <View style={styles.touchableContainer}>
+            <TouchableOpacity
+              onPress={goBack}
+              style={styles.backArrowContainer}
+            >
+              <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerContainer}>
+            <Text style={styles.header}>
+              {route.params.spreadName
+                ? route.params.spreadName
+                : route.params.name}
             </Text>
-          )}
-        </View>
-        {spreadData.length === 1 && (
-          <OneCardSpread
-            spreadData={spreadData}
-            upright={upright}
-            onCardFlip={onCardFlip}
-          />
-        )}
-        {spreadData.length === 2 && (
-          <TwoCardSpread
-            spreadData={spreadData}
-            upright={upright}
-            onCardFlip={onCardFlip}
-          />
-        )}
-        {spreadData.length === 3 && (
-          <ThreeCardSpread
-            spreadData={spreadData}
-            upright={upright}
-            onCardFlip={onCardFlip}
-          />
-        )}
-        {spreadData.length === 4 && (
-          <FourCardSpread
-            spreadData={spreadData}
-            upright={upright}
-            onCardFlip={onCardFlip}
-          />
-        )}
-        {currentCard !== null && displayInfo ? (
-          <Animated.View
-            style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
-          >
-            {route.params.spreadNumber !== '8' && (
-              <Text style={styles.spreadCopy}>
-                {
-                  spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
-                    currentCard
-                  ]
-                }
-                :
+            {route.params.date && (
+              <Text style={styles.secondaryHeader}>
+                {moment(route.params.date).format('dddd, MMMM D, YYYY')}
               </Text>
             )}
-            <Text style={styles.header}>{spreadData[currentCard].name}</Text>
-            <Text style={styles.reversed}>
-              {upright[currentCard] ? 'Upright' : '(Reversed)'}
-            </Text>
-            <View style={styles.keyTermsContainer}>
-              <Text style={styles.keyTerms}>
-                {upright[currentCard]
-                  ? spreadData[currentCard].uprightKeyTerms[0]
-                  : spreadData[currentCard].reversedKeyTerms[0]}
+          </View>
+          {spreadData.length === 1 && (
+            <OneCardSpread
+              spreadData={spreadData}
+              upright={upright}
+              onCardFlip={onCardFlip}
+            />
+          )}
+          {spreadData.length === 2 && (
+            <TwoCardSpread
+              spreadData={spreadData}
+              upright={upright}
+              onCardFlip={onCardFlip}
+            />
+          )}
+          {spreadData.length === 3 && (
+            <ThreeCardSpread
+              spreadData={spreadData}
+              upright={upright}
+              onCardFlip={onCardFlip}
+            />
+          )}
+          {spreadData.length === 4 && (
+            <FourCardSpread
+              spreadData={spreadData}
+              upright={upright}
+              onCardFlip={onCardFlip}
+            />
+          )}
+          {currentCard !== null && displayInfo ? (
+            <Animated.View
+              style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
+            >
+              {route.params.spreadNumber !== '8' && (
+                <Text style={styles.spreadCopy}>
+                  {
+                    spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
+                      currentCard
+                    ]
+                  }
+                  :
+                </Text>
+              )}
+              <Text style={styles.header}>{spreadData[currentCard].name}</Text>
+              <Text style={styles.reversed}>
+                {upright[currentCard] ? 'Upright' : '(Reversed)'}
               </Text>
-              <Text style={styles.keyTerms}>
+              <View style={styles.keyTermsContainer}>
+                <Text style={styles.keyTerms}>
+                  {upright[currentCard]
+                    ? spreadData[currentCard].uprightKeyTerms[0]
+                    : spreadData[currentCard].reversedKeyTerms[0]}
+                </Text>
+                <Text style={styles.keyTerms}>
+                  {upright[currentCard]
+                    ? spreadData[currentCard].uprightKeyTerms[1]
+                    : spreadData[currentCard].reversedKeyTerms[1]}
+                </Text>
+                <Text style={styles.keyTerms}>
+                  {upright[currentCard]
+                    ? spreadData[currentCard].uprightKeyTerms[2]
+                    : spreadData[currentCard].reversedKeyTerms[2]}
+                </Text>
+              </View>
+              <Text style={styles.description}>
                 {upright[currentCard]
-                  ? spreadData[currentCard].uprightKeyTerms[1]
-                  : spreadData[currentCard].reversedKeyTerms[1]}
+                  ? spreadData[currentCard].uprightDescription
+                  : spreadData[currentCard].reversedDescription}
               </Text>
-              <Text style={styles.keyTerms}>
-                {upright[currentCard]
-                  ? spreadData[currentCard].uprightKeyTerms[2]
-                  : spreadData[currentCard].reversedKeyTerms[2]}
-              </Text>
-            </View>
-            <Text style={styles.description}>
-              {upright[currentCard]
-                ? spreadData[currentCard].uprightDescription
-                : spreadData[currentCard].reversedDescription}
-            </Text>
-          </Animated.View>
-        ) : null}
-      </SafeAreaView>
-    </ScrollView>
+            </Animated.View>
+          ) : null}
+        </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 };
 

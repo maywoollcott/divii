@@ -42,7 +42,6 @@ const SignIn: React.FC = () => {
       context.setIsLoading(false);
       const readings = await getReadingsByUser(user._id);
       context.setReadings(readings);
-      console.log(readings);
     } catch (err: any) {
       console.error(err.message);
     }

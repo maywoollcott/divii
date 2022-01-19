@@ -2,6 +2,14 @@ import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
 export const styles = StyleSheet.create({
+  bounceContainer: {
+    backgroundColor: COLORS.parchment,
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   screenContainer: {
     backgroundColor: COLORS.parchment,
     alignItems: 'center',

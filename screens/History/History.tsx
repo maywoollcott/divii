@@ -58,41 +58,43 @@ const History = () => {
 
   if (!context.isLoading) {
     return (
-      <ScrollView contentContainerStyle={styles.screenContainer}>
-        <SafeAreaView style={styles.safeContainer}>
-          <View style={styles.headerContainer}>
-            <View style={styles.headerTextContainer}>
-              <Text style={styles.header}>History</Text>
+      <View style={styles.bounceContainer}>
+        <ScrollView contentContainerStyle={styles.screenContainer}>
+          <SafeAreaView style={styles.safeContainer}>
+            <View style={styles.headerContainer}>
+              <View style={styles.headerTextContainer}>
+                <Text style={styles.header}>History</Text>
+              </View>
+              <View style={styles.descriptionContainer}>
+                <Text style={styles.description}>
+                  You have completed {context.readings?.length} readings since
+                  joining Divii. Now it’s time for a little reflection.
+                </Text>
+              </View>
             </View>
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.description}>
-                You have completed {context.readings?.length} readings since
-                joining Divii. Now it’s time for a little reflection.
-              </Text>
-            </View>
-          </View>
-          <Calendar
-            style={{
-              backgroundColor: COLORS.grayBlue,
-              borderRadius: 15,
-              paddingVertical: 10,
-              width: Dimensions.get('screen').width * 0.85,
-            }}
-            theme={{
-              backgroundColor: COLORS.grayBlue,
-              calendarBackground: COLORS.grayBlue,
-              dayTextColor: 'white',
-              monthTextColor: 'white',
-              todayTextColor: COLORS.charcoal,
-              arrowColor: 'white',
-            }}
-            hideExtraDays={true}
-            enableSwipeMonths={true}
-            markedDates={markedDates}
-            onDayPress={onDateClick}
-          />
-        </SafeAreaView>
-      </ScrollView>
+            <Calendar
+              style={{
+                backgroundColor: COLORS.grayBlue,
+                borderRadius: 15,
+                paddingVertical: 10,
+                width: Dimensions.get('screen').width * 0.85,
+              }}
+              theme={{
+                backgroundColor: COLORS.grayBlue,
+                calendarBackground: COLORS.grayBlue,
+                dayTextColor: 'white',
+                monthTextColor: 'white',
+                todayTextColor: COLORS.charcoal,
+                arrowColor: 'white',
+              }}
+              hideExtraDays={true}
+              enableSwipeMonths={true}
+              markedDates={markedDates}
+              onDayPress={onDateClick}
+            />
+          </SafeAreaView>
+        </ScrollView>
+      </View>
     );
   }
 

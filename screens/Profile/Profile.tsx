@@ -66,6 +66,41 @@ const Profile = () => {
   };
   const dateJoined = moment(context.currentUser?.dateJoined);
 
+  const renderMostFrequentlyDrawnCard = () => {
+    if (context.readings.length === 0) {
+      return (
+        <Text style={styles.bodyText}>
+          You don't have a most frequently drawn card yet.
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={styles.bodyText}>
+          Your most frequently drawn card is the
+          <Text style={styles.bodyTextHighlight}> {mostFrequentCard}.</Text>
+        </Text>
+      );
+    }
+  };
+
+  const renderFavoriteSpread = () => {
+    if (context.readings.length === 0) {
+      return (
+        <Text style={styles.bodyText}>
+          You don't have a favorite spread yet.
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={styles.bodyText}>
+          Your favorite spread is the
+          <Text style={styles.bodyTextHighlight}> {mostFrequentSpread} </Text>
+          spread.
+        </Text>
+      );
+    }
+  };
+
   if (!context.isLoading) {
     return (
       <View style={styles.screenContainer}>
@@ -93,20 +128,10 @@ const Profile = () => {
             <Text style={styles.bodyText}>readings.</Text>
           </View>
           <View style={styles.bodyTextSingleContainer}>
-            <Text style={styles.bodyText}>
-              Your most frequently drawn card is the
-              <Text style={styles.bodyTextHighlight}> {mostFrequentCard}.</Text>
-            </Text>
+            {renderMostFrequentlyDrawnCard()}
           </View>
           <View style={styles.bodyTextSingleContainer}>
-            <Text style={styles.bodyText}>
-              Your favorite spread is the
-              <Text style={styles.bodyTextHighlight}>
-                {' '}
-                {mostFrequentSpread}{' '}
-              </Text>
-              spread.
-            </Text>
+            {renderFavoriteSpread()}
           </View>
         </View>
         <TouchableOpacity
