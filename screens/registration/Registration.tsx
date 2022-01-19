@@ -70,7 +70,6 @@ const Registration: React.FC = () => {
     context.setIsLoading(false);
     const readings = await getReadingsByUser(user._id);
     context.setReadings(readings);
-    console.log(readings);
   };
 
   if (!context.isLoading) {

@@ -40,7 +40,6 @@ const AllCards = () => {
     context.setIsLoading(true);
     const fetchCards = async () => {
       const cards = await getAllCards();
-      console.log(cards[0]);
       setAllCardsData(cards);
       setFilteredCards(cards);
     };
@@ -59,7 +58,6 @@ const AllCards = () => {
   }, [searchInput]);
 
   const navigateToCard = (card: Card) => {
-    console.log(card);
     navigation.navigate('CardDetails', card);
   };
 

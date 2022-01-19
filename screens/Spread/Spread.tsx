@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 import { getCardByNumber, saveReading } from '../../apiService/data';
-import { pickRandomCard } from '../../utils/pickRandomCard';
+import { getCardNumbers } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './Spread.style';
 import { COLORS } from '../../globalStyles';
@@ -83,8 +83,8 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
         cards: [],
         spreadNumber: route.params.spreadNumber,
       };
-      const fetchCard = async () => {
-        const randomCardNumber = pickRandomCard(0, 78);
+
+      const fetchCard = async (randomCardNumber: number) => {
         const card = await getCardByNumber(randomCardNumber);
         const uprightValue = Math.random() < 0.5;
 
@@ -102,10 +102,11 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
         }
       };
 
-      for (let i = 0; i < route.params.numberOfCards; i++) {
-        fetchCard();
-        console.log('fetched');
-      }
+      let numArray = getCardNumbers(route.params.numberOfCards);
+
+      numArray?.forEach((num) => {
+        fetchCard(num);
+      });
     }
     setTimeout(() => {
       context.setIsLoading(false);

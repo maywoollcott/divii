@@ -38,12 +38,6 @@ const Library = () => {
     fetchSpreads();
   }, []);
 
-  const onSpreadPress = (spread: any) => {
-    navigation.navigate('Spread', spread);
-    console.log(spread);
-    console.log(spread.name);
-  };
-
   return (
     <View style={styles.bounceContainer}>
       <ScrollView contentContainerStyle={styles.screenContainer}>

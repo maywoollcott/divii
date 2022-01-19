@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, Linking, Image } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
@@ -18,7 +18,6 @@ const Profile = () => {
 
   const logoutButtonHandler = async () => {
     const token = await SecureStore.getItemAsync('DIVII_TOKEN_AUTH');
-    console.log(token);
     if (token) {
       logout(token);
     }
@@ -38,7 +37,6 @@ const Profile = () => {
         });
       }
       const mostFreqCardNumber = getMostFrequent(cards);
-      console.log(`most Freq ${mostFreqCardNumber}`);
       fetchMostFreqCard(parseInt(mostFreqCardNumber));
       const mostFreqSpread = getMostFrequent(spreads);
       setMostFrequentSpread(mostFreqSpread);

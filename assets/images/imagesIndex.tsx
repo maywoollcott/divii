@@ -6,6 +6,7 @@ export const images = {
   leftCurtain: require('./left-curtain.png'),
   rightCurtain: require('./right-curtain.png'),
   spinner: require('./spinner.png'),
+  sharing: require('./sharing.png'),
 };
 
 // export const cardDisplays: { [key: string]: NodeRequire } = {

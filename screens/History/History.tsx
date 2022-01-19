@@ -27,7 +27,6 @@ const History = () => {
       ...tempMarkedDates,
       ...{ [today]: todaysDateFormat },
     };
-    console.log(tempMarkedDates);
     setMarkedDates(tempMarkedDates);
   }, [context.readings]);
 
