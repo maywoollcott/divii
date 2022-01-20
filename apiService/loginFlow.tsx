@@ -19,14 +19,30 @@ export const register = async (user: any) => {
 };
 
 export const login = async (email: string, password: string) => {
-  const { data } = await axios.post(`${BASE_URL}/login`, {
-    email,
-    password,
-  });
+  try {
+    const { data, status } = await axios.post(`${BASE_URL}/login`, {
+      email,
+      password,
+    });
 
-  await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
+    await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
 
-  return data;
+    const successResponse = {
+      status: status,
+      user: data.user,
+    };
+
+    return successResponse;
+  } catch (error: any) {
+    const { response } = error;
+
+    const errorResponse = {
+      status: response.status,
+      message: response.data,
+    };
+
+    return errorResponse;
+  }
 };
 
 export const logout = async (key: string) => {

@@ -18,6 +18,7 @@ import { Context } from '../../Context';
 import { login } from '../../apiService/loginFlow';
 import { getReadingsByUser } from '../../apiService/data';
 import AppLoading from '../AppLoading/AppLoading';
+import { loginResponse } from '../../types';
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
@@ -32,18 +33,24 @@ const SignIn: React.FC = () => {
     Keyboard.dismiss();
     try {
       context.setIsLoading(true);
-      const res = await login(
+      const res: loginResponse = await login(
         loginData.email.toLowerCase(),
         loginData.password
       );
-      const { user } = res;
-      context.setIsAuthenticated(true);
-      context.setCurrentUser(user);
-      context.setIsLoading(false);
-      const readings = await getReadingsByUser(user._id);
-      context.setReadings(readings);
+      if (res.status === 200) {
+        const { user } = res;
+        context.setIsAuthenticated(true);
+        context.setCurrentUser(user);
+        context.setIsLoading(false);
+        const readings = await getReadingsByUser(user._id);
+        context.setReadings(readings);
+      } else {
+        console.log(res.message);
+        context.setIsLoading(false);
+      }
     } catch (err: any) {
-      console.error(err.message);
+      // console.error(err.message);
+      console.log('sign in catch');
     }
   };
 

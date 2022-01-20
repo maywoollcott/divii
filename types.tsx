@@ -31,3 +31,9 @@ export type SpreadType = {
   cards?: any[];
   spreadName: string;
 };
+
+export type loginResponse = {
+  status: number;
+  user?: any;
+  message?: string;
+};
