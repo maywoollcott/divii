@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `https://divii-server.herokuapp.com`;
+const BASE_URL = `http://192.168.1.148:3002`;
 
 export const getCardByNumber = async (deckNumber: any) => {
   const { data } = await axios.get(`${BASE_URL}/cardbynumber${deckNumber}`);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const BASE_URL = `https://divii-server.herokuapp.com`;
+const BASE_URL = `http://192.168.1.148:3002`;
 
 export const register = async (user: any) => {
   const { data } = await axios.post(`${BASE_URL}/register`, {
