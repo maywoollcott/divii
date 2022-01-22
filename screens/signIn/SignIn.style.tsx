@@ -10,6 +10,8 @@ export const styles = StyleSheet.create({
   },
   headerContainer: {
     width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     color: COLORS.parchment,

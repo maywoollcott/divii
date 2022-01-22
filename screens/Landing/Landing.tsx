@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {
   ImageBackground,
   SafeAreaView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import moment from 'moment';
 import { Context } from '../../Context';
@@ -23,8 +23,16 @@ import { images } from '../../assets/images/imagesIndex';
 const Landing = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
-  const now = moment();
+  const isFocused = useIsFocused();
+
   const hour = moment().hour();
+
+  const [day, setDay] = useState<any>();
+
+  useEffect(() => {
+    let now = moment();
+    setDay(now);
+  }, [isFocused]);
 
   const greeting = () => {
     if (hour < 12) {
@@ -51,7 +59,7 @@ const Landing = () => {
           <AutoHeightImage source={images.moons} width={250} />
           <Text style={styles.morningGreeting}>
             Good {greeting()}, {context.currentUser?.name}. Today is{' '}
-            {now.format('dddd, MMMM D, YYYY')}.
+            {day?.format('dddd, MMMM D, YYYY')}.
           </Text>
         </View>
         <View style={styles.actionCardContainer}>

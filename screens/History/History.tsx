@@ -8,11 +8,13 @@ import { COLORS } from '../../globalStyles';
 import { Reading } from '../../types';
 import moment from 'moment';
 import AppLoading from '../AppLoading/AppLoading';
+import { useIsFocused } from '@react-navigation/native';
 
 const History = () => {
   const [markedDates, setMarkedDates] = useState<any>(null);
 
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const context = useContext(Context);
 
@@ -28,7 +30,7 @@ const History = () => {
       ...{ [today]: todaysDateFormat },
     };
     setMarkedDates(tempMarkedDates);
-  }, [context.readings]);
+  }, [isFocused]);
 
   const filterReadingsByDate = (date: string) => {
     const allReadings = context.readings;

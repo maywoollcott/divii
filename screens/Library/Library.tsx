@@ -66,9 +66,9 @@ const Library = () => {
           <View style={styles.actionCardContainer}>
             <TouchableOpacity
               style={styles.touchable}
-              onPress={() => navigateTo('AllCards')}
+              onPress={() => navigateTo('Suits')}
             >
-              <Text style={styles.touchableText}>All Cards</Text>
+              <Text style={styles.touchableText}>Suits</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.touchable}
@@ -84,9 +84,9 @@ const Library = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.touchable}
-              onPress={() => navigateTo('Suits')}
+              onPress={() => navigateTo('AllCards')}
             >
-              <Text style={styles.touchableText}>Suits</Text>
+              <Text style={styles.touchableText}>All Cards</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity style={styles.touchable}>
             <Text style={styles.touchableText}>Numerology</Text>

@@ -21,6 +21,7 @@ import { Context } from '../../Context';
 import { styles } from './DailyCard.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
+import AppLoading from '../AppLoading/AppLoading';
 
 interface IDailyCardProps {
   route?: DailyCardParams;
@@ -64,6 +65,7 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
+    context.setIsLoading(true);
     const fetchCard = async () => {
       if (route?.params?.cards) {
         const card = await getCardByNumber(route.params.cards[0].deckNumber);
@@ -107,8 +109,14 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
     };
 
     fetchCard();
+    setTimeout(() => {
+      context.setIsLoading(false);
+    }, 1000);
   }, []);
 
+  if (context.isLoading) {
+    return <AppLoading />;
+  }
   return (
     <View style={styles.bounceContainer}>
       <ScrollView contentContainerStyle={styles.screenContainer}>

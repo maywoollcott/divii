@@ -13,16 +13,20 @@ import { arcanaNames } from '../../copy/Cards';
 
 const Profile = () => {
   const context = React.useContext(Context);
-  const [mostFrequentCard, setMostFrequentCard] = useState<string>();
+  const navigate = useNavigation();
+
+  const [mostFrequentCard, setMostFrequentCard] = useState<number>();
   const [mostFrequentSpread, setMostFrequentSpread] = useState<string>();
 
   const logoutButtonHandler = async () => {
+    context.setIsLoading(true);
     const token = await SecureStore.getItemAsync('DIVII_TOKEN_AUTH');
     if (token) {
       logout(token);
     }
     context.setCurrentUser(null);
     context.setIsAuthenticated(false);
+    context.setIsLoading(false);
   };
 
   useEffect(() => {
@@ -60,9 +64,15 @@ const Profile = () => {
   }
 
   const fetchMostFreqCard = async (cardNumber: number) => {
-    setMostFrequentCard(arcanaNames[cardNumber]);
+    setMostFrequentCard(cardNumber);
   };
+
   const dateJoined = moment(context.currentUser?.dateJoined);
+
+  const navigateToCard = async (card: number) => {
+    const mostFreqCardInfo = await getCardByNumber(card);
+    navigate.navigate('CardDetails', mostFreqCardInfo);
+  };
 
   const renderMostFrequentlyDrawnCard = () => {
     if (context.readings.length === 0) {
@@ -73,10 +83,15 @@ const Profile = () => {
       );
     } else {
       return (
-        <Text style={styles.bodyText}>
-          Your most frequently drawn card is the
-          <Text style={styles.bodyTextHighlight}> {mostFrequentCard}.</Text>
-        </Text>
+        <TouchableOpacity onPress={() => navigateToCard(mostFrequentCard)}>
+          <Text style={styles.bodyText}>
+            Your most frequently drawn card is the
+            <Text style={styles.bodyTextHighlight}>
+              {' '}
+              {arcanaNames[mostFrequentCard]}.
+            </Text>
+          </Text>
+        </TouchableOpacity>
       );
     }
   };

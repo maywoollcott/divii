@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,8 @@ import { determineAstrologicalSign } from './utils';
 import { Context } from '../../Context';
 import { getReadingsByUser } from '../../apiService/data';
 import AppLoading from '../AppLoading/AppLoading';
+import { TextInputMask } from 'react-native-masked-text';
+import { BasicModal } from '../../components/Modal/BasicModal';
 
 const Registration: React.FC = () => {
   const navigation = useNavigation();
@@ -39,18 +41,22 @@ const Registration: React.FC = () => {
       formData.name.length < 1 ||
       formData.birthdate.length < 1
     ) {
-      Alert.alert('Try again!', 'Please fill in all required fields.');
+      context.setModalText('Please fill in all required fields.');
+      context.setModalOpen(true);
       return;
     }
+
     if (formData.password.length < 6) {
-      Alert.alert(
-        'Try again!',
-        'Please choose a password with at least 6 characters.'
+      context.setModalText(
+        'Please choose a password of at least 6 characters.'
       );
+      context.setModalOpen(true);
       return;
     }
+
     if (formData.password !== formData.passwordCheck) {
-      Alert.alert('Try again!', 'Please make sure your passwords match.');
+      context.setModalText('Please make sure your passwords match.');
+      context.setModalOpen(true);
       return;
     }
 
@@ -80,6 +86,15 @@ const Registration: React.FC = () => {
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={-10}
         >
+          <BasicModal
+            animationType='none'
+            transparent={true}
+            visible={context.modalOpen}
+            onRequestClose={() => {
+              context.setModalOpen(!context.modalOpen);
+            }}
+            modalText={context.modalText}
+          />
           <View style={styles.headerContainer}>
             <Text style={styles.header}>Let's get started!</Text>
           </View>
@@ -140,13 +155,19 @@ const Registration: React.FC = () => {
                   </View>
                 )}
             </View>
-            <TextInput
+            <TextInputMask
+              type={'datetime'}
+              options={{
+                format: 'MM/DD',
+              }}
               style={styles.input}
+              keyboardType='numeric'
               placeholder='Birthday (mm/dd)'
+              value={formData.birthdate}
               placeholderTextColor={COLORS.parchment}
-              onChangeText={(text) =>
-                setFormData({ ...formData, birthdate: text })
-              }
+              onChangeText={(text) => {
+                setFormData({ ...formData, birthdate: text });
+              }}
             />
             <TouchableOpacity
               onPress={signUpHandler}

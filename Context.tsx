@@ -15,6 +15,10 @@ type AppContextValue = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   readings: any;
   setReadings: Dispatch<SetStateAction<any>>;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  modalText: string;
+  setModalText: Dispatch<SetStateAction<string>>;
 };
 
 const defaultValue: AppContextValue = {
@@ -26,6 +30,10 @@ const defaultValue: AppContextValue = {
   setIsLoading: () => {},
   readings: null,
   setReadings: () => {},
+  modalOpen: false,
+  setModalOpen: () => {},
+  modalText: '',
+  setModalText: () => {},
 };
 export const Context = createContext(defaultValue);
 
@@ -34,6 +42,8 @@ export const Provider = (props: any) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [readings, setReadings] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalText, setModalText] = useState('');
 
   return (
     <Context.Provider
@@ -46,6 +56,10 @@ export const Provider = (props: any) => {
         setIsLoading: setIsLoading,
         readings: readings,
         setReadings: setReadings,
+        modalOpen: modalOpen,
+        setModalOpen: setModalOpen,
+        modalText: modalText,
+        setModalText: setModalText,
       }}
     >
       {props.children}

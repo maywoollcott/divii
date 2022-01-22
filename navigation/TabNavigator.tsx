@@ -12,8 +12,7 @@ import { COLORS } from '../globalStyles';
 import { LandingNavigator } from './Landing.Navigator';
 import { LibraryNavigator } from './Library.Navigator';
 import { HistoryNavigator } from './History.Navigator';
-import Study from '../screens/Study/Study';
-import Profile from '../screens/Profile/Profile';
+import { ProfileNavigator } from './Profile.Navigator';
 
 export const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -73,7 +72,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name='Profile'
-        component={Profile}
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name='person-outline' color={color} size={28} />

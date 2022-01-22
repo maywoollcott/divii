@@ -110,7 +110,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
     }
     setTimeout(() => {
       context.setIsLoading(false);
-    }, 500);
+    }, 1000);
   }, []);
 
   if (context.isLoading) {
