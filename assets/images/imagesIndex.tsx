@@ -8,9 +8,3 @@ export const images = {
   spinner: require('./spinner.png'),
   sharing: require('./sharing.png'),
 };
-
-// export const cardDisplays: { [key: string]: NodeRequire } = {
-//   eightPentacles: require('./minorArcana/eightPentacles.png'),
-// };
-
-export const eightPentacles = require('./arcana/eightPentacles.png');

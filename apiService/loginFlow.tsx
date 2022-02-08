@@ -13,8 +13,6 @@ export const register = async (user: any) => {
     dateJoined: user.dateJoined,
   });
 
-  await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
-
   return data;
 };
 
@@ -25,11 +23,35 @@ export const login = async (email: string, password: string) => {
       password,
     });
 
-    await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', data.authToken);
+    const successResponse = {
+      status: status,
+      user: data.user,
+      token: data.authToken,
+    };
+
+    return successResponse;
+  } catch (error: any) {
+    const { response } = error;
+
+    const errorResponse = {
+      status: response.status,
+      message: response.data,
+    };
+
+    return errorResponse;
+  }
+};
+
+export const getUserByToken = async (token: string) => {
+  try {
+    const { data, status } = await axios.post(`${BASE_URL}/getuserbytoken`, {
+      token,
+    });
 
     const successResponse = {
       status: status,
       user: data.user,
+      token: data.authToken,
     };
 
     return successResponse;
@@ -46,5 +68,6 @@ export const login = async (email: string, password: string) => {
 };
 
 export const logout = async (key: string) => {
-  await SecureStore.deleteItemAsync(key);
+  const result = await SecureStore.deleteItemAsync('DIVII_TOKEN_AUTH');
+  return result;
 };

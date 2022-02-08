@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, Animated, Easing } from 'react-native';
 import { styles } from './AppLoading.style';
 import { images } from '../../assets/images/imagesIndex';

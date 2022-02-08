@@ -12,6 +12,7 @@ import {
   Dimensions,
   ImageBackground,
   SafeAreaView,
+  AsyncStorage,
 } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import AutoHeightImage from 'react-native-auto-height-image';
@@ -19,6 +20,7 @@ import moment from 'moment';
 import { Context } from '../../Context';
 import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
+import * as SecureStore from 'expo-secure-store';
 
 const Landing = () => {
   const navigation = useNavigation();
@@ -69,10 +71,11 @@ const Landing = () => {
           >
             <Text style={styles.header}>Your Card of the Day</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchable}>
-            <Text style={styles.header} onPress={navigateToSpreadIndex}>
-              Choose a Spread
-            </Text>
+          <TouchableOpacity
+            style={styles.touchable}
+            onPress={navigateToSpreadIndex}
+          >
+            <Text style={styles.header}>Choose a Spread</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

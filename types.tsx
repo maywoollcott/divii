@@ -36,4 +36,5 @@ export type loginResponse = {
   status: number;
   user?: any;
   message?: string;
+  token?: string;
 };

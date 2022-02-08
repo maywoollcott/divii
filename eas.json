@@ -1,0 +1,15 @@
+{
+  "cli": {
+    "version": ">= 0.34.0"
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "maywoollcott@gmail.com"
+      }
+    }
+  },
+  "build": {
+    "production": {}
+  }
+}
