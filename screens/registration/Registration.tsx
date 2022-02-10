@@ -10,6 +10,7 @@ import {
   Platform,
   Alert,
 } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import styles from './Registration.style';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -22,6 +23,8 @@ import { getReadingsByUser } from '../../apiService/data';
 import AppLoading from '../AppLoading/AppLoading';
 import { TextInputMask } from 'react-native-masked-text';
 import { BasicModal } from '../../components/Modal/BasicModal';
+import { loginResponse } from '../../types';
+import { validateEmail } from '../../utils/emailValidation';
 
 const Registration: React.FC = () => {
   const navigation = useNavigation();
@@ -60,6 +63,12 @@ const Registration: React.FC = () => {
       return;
     }
 
+    if (validateEmail(formData.email) === false) {
+      context.setModalText('Please enter a valid email.');
+      context.setModalOpen(true);
+      return;
+    }
+
     const userForm = {
       email: formData.email.toLowerCase(),
       name: formData.name,
@@ -68,14 +77,43 @@ const Registration: React.FC = () => {
       sign: determineAstrologicalSign(formData.birthdate),
       dateJoined: Date.now().toString(),
     };
-    context.setIsLoading(true);
-    const res = await register(userForm);
-    const { user } = res;
-    context.setCurrentUser(user);
-    context.setIsAuthenticated(true);
-    context.setIsLoading(false);
-    const readings = await getReadingsByUser(user._id);
-    context.setReadings(readings);
+    Keyboard.dismiss();
+
+    try {
+      context.setIsLoading(true);
+      const res: loginResponse = await register(userForm);
+      if (res.status === 200) {
+        const { user, token } = res;
+        if (token) {
+          await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
+        }
+        context.setIsAuthenticated(true);
+        context.setCurrentUser(user);
+        const readings = await getReadingsByUser(user._id);
+        context.setReadings(readings);
+        context.setIsLoading(false);
+      } else if (res.status === 409) {
+        if (res.message) {
+          context.setModalText(res.message);
+          context.setModalOpen(true);
+        }
+        setTimeout(() => {
+          context.setIsLoading(false);
+        }, 1000);
+      } else {
+        if (res.message) {
+          context.setModalText(res.message);
+          context.setModalOpen(true);
+        }
+        context.setIsLoading(false);
+      }
+    } catch (err: any) {
+      context.setModalText(
+        'Network error. Please check your internet connection.'
+      );
+      context.setModalOpen(true);
+      context.setIsLoading(false);
+    }
   };
 
   if (!context.isLoading) {
