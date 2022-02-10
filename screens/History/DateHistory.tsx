@@ -35,9 +35,6 @@ const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
   };
 
   const onSpreadPress = (spread: string, readingInfo: any) => {
-    if (spread === 'Daily Reading') {
-      navigation.navigate(spread, readingInfo);
-    }
     navigation.navigate('Spread', readingInfo);
   };
 

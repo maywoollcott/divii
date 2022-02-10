@@ -65,13 +65,15 @@ const SpreadIndex = () => {
           </View>
           {spreads &&
             spreads.map((spread) => {
-              return (
-                <SpreadTouchable
-                  name={spread.name}
-                  onPress={() => onSpreadPress(spread)}
-                  key={spread.spreadNumber}
-                />
-              );
+              if (spread.spreadNumber !== 8) {
+                return (
+                  <SpreadTouchable
+                    name={spread.name}
+                    onPress={() => onSpreadPress(spread)}
+                    key={spread.spreadNumber}
+                  />
+                );
+              }
             })}
         </SafeAreaView>
       </ScrollView>
