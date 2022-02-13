@@ -123,4 +123,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
   },
+  share: {
+    color: COLORS.grayBlue,
+    marginLeft: 5,
+  },
+  shareAndHeaderContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });

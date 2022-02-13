@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 30,
+    fontSize: 32,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
@@ -101,5 +101,13 @@ export const styles = StyleSheet.create({
     marginTop: '10%',
     alignItems: 'center',
     width: '85%',
+  },
+  share: {
+    color: COLORS.grayBlue,
+    marginLeft: 5,
+  },
+  shareAndHeaderContainer: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 });

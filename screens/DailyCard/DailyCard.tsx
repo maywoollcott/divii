@@ -1,27 +1,16 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Animated,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
-import {
-  getCardByNumber,
-  saveReading,
-  getReadingsByUser,
-} from '../../apiService/data';
+import { getCardByNumber, saveReading, getReadingsByUser } from '../../apiService/data';
 import { getCardNumbers } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './DailyCard.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
 import AppLoading from '../AppLoading/AppLoading';
+import { ShareModal } from '../../components/Modal/ShareModal';
 
 interface IDailyCardProps {
   route?: DailyCardParams;
@@ -114,23 +103,41 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
     }, 1000);
   }, []);
 
+  const openShareModalHandler = () => {
+    context.setModalText('modal');
+    context.setModalOpen(true);
+  };
+
   if (context.isLoading) {
     return <AppLoading />;
   }
   return (
     <View style={styles.bounceContainer}>
+      <ShareModal
+        animationType='none'
+        transparent={true}
+        visible={context.modalOpen}
+        onRequestClose={() => {
+          context.setModalOpen(!context.modalOpen);
+        }}
+        cards={[dailyCardData]}
+        spreadName={'Daily Spread'}
+        upright={[upright]}
+      />
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.touchableContainer}>
-            <TouchableOpacity
-              onPress={goBack}
-              style={styles.backArrowContainer}
-            >
+            <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
           </View>
           <View style={styles.headerContainer}>
-            <Text style={styles.header}>Your Card of the Day</Text>
+            <View style={styles.shareAndHeaderContainer}>
+              <Text style={styles.header}>Daily Reading</Text>
+              <TouchableOpacity onPress={openShareModalHandler}>
+                <Feather name='share' size={20} style={styles.share} />
+              </TouchableOpacity>
+            </View>
             <Text style={styles.secondaryHeader}>
               {route?.params
                 ? moment(route.params.date).format('dddd, MMMM D, YYYY')
@@ -139,43 +146,26 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
           </View>
           <View style={{ height: 413 }}>
             {dailyCardData && (
-              <TarotCard
-                image={dailyCardData.image}
-                rightSideUp={upright}
-                onCardFlip={onCardFlip}
-                width={250}
-              />
+              <TarotCard image={dailyCardData.image} rightSideUp={upright} onCardFlip={onCardFlip} width={250} />
             )}
           </View>
           {displayInfo && dailyCardData && (
-            <Animated.View
-              style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
-            >
+            <Animated.View style={{ ...styles.descriptionContainer, opacity: fadeAnim }}>
               <Text style={styles.header}>{dailyCardData.name}</Text>
-              <Text style={styles.reversed}>
-                {upright ? 'Upright' : '(Reversed)'}
-              </Text>
+              <Text style={styles.reversed}>{upright ? 'Upright' : '(Reversed)'}</Text>
               <View style={styles.keyTermsContainer}>
                 <Text style={styles.keyTerms}>
-                  {upright
-                    ? dailyCardData.uprightKeyTerms[0]
-                    : dailyCardData.reversedKeyTerms[0]}
+                  {upright ? dailyCardData.uprightKeyTerms[0] : dailyCardData.reversedKeyTerms[0]}
                 </Text>
                 <Text style={styles.keyTerms}>
-                  {upright
-                    ? dailyCardData.uprightKeyTerms[1]
-                    : dailyCardData.reversedKeyTerms[1]}
+                  {upright ? dailyCardData.uprightKeyTerms[1] : dailyCardData.reversedKeyTerms[1]}
                 </Text>
                 <Text style={styles.keyTerms}>
-                  {upright
-                    ? dailyCardData.uprightKeyTerms[2]
-                    : dailyCardData.reversedKeyTerms[2]}
+                  {upright ? dailyCardData.uprightKeyTerms[2] : dailyCardData.reversedKeyTerms[2]}
                 </Text>
               </View>
               <Text style={styles.description}>
-                {upright
-                  ? dailyCardData.uprightDescription
-                  : dailyCardData.reversedDescription}
+                {upright ? dailyCardData.uprightDescription : dailyCardData.reversedDescription}
               </Text>
             </Animated.View>
           )}

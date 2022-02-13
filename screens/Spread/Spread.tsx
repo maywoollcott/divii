@@ -1,12 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Animated,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Platform, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
@@ -22,7 +15,10 @@ import { FourCardSpread } from '../../components/Spread/FourCardSpread';
 import { TwoCardSpread } from '../../components/Spread/TwoCardSpread';
 import { OneCardSpread } from '../../components/Spread/OneCardSpread';
 import AppLoading from '../AppLoading/AppLoading';
-
+import Share from 'react-native-share';
+import { captureRef } from 'react-native-view-shot';
+import { BasicModal } from '../../components/Modal/BasicModal';
+import { ShareModal } from '../../components/Modal/ShareModal';
 interface ISpreadProps {
   route: SpreadParams;
 }
@@ -56,6 +52,11 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
       duration: 5000,
       useNativeDriver: true,
     }).start();
+  };
+
+  const openShareModalHandler = () => {
+    context.setModalText('modal');
+    context.setModalOpen(true);
   };
 
   useEffect(() => {
@@ -118,74 +119,58 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   }
   return (
     <View style={styles.bounceContainer}>
+      <ShareModal
+        animationType='none'
+        transparent={true}
+        visible={context.modalOpen}
+        onRequestClose={() => {
+          context.setModalOpen(!context.modalOpen);
+        }}
+        cards={spreadData}
+        spreadName={route.params.spreadName}
+        upright={upright}
+      />
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.touchableContainer}>
-            <TouchableOpacity
-              onPress={goBack}
-              style={styles.backArrowContainer}
-            >
+            <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
           </View>
           <View style={styles.headerContainer}>
-            <Text style={styles.header}>
-              {route.params.spreadName
-                ? route.params.spreadName
-                : route.params.name}
-            </Text>
-            {route.params.date && (
-              <Text style={styles.secondaryHeader}>
-                {moment(route.params.date).format('dddd, MMMM D, YYYY')}
+            <View style={styles.shareAndHeaderContainer}>
+              <Text style={styles.header}>
+                {route.params.spreadName ? route.params.spreadName : route.params.name}{' '}
               </Text>
+              <TouchableOpacity onPress={openShareModalHandler}>
+                <Feather name='share' size={20} style={styles.share} />
+              </TouchableOpacity>
+            </View>
+            {route.params.date && (
+              <Text style={styles.secondaryHeader}>{moment(route.params.date).format('dddd, MMMM D, YYYY')}</Text>
             )}
           </View>
           {spreadData.length === 1 && (
-            <OneCardSpread
-              spreadData={spreadData}
-              upright={upright}
-              onCardFlip={onCardFlip}
-            />
+            <OneCardSpread spreadData={spreadData} upright={upright} onCardFlip={onCardFlip} />
           )}
           {spreadData.length === 2 && (
-            <TwoCardSpread
-              spreadData={spreadData}
-              upright={upright}
-              onCardFlip={onCardFlip}
-            />
+            <TwoCardSpread spreadData={spreadData} upright={upright} onCardFlip={onCardFlip} />
           )}
           {spreadData.length === 3 && (
-            <ThreeCardSpread
-              spreadData={spreadData}
-              upright={upright}
-              onCardFlip={onCardFlip}
-            />
+            <ThreeCardSpread spreadData={spreadData} upright={upright} onCardFlip={onCardFlip} />
           )}
           {spreadData.length === 4 && (
-            <FourCardSpread
-              spreadData={spreadData}
-              upright={upright}
-              onCardFlip={onCardFlip}
-            />
+            <FourCardSpread spreadData={spreadData} upright={upright} onCardFlip={onCardFlip} />
           )}
           {currentCard !== null && displayInfo ? (
-            <Animated.View
-              style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
-            >
+            <Animated.View style={{ ...styles.descriptionContainer, opacity: fadeAnim }}>
               {route.params.spreadNumber !== '8' && (
                 <Text style={styles.spreadCopy}>
-                  {
-                    spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
-                      currentCard
-                    ]
-                  }
-                  :
+                  {spreadCopy[parseInt(route.params.spreadNumber)].itemNames[currentCard]}:
                 </Text>
               )}
               <Text style={styles.header}>{spreadData[currentCard].name}</Text>
-              <Text style={styles.reversed}>
-                {upright[currentCard] ? 'Upright' : '(Reversed)'}
-              </Text>
+              <Text style={styles.reversed}>{upright[currentCard] ? 'Upright' : '(Reversed)'}</Text>
               <View style={styles.keyTermsContainer}>
                 <Text style={styles.keyTerms}>
                   {upright[currentCard]
