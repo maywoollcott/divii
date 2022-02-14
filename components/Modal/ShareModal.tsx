@@ -10,7 +10,7 @@ import { COLORS } from '../../globalStyles';
 import { AntDesign } from '@expo/vector-icons';
 import Share from 'react-native-share';
 import { Context } from '../../Context';
-import { captureRef, cap } from 'react-native-view-shot';
+import { captureRef } from 'react-native-view-shot';
 
 interface IShareModalProps {
   animationType: any;
@@ -45,16 +45,11 @@ export const ShareModal: React.FC<IShareModalProps> = ({
   }, []);
 
   const instagramStoryHandler = async () => {
-    // console.log('hi');
-    // const shareResponse = await Share.shareSingle(shareOptions);
-    // console.log(shareResponse);
-
     try {
       const uri = await captureRef(viewRef, {
         format: 'png',
-        quality: 0.8,
+        quality: 1,
       });
-      // await Share.open({ url: uri });
 
       const shareOptions = {
         social: Share.Social.INSTAGRAM_STORIES,
@@ -99,6 +94,7 @@ export const ShareModal: React.FC<IShareModalProps> = ({
             <TouchableOpacity style={styles.basicButton} onPress={instagramStoryHandler}>
               <FontAwesome name='instagram' size={60} color={COLORS.parchment} />
             </TouchableOpacity>
+
             <TouchableOpacity>
               <Feather name='share' size={53} color={COLORS.parchment} onPress={generalShareHandler} />
             </TouchableOpacity>

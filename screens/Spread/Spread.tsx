@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Platform, Linking } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
@@ -15,9 +15,6 @@ import { FourCardSpread } from '../../components/Spread/FourCardSpread';
 import { TwoCardSpread } from '../../components/Spread/TwoCardSpread';
 import { OneCardSpread } from '../../components/Spread/OneCardSpread';
 import AppLoading from '../AppLoading/AppLoading';
-import Share from 'react-native-share';
-import { captureRef } from 'react-native-view-shot';
-import { BasicModal } from '../../components/Modal/BasicModal';
 import { ShareModal } from '../../components/Modal/ShareModal';
 interface ISpreadProps {
   route: SpreadParams;
@@ -55,7 +52,6 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   };
 
   const openShareModalHandler = () => {
-    context.setModalText('modal');
     context.setModalOpen(true);
   };
 
@@ -64,6 +60,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
+    let isMounted = true;
     context.setIsLoading(true);
     if (route.params.cards) {
       const setCardsWithHistory = async () => {
@@ -101,6 +98,9 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
           let joined = context.readings.concat(reading);
           context.setReadings(joined);
         }
+        return () => {
+          isMounted = false;
+        };
       };
 
       let numArray = getCardNumbers(route.params.numberOfCards);
@@ -142,9 +142,11 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
               <Text style={styles.header}>
                 {route.params.spreadName ? route.params.spreadName : route.params.name}{' '}
               </Text>
-              <TouchableOpacity onPress={openShareModalHandler}>
-                <Feather name='share' size={20} style={styles.share} />
-              </TouchableOpacity>
+              {route.params.spreadName === 'Daily Reading' && (
+                <TouchableOpacity onPress={openShareModalHandler}>
+                  <Feather name='share' size={20} style={styles.share} />
+                </TouchableOpacity>
+              )}
             </View>
             {route.params.date && (
               <Text style={styles.secondaryHeader}>{moment(route.params.date).format('dddd, MMMM D, YYYY')}</Text>

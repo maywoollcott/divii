@@ -104,7 +104,6 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
   }, []);
 
   const openShareModalHandler = () => {
-    context.setModalText('modal');
     context.setModalOpen(true);
   };
 
@@ -121,7 +120,7 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
           context.setModalOpen(!context.modalOpen);
         }}
         cards={[dailyCardData]}
-        spreadName={'Daily Spread'}
+        spreadName={'Daily Reading'}
         upright={[upright]}
       />
       <ScrollView contentContainerStyle={styles.screenContainer}>

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TouchableOpacity, View, Image, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import { styles } from './SharingCard.style';
 import { Card } from '../../types';
+import { Context } from '../../Context';
 
 interface ISingleSharingCardProps {
   cards: Card[];
@@ -13,6 +14,7 @@ interface ISingleSharingCardProps {
 
 const SingleSharingCard: React.FC<ISingleSharingCardProps> = ({ cards, spread, upright }) => {
   const navigate = useNavigation();
+  const context = useContext(Context);
 
   const directionalText = () => {
     if (upright[0]) {
@@ -25,15 +27,25 @@ const SingleSharingCard: React.FC<ISingleSharingCardProps> = ({ cards, spread, u
   return (
     <>
       <View style={styles.sharingCardContainer}>
-        <Text style={styles.headerText}>{spread}</Text>
+        <Text style={styles.headerText}>
+          {context.currentUser.name}'s {spread}
+        </Text>
         <View style={styles.centralContainer}>
           <View style={upright[0] ? styles.card : styles.reversedCard}>
             <AutoHeightImage width={130} source={{ uri: cards[0].image }} />
           </View>
           <View style={styles.keyTermsContainer}>
             {upright[0]
-              ? cards[0].uprightKeyTerms.map((keyTerm) => <Text style={styles.keyTermsText}>{keyTerm}</Text>)
-              : cards[0].reversedKeyTerms.map((keyTerm) => <Text style={styles.keyTermsText}>{keyTerm}</Text>)}
+              ? cards[0].uprightKeyTerms.map((keyTerm) => (
+                  <Text style={styles.keyTermsText} key={keyTerm}>
+                    {keyTerm}
+                  </Text>
+                ))
+              : cards[0].reversedKeyTerms.map((keyTerm) => (
+                  <Text style={styles.keyTermsText} key={keyTerm}>
+                    {keyTerm}
+                  </Text>
+                ))}
           </View>
         </View>
         <Text style={styles.cardText}>{cards[0].name}</Text>

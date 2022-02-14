@@ -56,7 +56,6 @@ export const styles = StyleSheet.create({
   sharingCardContainer: {
     backgroundColor: COLORS.grayBlue,
     width: 300,
-    height: 440,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -102,11 +101,11 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'made-dillan',
     width: '70%',
-    marginTop: 40,
+    marginTop: 30,
   },
   directionalText: {
     fontFamily: 'made-dillan',
     color: COLORS.parchment,
-    marginBottom: 40,
+    marginBottom: 30,
   },
 });
