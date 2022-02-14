@@ -95,8 +95,8 @@ export const ShareModal: React.FC<IShareModalProps> = ({
               <FontAwesome name='instagram' size={60} color={COLORS.parchment} />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Feather name='share' size={53} color={COLORS.parchment} onPress={generalShareHandler} />
+            <TouchableOpacity onPress={generalShareHandler}>
+              <Feather name='share' size={53} color={COLORS.parchment} />
             </TouchableOpacity>
           </View>
         </View>

@@ -55,9 +55,7 @@ const SignIn: React.FC = () => {
           context.setIsLoading(false);
         }
       } catch (err: any) {
-        context.setModalText(
-          'Network error. Please check your internet connection.'
-        );
+        context.setModalText('Network error. Please check your internet connection.');
         context.setModalOpen(true);
         context.setIsLoading(false);
       }
@@ -72,10 +70,7 @@ const SignIn: React.FC = () => {
     Keyboard.dismiss();
     try {
       context.setIsLoading(true);
-      const res: loginResponse = await login(
-        loginData.email.toLowerCase(),
-        loginData.password
-      );
+      const res: loginResponse = await login(loginData.email.toLowerCase(), loginData.password);
       if (res.status === 200) {
         const { user, token } = res;
         if (token) {
@@ -111,9 +106,7 @@ const SignIn: React.FC = () => {
         context.setIsLoading(false);
       }
     } catch (err: any) {
-      context.setModalText(
-        'Network error. Please check your internet connection.'
-      );
+      context.setModalText('Network error. Please check your internet connection.');
       context.setModalOpen(true);
       context.setIsLoading(false);
     }
@@ -149,21 +142,17 @@ const SignIn: React.FC = () => {
             onChangeText={(text) => setLoginData({ ...loginData, email: text })}
             style={styles.input}
             autoCapitalize='none'
+            keyboardType='email-address'
           />
           <TextInput
             placeholder='Password'
             placeholderTextColor={COLORS.parchment}
-            onChangeText={(text) =>
-              setLoginData({ ...loginData, password: text })
-            }
+            onChangeText={(text) => setLoginData({ ...loginData, password: text })}
             style={styles.input}
             secureTextEntry={true}
             autoCapitalize='none'
           />
-          <TouchableOpacity
-            style={styles.basicButton}
-            onPress={loginButtonHandler}
-          >
+          <TouchableOpacity style={styles.basicButton} onPress={loginButtonHandler}>
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
         </View>

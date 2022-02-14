@@ -1,14 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Animated,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 import { getAllSpreads, getCardByNumber } from '../../apiService/data';
@@ -43,18 +35,13 @@ const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.touchableContainer}>
-            <TouchableOpacity
-              onPress={goBack}
-              style={styles.backArrowContainer}
-            >
+            <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
           </View>
           <View style={styles.headerContainer}>
             <Text style={styles.header}>Readings</Text>
-            <Text style={styles.secondaryHeader}>
-              {moment(route.params[0].date).format('dddd, MMMM D, YYYY')}
-            </Text>
+            <Text style={styles.secondaryHeader}>{moment(route.params[0].date).format('dddd, MMMM D, YYYY')}</Text>
           </View>
           {route.params.map((reading, index) => {
             return (

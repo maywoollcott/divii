@@ -1,14 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Animated,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 import { getAllSpreads, getCardByNumber } from '../../apiService/data';
@@ -43,35 +35,20 @@ const SpreadIndex = () => {
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.touchableContainer}>
-            <TouchableOpacity
-              onPress={goBack}
-              style={styles.backArrowContainer}
-            >
+            <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
           </View>
           <View style={styles.headerContainer}>
-            <AutoHeightImage
-              source={images.whiteStar}
-              width={69}
-              style={styles.whiteStar}
-            />
+            <Image source={images.whiteStar} style={{ ...styles.whiteStar, width: 69, height: 64 }} />
             <Text style={styles.header}>Spreads</Text>
-            <AutoHeightImage
-              source={images.whiteStar}
-              width={69}
-              style={styles.whiteStar}
-            />
+            <Image source={images.whiteStar} style={{ ...styles.whiteStar, width: 69, height: 64 }} />
           </View>
           {spreads &&
             spreads.map((spread) => {
               if (spread.spreadNumber !== 8) {
                 return (
-                  <SpreadTouchable
-                    name={spread.name}
-                    onPress={() => onSpreadPress(spread)}
-                    key={spread.spreadNumber}
-                  />
+                  <SpreadTouchable name={spread.name} onPress={() => onSpreadPress(spread)} key={spread.spreadNumber} />
                 );
               }
             })}

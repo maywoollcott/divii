@@ -1,7 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import { styles } from './NonFlipTarotCard.style';
 import { Card } from '../../types';
 
@@ -12,27 +11,20 @@ interface INonFlipTarotCardProps {
   height?: number;
 }
 
-const NonFlipTarotCard: React.FC<INonFlipTarotCardProps> = ({
-  card,
-  width,
-  height,
-  onPress,
-}) => {
+const NonFlipTarotCard: React.FC<INonFlipTarotCardProps> = ({ card, width, height, onPress }) => {
   const navigate = useNavigation();
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{ width: '50%', justifyContent: 'center', alignItems: 'center' }}
-    >
+    <TouchableOpacity onPress={onPress} style={{ width: '50%', justifyContent: 'center', alignItems: 'center' }}>
       <View style={styles.card}>
-        <AutoHeightImage
+        <Image
           style={{
             marginVertical: 15,
             borderRadius: 5,
+            width: width,
+            height: width * 1.65,
           }}
           source={{ uri: card.image }}
-          width={width}
         />
       </View>
     </TouchableOpacity>

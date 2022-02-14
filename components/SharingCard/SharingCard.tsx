@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { TouchableOpacity, View, Image, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import { styles } from './SharingCard.style';
 import { Card } from '../../types';
 import { Context } from '../../Context';
@@ -32,7 +31,7 @@ const SingleSharingCard: React.FC<ISingleSharingCardProps> = ({ cards, spread, u
         </Text>
         <View style={styles.centralContainer}>
           <View style={upright[0] ? styles.card : styles.reversedCard}>
-            <AutoHeightImage width={130} source={{ uri: cards[0].image }} />
+            <Image style={{ width: 130, height: 214 }} source={{ uri: cards[0].image }} />
           </View>
           <View style={styles.keyTermsContainer}>
             {upright[0]

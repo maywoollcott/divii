@@ -15,7 +15,6 @@ import {
   AsyncStorage,
 } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import moment from 'moment';
 import { Context } from '../../Context';
 import { styles } from './Landing.style';
@@ -58,23 +57,16 @@ const Landing = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.screenContainer}>
         <View style={styles.headerContainer}>
-          <AutoHeightImage source={images.moons} width={250} />
+          <Image source={images.moons} style={{ width: 250, height: 125 }} />
           <Text style={styles.morningGreeting}>
-            Good {greeting()}, {context.currentUser?.name}. Today is{' '}
-            {day?.format('dddd, MMMM D, YYYY')}.
+            Good {greeting()}, {context.currentUser?.name}. Today is {day?.format('dddd, MMMM D, YYYY')}.
           </Text>
         </View>
         <View style={styles.actionCardContainer}>
-          <TouchableOpacity
-            style={styles.touchable}
-            onPress={navigateToCardOfDay}
-          >
+          <TouchableOpacity style={styles.touchable} onPress={navigateToCardOfDay}>
             <Text style={styles.header}>Your Card of the Day</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchable}
-            onPress={navigateToSpreadIndex}
-          >
+          <TouchableOpacity style={styles.touchable} onPress={navigateToSpreadIndex}>
             <Text style={styles.header}>Choose a Spread</Text>
           </TouchableOpacity>
         </View>
