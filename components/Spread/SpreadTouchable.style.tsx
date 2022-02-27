@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   actionCardContainer: {
     width: '80%',
@@ -10,8 +12,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 20,
     borderColor: COLORS.grayBlue,
-    width: 280,
-    height: 130,
+    width: width * 0.7,
+    height: width * 0.35,
     padding: 20,
     marginTop: '8%',
     display: 'flex',
@@ -20,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   spreadText: {
     color: COLORS.grayBlue,
-    fontSize: 24,
+    fontSize: width * 0.06,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },

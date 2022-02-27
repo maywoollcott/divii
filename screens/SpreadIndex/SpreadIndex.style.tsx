@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   bounceContainer: {
     backgroundColor: COLORS.parchment,
@@ -38,11 +40,13 @@ export const styles = StyleSheet.create({
     width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '10%',
+    marginBottom: '5%',
     marginTop: '15%',
   },
   whiteStar: {
-    marginHorizontal: 10,
+    marginHorizontal: width * 0.02,
+    width: width * 0.2,
+    height: width * 0.18,
   },
   actionCardContainer: {
     width: '80%',
@@ -50,25 +54,7 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 32,
-    textAlign: 'center',
-    fontFamily: 'made-dillan',
-  },
-  touchable: {
-    borderWidth: 1.5,
-    borderRadius: 20,
-    borderColor: COLORS.grayBlue,
-    width: 280,
-    height: 130,
-    padding: 20,
-    marginTop: '8%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  spreadText: {
-    color: COLORS.grayBlue,
-    fontSize: 24,
+    fontSize: width * 0.082,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Image } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import { styles } from './SpreadIndex.style';
 import { SpreadTouchable } from '../../components/Spread/SpreadTouchable';
 import { COLORS } from '../../globalStyles';
 import { images } from '../../assets/images/imagesIndex';
+
+const { width, height } = Dimensions.get('window');
 
 const SpreadIndex = () => {
   const navigation = useNavigation();
@@ -40,9 +42,9 @@ const SpreadIndex = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.headerContainer}>
-            <Image source={images.whiteStar} style={{ ...styles.whiteStar, width: 69, height: 64 }} />
+            <Image source={images.whiteStar} style={styles.whiteStar} />
             <Text style={styles.header}>Spreads</Text>
-            <Image source={images.whiteStar} style={{ ...styles.whiteStar, width: 69, height: 64 }} />
+            <Image source={images.whiteStar} style={styles.whiteStar} />
           </View>
           {spreads &&
             spreads.map((spread) => {
