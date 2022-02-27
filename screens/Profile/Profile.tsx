@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Linking, Image, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
@@ -101,29 +101,31 @@ const Profile = () => {
 
   if (!context.isLoading) {
     return (
-      <View style={styles.screenContainer}>
-        <View>
-          <Text style={styles.headerText}>Hi, {context.currentUser?.name}.</Text>
-        </View>
-        <View style={styles.bodyContainer}>
-          <View style={styles.bodyTextSingleContainer}>
-            <Text style={styles.bodyText}>
-              You’ve been divinating since
-              <Text style={styles.bodyTextHighlight}> {dateJoined.format('MMMM D, YYYY')}.</Text>
-            </Text>
+      <ScrollView contentContainerStyle={styles.bounceContainer}>
+        <View style={styles.screenContainer}>
+          <View>
+            <Text style={styles.headerText}>Hi, {context.currentUser?.name}.</Text>
           </View>
-          <View style={styles.bodyTextSingleContainer}>
-            <Text style={styles.bodyText}>You’ve completed</Text>
-            <Text style={styles.bodyTextHighlight}> {context.readings?.length} </Text>
-            <Text style={styles.bodyText}> readings.</Text>
+          <View style={styles.bodyContainer}>
+            <View style={styles.bodyTextSingleContainer}>
+              <Text style={styles.bodyText}>
+                You’ve been divinating since
+                <Text style={styles.bodyTextHighlight}> {dateJoined.format('MMMM D, YYYY')}.</Text>
+              </Text>
+            </View>
+            <View style={styles.bodyTextSingleContainer}>
+              <Text style={styles.bodyText}>You’ve completed</Text>
+              <Text style={styles.bodyTextHighlight}> {context.readings?.length} </Text>
+              <Text style={styles.bodyText}> readings.</Text>
+            </View>
+            <View style={styles.bodyTextSingleContainer}>{renderMostFrequentlyDrawnCard()}</View>
+            <View style={styles.bodyTextSingleContainer}>{renderFavoriteSpread()}</View>
           </View>
-          <View style={styles.bodyTextSingleContainer}>{renderMostFrequentlyDrawnCard()}</View>
-          <View style={styles.bodyTextSingleContainer}>{renderFavoriteSpread()}</View>
+          <TouchableOpacity style={styles.basicButton} onPress={logoutButtonHandler}>
+            <Text style={styles.buttonText}>Log Out</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.basicButton} onPress={logoutButtonHandler}>
-          <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 
