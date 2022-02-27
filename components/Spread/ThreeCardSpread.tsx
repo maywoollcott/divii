@@ -1,7 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { styles } from './ThreeCardSpread.style';
 import { TarotCard } from '../TarotCard/TarotCard';
+
+const { width, height } = Dimensions.get('window');
 
 interface IThreeCardSpread {
   spreadData: Array<any>;
@@ -9,11 +11,7 @@ interface IThreeCardSpread {
   onCardFlip: (arg0: number) => void;
 }
 
-export const ThreeCardSpread: React.FC<IThreeCardSpread> = ({
-  spreadData,
-  upright,
-  onCardFlip,
-}) => {
+export const ThreeCardSpread: React.FC<IThreeCardSpread> = ({ spreadData, upright, onCardFlip }) => {
   return (
     <View style={styles.spreadContainer}>
       <View style={styles.cardContainer}>
@@ -21,7 +19,7 @@ export const ThreeCardSpread: React.FC<IThreeCardSpread> = ({
           image={spreadData[0].image}
           rightSideUp={upright[0]}
           onCardFlip={() => onCardFlip(0)}
-          width={110}
+          width={width * 0.29}
         />
       </View>
       <View style={styles.cardContainer}>
@@ -29,7 +27,7 @@ export const ThreeCardSpread: React.FC<IThreeCardSpread> = ({
           image={spreadData[1].image}
           rightSideUp={upright[1]}
           onCardFlip={() => onCardFlip(1)}
-          width={110}
+          width={width * 0.29}
         />
       </View>
       <View style={styles.cardContainer}>
@@ -37,7 +35,7 @@ export const ThreeCardSpread: React.FC<IThreeCardSpread> = ({
           image={spreadData[2].image}
           rightSideUp={upright[2]}
           onCardFlip={() => onCardFlip(2)}
-          width={110}
+          width={width * 0.29}
         />
       </View>
     </View>

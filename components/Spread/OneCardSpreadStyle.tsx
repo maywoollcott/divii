@@ -1,9 +1,11 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   spreadContainer: {
-    height: 400,
+    height: width * 1.15,
     width: '100%',
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -12,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   cardContainer: {
     width: 100,
-    height: 380,
+    height: width * 1.15,
     alignItems: 'center',
     justifyContent: 'center',
   },

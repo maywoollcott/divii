@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   bounceContainer: {
     backgroundColor: COLORS.parchment,
@@ -41,25 +43,6 @@ export const styles = StyleSheet.create({
     marginBottom: '10%',
     marginTop: '15%',
   },
-  spreadContainer: {
-    height: 230,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  cardContainer: {
-    width: 110,
-    height: 181,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  spreadItemContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 110,
-  },
   spreadTextContainer: {
     height: 50,
     alignItems: 'center',
@@ -68,27 +51,27 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 32,
+    fontSize: width * 0.08,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
   keyTerms: {
     color: COLORS.orange,
-    fontSize: 20,
+    fontSize: width * 0.054,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 35,
   },
   reversed: {
     color: COLORS.grayBlue,
-    fontSize: 18,
+    fontSize: width * 0.054,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 35,
   },
   keyTermsContainer: {
     marginVertical: '8%',
-    width: '95%',
+    width: width * 0.7,
     borderTopColor: COLORS.grayBlue,
     borderBottomColor: COLORS.grayBlue,
     borderTopWidth: 1,
@@ -98,14 +81,14 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: COLORS.grayBlue,
-    fontSize: 18,
-    lineHeight: 22,
+    fontSize: width * 0.047,
+    lineHeight: width * 0.056,
     marginLeft: '3%',
     marginBottom: '20%',
   },
   secondaryHeader: {
     color: COLORS.orange,
-    fontSize: 18,
+    fontSize: width * 0.05,
     textAlign: 'center',
   },
   card: {
@@ -118,7 +101,7 @@ export const styles = StyleSheet.create({
   },
   spreadCopy: {
     color: COLORS.orange,
-    fontSize: 17,
+    fontSize: width * 0.048,
     marginBottom: '8%',
     justifyContent: 'center',
     textAlign: 'center',

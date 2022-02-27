@@ -172,7 +172,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
                 </Text>
               )}
               <Text style={styles.header}>{spreadData[currentCard].name}</Text>
-              <Text style={styles.reversed}>{upright[currentCard] ? 'Upright' : '(Reversed)'}</Text>
+              <Text style={styles.reversed}>{upright[currentCard] ? '(Upright)' : '(Reversed)'}</Text>
               <View style={styles.keyTermsContainer}>
                 <Text style={styles.keyTerms}>
                   {upright[currentCard]
