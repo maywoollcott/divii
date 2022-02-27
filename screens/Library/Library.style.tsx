@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   bounceContainer: {
     backgroundColor: COLORS.parchment,
@@ -34,8 +36,13 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: -6,
     top: 0,
+    width: width * 0.3,
+    height: width * 0.946,
   },
-  leftCurtain: {},
+  leftCurtain: {
+    width: width * 0.3,
+    height: width * 0.946,
+  },
   backArrowContainer: {
     display: 'flex',
     position: 'absolute',
@@ -48,16 +55,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '10%',
-    marginTop: 120,
+    marginTop: width * 0.25,
   },
   actionCardContainer: {
     width: '80%',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: width * 0.02,
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 36,
+    fontSize: width * 0.09, //36
     textAlign: 'center',
     fontFamily: 'made-dillan',
     marginBottom: 15,
@@ -70,14 +77,14 @@ export const styles = StyleSheet.create({
   },
   touchableText: {
     color: COLORS.grayBlue,
-    fontSize: 24,
+    fontSize: width * 0.07,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     width: '80%',
   },
   descriptionText: {
     color: COLORS.grayBlue,
-    fontSize: 18,
+    fontSize: width * 0.05,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     width: '80%',
@@ -86,9 +93,9 @@ export const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 20,
     borderColor: COLORS.grayBlue,
-    width: 240,
-    height: 120,
-    padding: 20,
+    width: width * 0.65,
+    height: width * 0.3,
+    padding: width * 0.02,
     marginTop: '8%',
     display: 'flex',
     alignItems: 'center',

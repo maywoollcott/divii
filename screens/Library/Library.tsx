@@ -35,8 +35,8 @@ const Library = () => {
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.leftCurtainContainer}>
-            <Image source={images.leftCurtain} style={{ ...styles.leftCurtain, width: 130, height: 410 }} />
-            <Image source={images.rightCurtain} style={{ ...styles.rightCurtain, width: 130, height: 410 }} />
+            <Image source={images.leftCurtain} style={styles.leftCurtain} />
+            <Image source={images.rightCurtain} style={styles.rightCurtain} />
           </View>
           <View style={styles.headerContainer}>
             <View style={styles.headerTextContainer}>

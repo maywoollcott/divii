@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   screenContainer: {
     backgroundColor: COLORS.parchment,
@@ -31,7 +33,7 @@ export const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '10%',
+    marginBottom: '2%',
     marginTop: '15%',
   },
   headerTextContainer: {
@@ -48,7 +50,7 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 36,
+    fontSize: width * 0.09,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
@@ -57,7 +59,7 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.grayBlue,
     borderWidth: 1.5,
     borderRadius: 15,
-    fontSize: 18,
+    fontSize: width * 0.05,
     paddingLeft: 15,
     marginTop: 30,
     width: '85%',
@@ -67,7 +69,7 @@ export const styles = StyleSheet.create({
   },
   expandableText: {
     color: COLORS.grayBlue,
-    fontSize: 24,
+    fontSize: width * 0.062,
     fontFamily: 'made-dillan',
     marginVertical: 15,
   },
@@ -86,14 +88,14 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: COLORS.grayBlue,
-    fontSize: 18,
+    fontSize: width * 0.05,
     lineHeight: 22,
     marginLeft: '3%',
     marginBottom: '5%',
   },
   headerDescription: {
     color: COLORS.grayBlue,
-    fontSize: 18,
+    fontSize: width * 0.05,
     lineHeight: 22,
     marginLeft: '3%',
   },

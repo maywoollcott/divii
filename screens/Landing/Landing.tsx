@@ -20,6 +20,7 @@ import { Context } from '../../Context';
 import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
 import * as SecureStore from 'expo-secure-store';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Landing = () => {
   const navigation = useNavigation();
@@ -54,24 +55,28 @@ const Landing = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView style={styles.screenContainer}>
-        <View style={styles.headerContainer}>
-          <Image source={images.moons} style={{ width: 250, height: 125 }} />
-          <Text style={styles.morningGreeting}>
-            Good {greeting()}, {context.currentUser?.name}. Today is {day?.format('dddd, MMMM D, YYYY')}.
-          </Text>
-        </View>
-        <View style={styles.actionCardContainer}>
-          <TouchableOpacity style={styles.touchable} onPress={navigateToCardOfDay}>
-            <Text style={styles.header}>Your Card of the Day</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.touchable} onPress={navigateToSpreadIndex}>
-            <Text style={styles.header}>Choose a Spread</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+    <View style={styles.bounceContainer}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <SafeAreaView style={styles.screenContainer}>
+            <View style={styles.headerContainer}>
+              <Image source={images.moons} style={styles.moons} />
+              <Text style={styles.morningGreeting}>
+                Good {greeting()}, {context.currentUser?.name}. Today is {day?.format('dddd, MMMM D, YYYY')}.
+              </Text>
+            </View>
+            <View style={styles.actionCardContainer}>
+              <TouchableOpacity style={styles.touchable} onPress={navigateToCardOfDay}>
+                <Text style={styles.header}>Your Card of the Day</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.touchable} onPress={navigateToSpreadIndex}>
+                <Text style={styles.header}>Choose a Spread</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 

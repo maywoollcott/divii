@@ -3,6 +3,7 @@ import {
   View,
   Text,
   SafeAreaView,
+  Dimensions,
   ScrollView,
   Animated,
   TouchableOpacity,
@@ -22,6 +23,8 @@ import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
 import { Context } from '../../Context';
+
+const { width, height } = Dimensions.get('window');
 
 const AllCards = () => {
   const [allCardsData, setAllCardsData] = useState<Card[] | null>(null);
@@ -51,9 +54,7 @@ const AllCards = () => {
   }, []);
 
   useEffect(() => {
-    const tempFilteredCards = allCardsData?.filter((card) =>
-      card.name.toLowerCase().includes(searchInput.toString())
-    );
+    const tempFilteredCards = allCardsData?.filter((card) => card.name.toLowerCase().includes(searchInput.toString()));
     if (tempFilteredCards) setFilteredCards(tempFilteredCards);
   }, [searchInput]);
 
@@ -82,12 +83,7 @@ const AllCards = () => {
               style={styles.input}
             />
             {displaySearchIcon && searchInput === '' ? (
-              <AntDesign
-                name='search1'
-                size={24}
-                color={COLORS.grayBlue}
-                style={styles.searchIcon}
-              />
+              <AntDesign name='search1' size={24} color={COLORS.grayBlue} style={styles.searchIcon} />
             ) : null}
           </View>
         </View>
@@ -99,12 +95,7 @@ const AllCards = () => {
             keyExtractor={(item) => item.name}
             numColumns={2}
             renderItem={({ item, index }) => (
-              <NonFlipTarotCard
-                card={item}
-                width={170}
-                key={index}
-                onPress={() => navigateToCard(item)}
-              />
+              <NonFlipTarotCard card={item} width={width * 0.45} key={index} onPress={() => navigateToCard(item)} />
             )}
           ></FlatList>
         )}
