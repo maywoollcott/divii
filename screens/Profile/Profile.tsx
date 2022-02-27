@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { logout } from '../../apiService/loginFlow';
+import { Ionicons } from '@expo/vector-icons';
 import { getReadingsByUser, getCardByNumber } from '../../apiService/data';
 import { styles } from './Profile.style';
 import { Context } from '../../Context';
@@ -11,6 +12,7 @@ import { Reading } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
 import { arcanaNames } from '../../copy/Cards';
 import Share from 'react-native-share';
+import { COLORS } from '../../globalStyles';
 
 const Profile = () => {
   const context = React.useContext(Context);
@@ -70,6 +72,10 @@ const Profile = () => {
     navigate.navigate('CardDetails', mostFreqCardInfo);
   };
 
+  const navigateToSettings = () => {
+    navigate.navigate('Settings');
+  };
+
   const renderMostFrequentlyDrawnCard = () => {
     if (context.readings.length === 0) {
       return <Text style={styles.bodyText}>You don't have a most frequently drawn card yet.</Text>;
@@ -103,6 +109,11 @@ const Profile = () => {
     return (
       <ScrollView contentContainerStyle={styles.bounceContainer}>
         <View style={styles.screenContainer}>
+          <View style={styles.touchableContainer}>
+            <TouchableOpacity onPress={navigateToSettings}>
+              <Ionicons name='ios-settings-outline' size={28} color={COLORS.grayBlue} />
+            </TouchableOpacity>
+          </View>
           <View>
             <Text style={styles.headerText}>Hi, {context.currentUser?.name}.</Text>
           </View>

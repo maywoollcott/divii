@@ -38,3 +38,17 @@ export type loginResponse = {
   message?: string;
   token?: string;
 };
+
+export type updateUserObject = {
+  name?: string;
+  email?: string;
+  birthdate?: string;
+  sign?: string;
+  password?: string;
+};
+
+export type updatedUserResponse = {
+  status: number;
+  updatedUser?: any;
+  message?: string;
+};

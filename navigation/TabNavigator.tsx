@@ -1,13 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  Entypo,
-  SimpleLineIcons,
-  AntDesign,
-  MaterialIcons,
-  Ionicons,
-} from '@expo/vector-icons';
+import { Entypo, SimpleLineIcons, AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../globalStyles';
 import { LandingNavigator } from './Landing.Navigator';
 import { LibraryNavigator } from './Library.Navigator';
@@ -20,7 +14,7 @@ export const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName='Landing'
+      initialRouteName='LandingNav'
       screenOptions={{
         tabBarActiveTintColor: COLORS.orange,
         tabBarInactiveTintColor: COLORS.grayBlue,
@@ -35,21 +29,17 @@ export const TabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name='Landing'
+        name='LandingNav'
         component={LandingNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <Entypo name='home' color={color} size={30} />
-          ),
+          tabBarIcon: ({ color }) => <Entypo name='home' color={color} size={30} />,
         }}
       />
       <Tab.Screen
-        name='Library'
+        name='LibraryNav'
         component={LibraryNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <SimpleLineIcons name='book-open' color={color} size={28} />
-          ),
+          tabBarIcon: ({ color }) => <SimpleLineIcons name='book-open' color={color} size={28} />,
         }}
       />
       {/* <Tab.Screen
@@ -62,21 +52,17 @@ export const TabNavigator = () => {
         }}
       /> */}
       <Tab.Screen
-        name='History'
+        name='HistoryNav'
         component={HistoryNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name='history' color={color} size={30} />
-          ),
+          tabBarIcon: ({ color }) => <MaterialIcons name='history' color={color} size={30} />,
         }}
       />
       <Tab.Screen
-        name='Profile'
+        name='ProfileNav'
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name='person-outline' color={color} size={28} />
-          ),
+          tabBarIcon: ({ color }) => <Ionicons name='person-outline' color={color} size={28} />,
         }}
       />
     </Tab.Navigator>
