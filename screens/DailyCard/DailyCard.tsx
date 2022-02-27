@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Button } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Button, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +11,8 @@ import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
 import AppLoading from '../AppLoading/AppLoading';
 import { ShareModal } from '../../components/Modal/ShareModal';
+
+const { width, height } = Dimensions.get('window');
 
 interface IDailyCardProps {
   route?: DailyCardParams;
@@ -129,13 +131,13 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
             <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
+            <TouchableOpacity onPress={openShareModalHandler} style={styles.shareContainer}>
+              <Feather name='share' size={25} color={COLORS.grayBlue} />
+            </TouchableOpacity>
           </View>
           <View style={styles.headerContainer}>
             <View style={styles.shareAndHeaderContainer}>
               <Text style={styles.header}>Daily Reading</Text>
-              <TouchableOpacity onPress={openShareModalHandler}>
-                <Feather name='share' size={20} style={styles.share} />
-              </TouchableOpacity>
             </View>
             <Text style={styles.secondaryHeader}>
               {route?.params
@@ -143,9 +145,14 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
                 : now.format('dddd, MMMM D, YYYY')}
             </Text>
           </View>
-          <View style={{ height: 413 }}>
+          <View style={{ height: width * 1.15 }}>
             {dailyCardData && (
-              <TarotCard image={dailyCardData.image} rightSideUp={upright} onCardFlip={onCardFlip} width={250} />
+              <TarotCard
+                image={dailyCardData.image}
+                rightSideUp={upright}
+                onCardFlip={onCardFlip}
+                width={width * 0.7}
+              />
             )}
           </View>
           {displayInfo && dailyCardData && (

@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { TouchableOpacity, View, Image, Text } from 'react-native';
+import { TouchableOpacity, View, Image, Text, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './SharingCard.style';
 import { Card } from '../../types';
 import { Context } from '../../Context';
 
+const { width, height } = Dimensions.get('window');
 interface ISingleSharingCardProps {
   cards: Card[];
   spread: string;
@@ -31,7 +32,7 @@ const SingleSharingCard: React.FC<ISingleSharingCardProps> = ({ cards, spread, u
         </Text>
         <View style={styles.centralContainer}>
           <View style={upright[0] ? styles.card : styles.reversedCard}>
-            <Image style={{ width: 130, height: 214 }} source={{ uri: cards[0].image }} />
+            <Image style={{ width: width * 0.34, height: width * 0.56 }} source={{ uri: cards[0].image }} />
           </View>
           <View style={styles.keyTermsContainer}>
             {upright[0]

@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   bounceContainer: {
     backgroundColor: COLORS.parchment,
@@ -24,12 +26,20 @@ export const styles = StyleSheet.create({
   touchableContainer: {
     alignSelf: 'flex-start',
     marginTop: '5%',
+    display: 'flex',
+    flexDirection: 'row',
   },
   backArrowContainer: {
     display: 'flex',
     position: 'absolute',
     top: '3%',
     left: '3%',
+  },
+  shareContainer: {
+    display: 'flex',
+    position: 'absolute',
+    top: '5%',
+    left: '90%',
   },
   headerContainer: {
     display: 'flex',
@@ -40,41 +50,33 @@ export const styles = StyleSheet.create({
     marginBottom: '10%',
     marginTop: '15%',
   },
-  morningGreeting: {
-    fontFamily: 'made-dillan',
-    color: COLORS.grayBlue,
-    textAlign: 'center',
-    fontSize: 18,
-    marginTop: '5%',
-    marginBottom: '10%',
-  },
   actionCardContainer: {
     width: '80%',
     alignItems: 'center',
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 32,
+    fontSize: width * 0.08,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
   keyTerms: {
     color: COLORS.orange,
-    fontSize: 20,
+    fontSize: width * 0.054,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 35,
   },
   reversed: {
     color: COLORS.grayBlue,
-    fontSize: 18,
+    fontSize: width * 0.054,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 35,
   },
   keyTermsContainer: {
     marginVertical: '8%',
-    width: 250,
+    width: width * 0.7,
     borderTopColor: COLORS.grayBlue,
     borderBottomColor: COLORS.grayBlue,
     borderTopWidth: 1,
@@ -84,14 +86,14 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: COLORS.grayBlue,
-    fontSize: 18,
-    lineHeight: 22,
+    fontSize: width * 0.047,
+    lineHeight: width * 0.056,
     marginLeft: '3%',
     marginBottom: '20%',
   },
   secondaryHeader: {
     color: COLORS.orange,
-    fontSize: 18,
+    fontSize: width * 0.047,
     textAlign: 'center',
   },
   card: {
@@ -101,10 +103,6 @@ export const styles = StyleSheet.create({
     marginTop: '10%',
     alignItems: 'center',
     width: '85%',
-  },
-  share: {
-    color: COLORS.grayBlue,
-    marginLeft: 5,
   },
   shareAndHeaderContainer: {
     display: 'flex',

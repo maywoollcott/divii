@@ -1,6 +1,8 @@
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 import { COLORS } from '../../globalStyles';
+
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   card: {
@@ -47,15 +49,15 @@ export const styles = StyleSheet.create({
   },
   headerText: {
     color: COLORS.parchment,
-    fontSize: 24,
+    fontSize: width * 0.06,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     width: '70%',
-    marginVertical: 40,
+    marginVertical: height * 0.025,
   },
   sharingCardContainer: {
     backgroundColor: COLORS.grayBlue,
-    width: 300,
+    width: width * 0.77,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -75,7 +77,7 @@ export const styles = StyleSheet.create({
     color: COLORS.parchment,
     marginVertical: 15,
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: width * 0.042,
   },
   centralContainer: {
     display: 'flex',
@@ -83,29 +85,29 @@ export const styles = StyleSheet.create({
   },
   diviiLabelContainer: {
     backgroundColor: COLORS.parchment,
-    height: 70,
-    width: 300,
+    height: height * 0.08,
+    width: width * 0.77,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     justifyContent: 'center',
   },
   diviiText: {
-    fontSize: 40,
+    fontSize: width * 0.1,
     fontFamily: 'made-dillan',
     color: COLORS.grayBlue,
     marginLeft: 20,
   },
   cardText: {
     color: COLORS.parchment,
-    fontSize: 24,
+    fontSize: width * 0.06,
     textAlign: 'center',
     fontFamily: 'made-dillan',
-    width: '70%',
-    marginTop: 30,
+    width: '80%',
+    marginTop: height * 0.025,
   },
   directionalText: {
     fontFamily: 'made-dillan',
     color: COLORS.parchment,
-    marginBottom: 30,
+    marginBottom: height * 0.025,
   },
 });

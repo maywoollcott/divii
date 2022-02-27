@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.charcoal,
-    borderRadius: 20,
   },
   textContainer: {
     justifyContent: 'center',

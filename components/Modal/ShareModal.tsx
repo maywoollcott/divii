@@ -1,5 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { View, Text, Modal, Platform, Button, TouchableOpacity, TouchableWithoutFeedback, Linking } from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  Platform,
+  Button,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Linking,
+  Dimensions,
+} from 'react-native';
 import { styles } from './ShareModal.style';
 import { BlurView } from 'expo-blur';
 import SharingCard from '../SharingCard/SharingCard';
@@ -12,6 +22,7 @@ import Share from 'react-native-share';
 import { Context } from '../../Context';
 import { captureRef } from 'react-native-view-shot';
 
+const { width, height } = Dimensions.get('window');
 interface IShareModalProps {
   animationType: any;
   transparent: boolean;
@@ -92,11 +103,11 @@ export const ShareModal: React.FC<IShareModalProps> = ({
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.basicButton} onPress={instagramStoryHandler}>
-              <FontAwesome name='instagram' size={60} color={COLORS.parchment} />
+              <FontAwesome name='instagram' size={width * 0.15} color={COLORS.parchment} />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={generalShareHandler}>
-              <Feather name='share' size={53} color={COLORS.parchment} />
+              <Feather name='share' size={width * 0.13} color={COLORS.parchment} />
             </TouchableOpacity>
           </View>
         </View>
