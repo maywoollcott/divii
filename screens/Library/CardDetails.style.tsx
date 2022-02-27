@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   bounceContainer: {
     backgroundColor: COLORS.parchment,
@@ -46,13 +48,13 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 30,
+    fontSize: width * 0.07,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
   keyTerms: {
     color: COLORS.orange,
-    fontSize: 20,
+    fontSize: width * 0.053,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 35,
@@ -66,7 +68,7 @@ export const styles = StyleSheet.create({
   },
   keyTermsContainer: {
     marginVertical: '8%',
-    width: 250,
+    width: width * 0.6,
     borderTopColor: COLORS.grayBlue,
     borderBottomColor: COLORS.grayBlue,
     borderTopWidth: 1,
@@ -76,14 +78,14 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: COLORS.grayBlue,
-    fontSize: 18,
-    lineHeight: 22,
+    fontSize: width * 0.05,
+    lineHeight: width * 0.06,
     marginLeft: '3%',
     marginBottom: '20%',
   },
   secondaryHeader: {
     color: COLORS.orange,
-    fontSize: 18,
+    fontSize: width * 0.05,
     textAlign: 'center',
   },
   card: {
@@ -109,11 +111,10 @@ export const styles = StyleSheet.create({
   },
   tabText: {
     color: COLORS.grayBlue,
-    fontSize: 18,
+    fontSize: width * 0.05,
   },
   tabTextSelected: {
-    color: COLORS.grayBlue,
-    fontSize: 18,
-    textDecorationLine: 'underline',
+    color: COLORS.orange,
+    fontSize: width * 0.05,
   },
 });
