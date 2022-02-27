@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
   bounceContainer: {
     backgroundColor: COLORS.parchment,
@@ -21,6 +23,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     display: 'flex',
+    marginBottom: '15%',
   },
   touchableContainer: {
     alignSelf: 'flex-start',
@@ -49,14 +52,14 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: 36,
+    fontSize: width * 0.09,
     textAlign: 'center',
     fontFamily: 'made-dillan',
   },
   description: {
     color: COLORS.grayBlue,
     fontFamily: 'made-dillan',
-    fontSize: 18,
+    fontSize: width * 0.05,
     lineHeight: 22,
     marginLeft: '3%',
     marginBottom: '5%',
@@ -66,11 +69,5 @@ export const styles = StyleSheet.create({
     marginTop: '7%',
     alignItems: 'center',
     width: '100%',
-  },
-  calendarContainer: {
-    backgroundColor: COLORS.grayBlue,
-    borderRadius: 15,
-    paddingVertical: '5%',
-    paddingHorizontal: '3%',
   },
 });
