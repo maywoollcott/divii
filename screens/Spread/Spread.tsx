@@ -136,17 +136,17 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
             <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
+            {route.params.spreadName === 'Daily Reading' && (
+              <TouchableOpacity onPress={openShareModalHandler} style={styles.shareContainer}>
+                <Feather name='share' size={25} color={COLORS.grayBlue} />
+              </TouchableOpacity>
+            )}
           </View>
           <View style={styles.headerContainer}>
             <View style={styles.shareAndHeaderContainer}>
               <Text style={styles.header}>
                 {route.params.spreadName ? route.params.spreadName : route.params.name}{' '}
               </Text>
-              {route.params.spreadName === 'Daily Reading' && (
-                <TouchableOpacity onPress={openShareModalHandler}>
-                  <Feather name='share' size={20} style={styles.share} />
-                </TouchableOpacity>
-              )}
             </View>
             {route.params.date && (
               <Text style={styles.secondaryHeader}>{moment(route.params.date).format('dddd, MMMM D, YYYY')}</Text>

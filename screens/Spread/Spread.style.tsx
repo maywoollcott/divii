@@ -88,7 +88,7 @@ export const styles = StyleSheet.create({
   },
   secondaryHeader: {
     color: COLORS.orange,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
     textAlign: 'center',
   },
   card: {
@@ -113,5 +113,11 @@ export const styles = StyleSheet.create({
   shareAndHeaderContainer: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  shareContainer: {
+    display: 'flex',
+    position: 'absolute',
+    top: '5%',
+    left: '90%',
   },
 });

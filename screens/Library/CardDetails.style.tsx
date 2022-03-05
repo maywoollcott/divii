@@ -78,14 +78,14 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: COLORS.grayBlue,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
     lineHeight: width * 0.06,
     marginLeft: '3%',
     marginBottom: '20%',
   },
   secondaryHeader: {
     color: COLORS.orange,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
     textAlign: 'center',
   },
   card: {
@@ -111,10 +111,10 @@ export const styles = StyleSheet.create({
   },
   tabText: {
     color: COLORS.grayBlue,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
   },
   tabTextSelected: {
     color: COLORS.orange,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
   },
 });

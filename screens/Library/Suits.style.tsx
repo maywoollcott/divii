@@ -88,14 +88,14 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: COLORS.grayBlue,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
     lineHeight: 22,
     marginLeft: '3%',
     marginBottom: '5%',
   },
   headerDescription: {
     color: COLORS.grayBlue,
-    fontSize: width * 0.05,
+    fontSize: width * 0.047,
     lineHeight: 22,
     marginLeft: '3%',
   },
