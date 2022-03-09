@@ -48,16 +48,19 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.grayBlue,
-    fontSize: width * 0.08, //30
+    fontSize: width * 0.05, //30
     textAlign: 'center',
     fontFamily: 'made-dillan',
+    width: '70%',
   },
   touchable: {
     borderWidth: 1.5,
     borderRadius: 20,
     borderColor: COLORS.grayBlue,
-    width: width * 0.7,
-    padding: height * 0.03,
+    width: width * 0.6,
+    padding: height * 0.02,
     marginTop: '8%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

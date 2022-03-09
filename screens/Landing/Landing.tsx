@@ -54,6 +54,14 @@ const Landing = () => {
     navigation.navigate('SpreadIndex');
   };
 
+  const navigateToPersonalCard = () => {
+    navigation.navigate('PersonalCard', {
+      personalCardNumber: context.currentUser?.personalCard,
+      name: context.currentUser?.name,
+      personalNumber: context.currentUser?.personalNumber,
+    });
+  };
+
   return (
     <View style={styles.bounceContainer}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -71,6 +79,9 @@ const Landing = () => {
               </TouchableOpacity>
               <TouchableOpacity style={styles.touchable} onPress={navigateToSpreadIndex}>
                 <Text style={styles.header}>Choose a Spread</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.touchable} onPress={navigateToPersonalCard}>
+                <Text style={styles.header}>The {context.currentUser?.name} Card</Text>
               </TouchableOpacity>
             </View>
           </SafeAreaView>

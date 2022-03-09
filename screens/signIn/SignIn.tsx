@@ -86,6 +86,7 @@ const SignIn: React.FC = () => {
         if (res.message) {
           context.setModalText(res.message);
           context.setModalOpen(true);
+          console.log(res.message);
         }
         setTimeout(() => {
           context.setIsLoading(false);
@@ -95,6 +96,7 @@ const SignIn: React.FC = () => {
         if (res.message) {
           context.setModalText(res.message);
           context.setModalOpen(true);
+          console.log(res.message);
         }
         context.setIsLoading(false);
       } else {
@@ -102,6 +104,7 @@ const SignIn: React.FC = () => {
         if (res.message) {
           context.setModalText(res.message);
           context.setModalOpen(true);
+          console.log(res.message);
         }
         context.setIsLoading(false);
       }
@@ -109,6 +112,7 @@ const SignIn: React.FC = () => {
       context.setModalText('Network error. Please check your internet connection.');
       context.setModalOpen(true);
       context.setIsLoading(false);
+      console.log(err);
     }
   };
 

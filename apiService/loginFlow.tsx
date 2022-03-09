@@ -12,6 +12,8 @@ export const register = async (user: any) => {
       email: user.email,
       sign: user.sign,
       dateJoined: user.dateJoined,
+      personalCard: user.personalCard,
+      personalNumber: user.personalNumber,
     });
 
     const successResponse = {

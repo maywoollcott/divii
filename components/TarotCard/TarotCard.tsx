@@ -9,9 +9,20 @@ interface ITarotProps {
   rightSideUp: boolean;
   width: number;
   onCardFlip: () => void;
+  isPersonalCard?: boolean;
+  name?: string;
+  number?: string;
 }
 
-export const TarotCard: React.FC<ITarotProps> = ({ image, rightSideUp, onCardFlip, width }) => {
+export const TarotCard: React.FC<ITarotProps> = ({
+  image,
+  rightSideUp,
+  onCardFlip,
+  width,
+  isPersonalCard,
+  name,
+  number,
+}) => {
   Image.prefetch(image);
   return (
     <FlipCard flipHorizontal={true} flipVertical={false} onFlipEnd={onCardFlip}>
@@ -37,6 +48,8 @@ export const TarotCard: React.FC<ITarotProps> = ({ image, rightSideUp, onCardFli
           }
           fallbackSource={Images.images.sunBack}
         />
+        {isPersonalCard && <Text style={styles.personalName}>The {name} Card</Text>}
+        {isPersonalCard && <Text style={styles.personalNumber}>{number}</Text>}
       </View>
     </FlipCard>
   );

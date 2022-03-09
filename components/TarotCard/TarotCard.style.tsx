@@ -1,5 +1,7 @@
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   card: {
@@ -19,6 +21,7 @@ export const styles = StyleSheet.create({
     }),
     margin: 0,
     padding: 0,
+    alignItems: 'center',
   },
   cardContainer: {
     borderRadius: 10,
@@ -30,5 +33,19 @@ export const styles = StyleSheet.create({
     transform: [{ rotateY: '180deg' }, { rotateX: '180deg' }],
     margin: 0,
     padding: 0,
+  },
+  personalName: {
+    position: 'absolute',
+    bottom: '3.2%',
+    fontFamily: 'made-dillan',
+    color: '#3d4447',
+    fontSize: width * 0.04,
+  },
+  personalNumber: {
+    position: 'absolute',
+    top: '1.4%',
+    fontFamily: 'made-dillan',
+    color: '#3d4447',
+    fontSize: width * 0.04,
   },
 });
