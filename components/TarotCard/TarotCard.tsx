@@ -12,6 +12,7 @@ interface ITarotProps {
   isPersonalCard?: boolean;
   name?: string;
   number?: string;
+  backNumber?: string;
 }
 
 export const TarotCard: React.FC<ITarotProps> = ({
@@ -22,13 +23,14 @@ export const TarotCard: React.FC<ITarotProps> = ({
   isPersonalCard,
   name,
   number,
+  backNumber,
 }) => {
   Image.prefetch(image);
   return (
     <FlipCard flipHorizontal={true} flipVertical={false} onFlipEnd={onCardFlip}>
       <View style={styles.card}>
         <Image
-          source={Images.images.sunBack}
+          source={backNumber ? Images.images[backNumber] : Images.images.sunBack}
           width={width}
           height={width * 1.65}
           style={

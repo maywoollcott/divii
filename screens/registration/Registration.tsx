@@ -70,8 +70,9 @@ const Registration: React.FC = () => {
       password: formData.password,
       sign: determineAstrologicalSign(formData.birthdate),
       dateJoined: Date.now().toString(),
-      personalCard: Math.floor(Math.random() * 113),
-      personalNumber: Math.floor(Math.random() * 100),
+      personalCard: Math.floor(Math.random() * (113 - 1) + 1),
+      personalNumber: Math.floor(Math.random() * (100 - 0)),
+      personalCardBack: Math.floor(Math.random() * (9 - 1) + 1),
     };
     Keyboard.dismiss();
 

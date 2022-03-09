@@ -59,6 +59,7 @@ const Landing = () => {
       personalCardNumber: context.currentUser?.personalCard,
       name: context.currentUser?.name,
       personalNumber: context.currentUser?.personalNumber,
+      cardBackNumber: context.currentUser?.personalCardBack,
     });
   };
 

@@ -14,6 +14,7 @@ export const register = async (user: any) => {
       dateJoined: user.dateJoined,
       personalCard: user.personalCard,
       personalNumber: user.personalNumber,
+      personalCardBack: user.personalCardBack,
     });
 
     const successResponse = {

@@ -36,6 +36,7 @@ export type PersonalCardParams = {
     personalCardNumber: string;
     name: string;
     personalNumber: string;
+    cardBackNumber: string;
   };
 };
 
@@ -132,6 +133,7 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
                 isPersonalCard={true}
                 name={route?.params.name}
                 number={route?.params.personalNumber}
+                backNumber={route?.params.cardBackNumber}
               />
             </View>
             <View style={styles.buttonContainer}>

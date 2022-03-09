@@ -7,4 +7,12 @@ export const images = {
   rightCurtain: require('./right-curtain.png'),
   spinner: require('./spinner.png'),
   sharing: require('./sharing.png'),
+  1: require('./1back.png'),
+  2: require('./2back.png'),
+  3: require('./3back.png'),
+  4: require('./4back.png'),
+  5: require('./5back.png'),
+  6: require('./6back.png'),
+  7: require('./7back.png'),
+  8: require('./8back.png'),
 };
