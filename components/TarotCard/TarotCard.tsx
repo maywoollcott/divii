@@ -50,7 +50,7 @@ export const TarotCard: React.FC<ITarotProps> = ({
           }
           fallbackSource={Images.images.sunBack}
         />
-        {isPersonalCard && <Text style={styles.personalName}>The {name} Card</Text>}
+        {isPersonalCard && <Text style={styles.personalName}>The {name}</Text>}
         {isPersonalCard && <Text style={styles.personalNumber}>{number}</Text>}
       </View>
     </FlipCard>

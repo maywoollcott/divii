@@ -27,6 +27,7 @@
     "expo-cli": "^5.0.3",
     "expo-file-system": "^13.2.0",
     "expo-font": "~10.0.4",
+    "expo-in-app-purchases": "^12.1.1",
     "expo-secure-store": "~11.1.0",
     "expo-sharing": "~10.1.0",
     "expo-splash-screen": "~0.14.1",
