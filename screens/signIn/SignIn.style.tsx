@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { COLORS } from '../../globalStyles';
+
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   screenContainer: {
@@ -15,7 +17,7 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.parchment,
-    fontSize: 55,
+    fontSize: width * 0.13,
     textAlign: 'center',
     fontFamily: 'made-dillan',
     lineHeight: 58,

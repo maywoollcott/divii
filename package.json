@@ -3,6 +3,8 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "iPhone13": "react-native run-ios --simulator='iPhone 13'",
+    "iPodTouch": "react-native run-ios --simulator='Touch'",
     "web": "expo start --web",
     "eject": "expo eject"
   },

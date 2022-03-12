@@ -25,6 +25,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import { BasicModal } from '../../components/Modal/BasicModal';
 import { loginResponse } from '../../types';
 import { validateEmail } from '../../utils/emailValidation';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Registration: React.FC = () => {
   const navigation = useNavigation();
@@ -114,6 +115,7 @@ const Registration: React.FC = () => {
   if (!context.isLoading) {
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {/* <ScrollView> */}
         <KeyboardAvoidingView
           style={styles.screenContainer}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -198,6 +200,7 @@ const Registration: React.FC = () => {
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
+        {/* </ScrollView> */}
       </TouchableWithoutFeedback>
     );
   }

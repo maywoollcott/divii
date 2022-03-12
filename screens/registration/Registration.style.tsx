@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { COLORS } from '../../globalStyles';
+
+const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
   screenContainer: {
@@ -10,13 +12,13 @@ export default StyleSheet.create({
   },
   headerContainer: {
     width: '80%',
+    marginTop: '10%',
   },
   header: {
     color: COLORS.parchment,
-    fontSize: 55,
+    fontSize: width * 0.1,
     textAlign: 'center',
     fontFamily: 'made-dillan',
-    lineHeight: 58,
     marginBottom: '10%',
   },
   formContainer: {
@@ -28,7 +30,7 @@ export default StyleSheet.create({
     borderColor: COLORS.parchment,
     borderWidth: 3,
     borderRadius: 10,
-    height: 50,
+    height: width * 0.14,
     fontSize: 18,
     paddingLeft: 15,
     marginBottom: '5%',
