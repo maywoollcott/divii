@@ -1,14 +1,11 @@
-import React, {
-  useState,
-  createContext,
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
 import { Reading } from './types';
 
 type AppContextValue = {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  isSubscribed: boolean;
+  setIsSubscribed: Dispatch<SetStateAction<boolean>>;
   currentUser: any;
   setCurrentUser: Dispatch<SetStateAction<null>>;
   isLoading: boolean;
@@ -24,6 +21,8 @@ type AppContextValue = {
 const defaultValue: AppContextValue = {
   isAuthenticated: false,
   setIsAuthenticated: () => {},
+  isSubscribed: false,
+  setIsSubscribed: () => {},
   currentUser: null,
   setCurrentUser: () => {},
   isLoading: false,
@@ -39,6 +38,7 @@ export const Context = createContext(defaultValue);
 
 export const Provider = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [readings, setReadings] = useState(null);
@@ -50,6 +50,8 @@ export const Provider = (props: any) => {
       value={{
         isAuthenticated: isAuthenticated,
         setIsAuthenticated: setIsAuthenticated,
+        isSubscribed: isSubscribed,
+        setIsSubscribed: setIsSubscribed,
         currentUser: currentUser,
         setCurrentUser: setCurrentUser,
         isLoading: isLoading,

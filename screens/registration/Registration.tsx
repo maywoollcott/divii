@@ -86,6 +86,7 @@ const Registration: React.FC = () => {
           await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
         }
         context.setIsAuthenticated(true);
+        context.setIsSubscribed(false);
         context.setCurrentUser(user);
         const readings = await getReadingsByUser(user._id);
         context.setReadings(readings);

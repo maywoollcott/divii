@@ -21,6 +21,8 @@ import { getReadingsByUser } from '../../apiService/data';
 import AppLoading from '../AppLoading/AppLoading';
 import { loginResponse } from '../../types';
 import { BasicModal } from '../../components/Modal/BasicModal';
+import useIsSubscribed from '../../hooks/useIsSubscribed';
+import * as InAppPurchases from 'expo-in-app-purchases';
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
@@ -31,32 +33,38 @@ const SignIn: React.FC = () => {
     password: '',
   });
 
+  const { checkIfSubscribed } = useIsSubscribed();
+
   const isFocused = useIsFocused();
+
+  const isSubscribed = async () => {
+    const isSubscribed = await checkIfSubscribed();
+    if (isSubscribed) {
+      context.setIsSubscribed(true);
+    } else {
+      context.setIsSubscribed(false);
+    }
+  };
 
   const isAuthenticatedCheck = async () => {
     let token = await SecureStore.getItemAsync('DIVII_TOKEN_AUTH');
     if (token !== null) {
-      try {
-        context.setIsLoading(true);
-        const res: loginResponse = await getUserByToken(token);
-        console.log(res);
-        if (res.status === 200) {
-          const { user } = res;
-          context.setIsAuthenticated(true);
-          context.setCurrentUser(user);
-          const readings = await getReadingsByUser(user._id);
-          context.setReadings(readings);
-          context.setIsLoading(false);
-        } else {
-          if (res.message) {
-            context.setModalText(res.message);
-            context.setModalOpen(true);
-          }
-          context.setIsLoading(false);
+      context.setIsLoading(true);
+      const res: loginResponse = await getUserByToken(token);
+      console.log(res);
+      if (res.status === 200) {
+        const { user } = res;
+        context.setIsAuthenticated(true);
+        context.setCurrentUser(user);
+        const readings = await getReadingsByUser(user._id);
+        context.setReadings(readings);
+        context.setIsLoading(false);
+        await isSubscribed();
+      } else {
+        if (res.message) {
+          context.setModalText(res.message);
+          context.setModalOpen(true);
         }
-      } catch (err: any) {
-        context.setModalText('Network error. Please check your internet connection.');
-        context.setModalOpen(true);
         context.setIsLoading(false);
       }
     }
@@ -64,7 +72,7 @@ const SignIn: React.FC = () => {
 
   useEffect(() => {
     isAuthenticatedCheck();
-  }, [isFocused]);
+  }, []);
 
   const loginButtonHandler = async () => {
     Keyboard.dismiss();
@@ -76,6 +84,7 @@ const SignIn: React.FC = () => {
         if (token) {
           await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
         }
+        await isSubscribed();
         context.setIsAuthenticated(true);
         context.setCurrentUser(user);
         const readings = await getReadingsByUser(user._id);
@@ -116,59 +125,59 @@ const SignIn: React.FC = () => {
     }
   };
 
-  if (context.isLoading) {
-    return <AppLoading />;
+  if (!context.isLoading) {
+    return (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={-64}
+          style={styles.screenContainer}
+        >
+          <BasicModal
+            animationType='none'
+            transparent={true}
+            visible={context.modalOpen}
+            onRequestClose={() => {
+              context.setModalOpen(!context.modalOpen);
+            }}
+            modalText={context.modalText}
+          />
+          <View style={styles.headerContainer}>
+            <Text style={styles.header}>Divination awaits!</Text>
+          </View>
+          <View style={styles.formContainer}>
+            <TextInput
+              placeholder='Email'
+              placeholderTextColor={COLORS.parchment}
+              onChangeText={(text) => setLoginData({ ...loginData, email: text })}
+              style={styles.input}
+              autoCapitalize='none'
+              keyboardType='email-address'
+            />
+            <TextInput
+              placeholder='Password'
+              placeholderTextColor={COLORS.parchment}
+              onChangeText={(text) => setLoginData({ ...loginData, password: text })}
+              style={styles.input}
+              secureTextEntry={true}
+              autoCapitalize='none'
+            />
+            <TouchableOpacity style={styles.basicButton} onPress={loginButtonHandler}>
+              <Text style={styles.buttonText}>Log In</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.centeredTextContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
+              <Text style={styles.rerouteText}>Don't have an account?</Text>
+              <Text style={styles.rerouteText}> Sign up here.</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    );
   }
 
-  return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={-64}
-        style={styles.screenContainer}
-      >
-        <BasicModal
-          animationType='none'
-          transparent={true}
-          visible={context.modalOpen}
-          onRequestClose={() => {
-            context.setModalOpen(!context.modalOpen);
-          }}
-          modalText={context.modalText}
-        />
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>Divination awaits!</Text>
-        </View>
-        <View style={styles.formContainer}>
-          <TextInput
-            placeholder='Email'
-            placeholderTextColor={COLORS.parchment}
-            onChangeText={(text) => setLoginData({ ...loginData, email: text })}
-            style={styles.input}
-            autoCapitalize='none'
-            keyboardType='email-address'
-          />
-          <TextInput
-            placeholder='Password'
-            placeholderTextColor={COLORS.parchment}
-            onChangeText={(text) => setLoginData({ ...loginData, password: text })}
-            style={styles.input}
-            secureTextEntry={true}
-            autoCapitalize='none'
-          />
-          <TouchableOpacity style={styles.basicButton} onPress={loginButtonHandler}>
-            <Text style={styles.buttonText}>Log In</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.centeredTextContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-            <Text style={styles.rerouteText}>Don't have an account?</Text>
-            <Text style={styles.rerouteText}> Sign up here.</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
-  );
+  return <AppLoading />;
 };
 
 export default SignIn;
