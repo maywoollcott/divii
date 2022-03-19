@@ -33,6 +33,10 @@ const Settings = () => {
     navigate.navigate('ResetPassword');
   };
 
+  const onManageSubscriptionHandler = () => {
+    navigate.navigate('ManageSubscription');
+  };
+
   const onSaveHandler = async (field: string, value: string) => {
     if (field === 'email') {
       if (validateEmail(value) === false) {
@@ -133,7 +137,7 @@ const Settings = () => {
           <TouchableOpacity style={styles.basicButton} onPress={onChangePasswordHandler}>
             <Text style={styles.buttonText}>Change Password</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.basicButton} onPress={() => 'click'}>
+          <TouchableOpacity style={styles.basicButton} onPress={onManageSubscriptionHandler}>
             <Text style={styles.buttonText}>Manage Subscription</Text>
           </TouchableOpacity>
         </View>
