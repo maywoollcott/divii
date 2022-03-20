@@ -23,30 +23,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { BasicModal } from '../../components/Modal/BasicModal';
 import useIsSubscribed from '../../hooks/useIsSubscribed';
+import Purchases from 'react-native-purchases';
+import moment from 'moment';
 
 const ManageSubscription = () => {
   const context = React.useContext(Context);
   const navigate = useNavigation();
 
-  const [birthdate, setBirthdate] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [renewsOn, setRenewsOn] = useState('');
 
   const goBack = () => {
     navigate.goBack();
   };
-  const { checkIfSubscribed } = useIsSubscribed();
+  const { checkIfSubscribed, getDetailedSubscriptionInfo } = useIsSubscribed();
 
-  const onManageHandler = () => {};
-
-  const fetchSubscriptionInfo = async () => {
-    const results = await checkIfSubscribed();
-    console.log(results);
+  const getSubscriptionInfo = async () => {
+    const res = await getDetailedSubscriptionInfo();
+    let renewalDate = moment(new Date(res.renewsOn)).format('MMMM D, YYYY');
+    setRenewsOn(renewalDate);
   };
-
-  useEffect(() => {
-    fetchSubscriptionInfo();
-  }, []);
 
   if (!context.isLoading) {
     return (
@@ -74,39 +69,10 @@ const ManageSubscription = () => {
             <Text style={styles.headerText}>Manage Subscription</Text>
           </View>
           <View style={styles.bodyContainer}>
-            <View style={styles.passwordForm}>
-              <TextInput
-                style={styles.input}
-                placeholder='Password'
-                secureTextEntry={true}
-                placeholderTextColor={COLORS.grayBlue}
-                onChangeText={(text) => setPassword(text)}
-                autoCapitalize='none'
-              />
-              {password.length >= 6 && (
-                <View style={styles.icon}>
-                  <FontAwesomeIcon color={COLORS.grayBlue} size={25} icon={faCheckCircle} />
-                </View>
-              )}
-            </View>
-            <View style={styles.passwordForm}>
-              <TextInput
-                style={styles.input}
-                placeholder='Confirm Password'
-                secureTextEntry={true}
-                placeholderTextColor={COLORS.grayBlue}
-                onChangeText={(text) => setConfirmPassword(text)}
-                autoCapitalize='none'
-              />
-              {confirmPassword === password && password.length >= 6 && (
-                <View style={styles.icon}>
-                  <FontAwesomeIcon color={COLORS.grayBlue} size={25} icon={faCheckCircle} />
-                </View>
-              )}
-            </View>
+            <Text>{renewsOn}</Text>
           </View>
-          <TouchableOpacity style={styles.basicButton} onPress={onManageHandler}>
-            <Text style={styles.buttonText}>Update</Text>
+          <TouchableOpacity style={styles.basicButton} onPress={getSubscriptionInfo}>
+            <Text style={styles.buttonText}>Subscription Info</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>

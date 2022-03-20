@@ -1,5 +1,6 @@
 import * as InAppPurchases from 'expo-in-app-purchases';
 import React from 'react';
+import Purchases from 'react-native-purchases';
 import { Context } from '../Context';
 
 const usePurchaseSubscription = () => {
@@ -12,37 +13,33 @@ const usePurchaseSubscription = () => {
     context.setIsSubscribed(true);
   };
 
-  const purchaseSubscription = async () => {
-    await InAppPurchases.connectAsync();
-    await InAppPurchases.getProductsAsync([subscripId]);
-    InAppPurchases.purchaseItemAsync(subscripId);
-
+  const purchaseSubscription = async (userId: string) => {
+    Purchases.setDebugLogsEnabled(true);
+    await Purchases.setup('appl_OWPeHBZFZEkiBqpCcFrvIhHSAQx', userId);
     try {
-      return await new Promise((resolve, reject) => {
-        InAppPurchases.setPurchaseListener(async (result) => {
-          switch (result.responseCode) {
-            case InAppPurchases.IAPResponseCode.OK:
-            case InAppPurchases.IAPResponseCode.DEFERRED:
-              console.log('success');
-              await successfulPurchase();
-              await InAppPurchases.finishTransactionAsync(result.results![0], true);
-              await InAppPurchases.disconnectAsync();
-              return resolve(true);
-            case InAppPurchases.IAPResponseCode.USER_CANCELED:
-              console.log('cancelled');
-              await InAppPurchases.disconnectAsync();
-              return resolve(false);
-            case InAppPurchases.IAPResponseCode.ERROR:
-              console.log('error');
-              await InAppPurchases.disconnectAsync();
-              return reject(new Error('IAP Error: ' + result.errorCode));
-          }
-        });
-      });
-    } catch (error) {
-      console.log(error);
-      await InAppPurchases.disconnectAsync();
-      throw error;
+      console.log('trying');
+      const offerings = await Purchases.getOfferings();
+      console.log(offerings);
+      if (offerings.current?.availablePackages !== null && offerings.current?.availablePackages[0]) {
+        // Display current offering with offerings.current
+        console.log(offerings.current?.availablePackages[0]);
+        let packageToBuy = offerings.current?.availablePackages[0];
+        console.log('line 72');
+        try {
+          console.log('line 75');
+          const res = await Purchases.purchasePackage(packageToBuy);
+          console.log('subscribed woohoo!');
+          context.setIsSubscribed(true);
+          console.log(res);
+        } catch (e: any) {
+          console.log('line 84');
+          console.log(JSON.stringify(e));
+        }
+      }
+    } catch (e) {
+      console.log(e);
+      console.log('big error');
+      console.log(JSON.stringify(e));
     }
   };
   return { purchaseSubscription };

@@ -1,32 +1,38 @@
 import * as InAppPurchases from 'expo-in-app-purchases';
 import { useContext } from 'react';
 import { Context } from '../Context';
+import Purchases from 'react-native-purchases';
 
 const useIsSubscribed = () => {
   const context = useContext(Context);
 
   const subscripId = 'diviisubscrip1';
 
-  const checkIfSubscribed = async () => {
-    await InAppPurchases.connectAsync();
-    let returnValue;
-    const { results } = await InAppPurchases.getPurchaseHistoryAsync();
-    console.log(results);
-    if (results && results.some((result) => result.productId === subscripId)) {
-      console.log('Already subscribed!');
-      context.setIsSubscribed(true);
-      returnValue = true;
-    } else {
-      console.log('not subscribed');
-      context.setIsSubscribed(false);
-      returnValue = false;
-    }
+  const checkIfSubscribed = async (userId: string) => {
+    Purchases.setDebugLogsEnabled(true);
+    await Purchases.setup('appl_OWPeHBZFZEkiBqpCcFrvIhHSAQx', userId);
 
-    await InAppPurchases.disconnectAsync();
-    return returnValue;
+    const { activeSubscriptions } = await Purchases.getPurchaserInfo();
+    if (activeSubscriptions && activeSubscriptions.includes(subscripId)) {
+      console.log('User is subscribed!');
+      context.setIsSubscribed(true);
+      return true;
+    } else {
+      console.log('User is not subscribed.');
+      context.setIsSubscribed(false);
+      return false;
+    }
   };
 
-  return { checkIfSubscribed };
+  const getDetailedSubscriptionInfo = async () => {
+    const { entitlements } = await Purchases.getPurchaserInfo();
+    return {
+      originalPurchaseDate: entitlements.active.montly.originalPurchaseDate,
+      renewsOn: entitlements.active.montly.expirationDate,
+    };
+  };
+
+  return { checkIfSubscribed, getDetailedSubscriptionInfo };
 };
 
 export default useIsSubscribed;

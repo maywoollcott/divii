@@ -35,17 +35,6 @@ const SignIn: React.FC = () => {
 
   const { checkIfSubscribed } = useIsSubscribed();
 
-  const isFocused = useIsFocused();
-
-  const isSubscribed = async () => {
-    const isSubscribed = await checkIfSubscribed();
-    if (isSubscribed) {
-      context.setIsSubscribed(true);
-    } else {
-      context.setIsSubscribed(false);
-    }
-  };
-
   const isAuthenticatedCheck = async () => {
     let token = await SecureStore.getItemAsync('DIVII_TOKEN_AUTH');
     if (token !== null) {
@@ -59,7 +48,7 @@ const SignIn: React.FC = () => {
         const readings = await getReadingsByUser(user._id);
         context.setReadings(readings);
         context.setIsLoading(false);
-        await isSubscribed();
+        await checkIfSubscribed(user.id);
       } else {
         if (res.message) {
           context.setModalText(res.message);
@@ -84,11 +73,11 @@ const SignIn: React.FC = () => {
         if (token) {
           await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
         }
-        await isSubscribed();
         context.setIsAuthenticated(true);
         context.setCurrentUser(user);
         const readings = await getReadingsByUser(user._id);
         context.setReadings(readings);
+        await checkIfSubscribed(user._id);
         context.setIsLoading(false);
       } else if (res.status === 409) {
         //no user exists

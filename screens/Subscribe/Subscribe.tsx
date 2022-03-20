@@ -16,7 +16,7 @@ const Subscribe = () => {
   const { purchaseSubscription } = usePurchaseSubscription();
 
   const purchaseHandler = async () => {
-    await purchaseSubscription();
+    await purchaseSubscription(context.currentUser._id);
   };
 
   if (!context.isLoading) {
