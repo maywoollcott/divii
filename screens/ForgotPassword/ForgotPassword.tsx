@@ -12,7 +12,7 @@ import {
   Button,
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { styles } from './SignIn.style';
+import { styles } from './ForgotPassword.style';
 import { COLORS } from '../../globalStyles';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Context } from '../../Context';
@@ -24,95 +24,16 @@ import { BasicModal } from '../../components/Modal/BasicModal';
 import useIsSubscribed from '../../hooks/useIsSubscribed';
 import * as InAppPurchases from 'expo-in-app-purchases';
 
-const SignIn: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
+
+  const [currentResetState, useCurrentResetState] = useState(0);
 
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
-
-  const { checkIfSubscribed } = useIsSubscribed();
-
-  const isAuthenticatedCheck = async () => {
-    let token = await SecureStore.getItemAsync('DIVII_TOKEN_AUTH');
-    if (token !== null) {
-      context.setIsLoading(true);
-      const res: loginResponse = await getUserByToken(token);
-      console.log(res);
-      if (res.status === 200) {
-        const { user } = res;
-        context.setIsAuthenticated(true);
-        context.setCurrentUser(user);
-        const readings = await getReadingsByUser(user._id);
-        context.setReadings(readings);
-        context.setIsLoading(false);
-        await checkIfSubscribed(user.id);
-      } else {
-        if (res.message) {
-          context.setModalText(res.message);
-          context.setModalOpen(true);
-        }
-        context.setIsLoading(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    isAuthenticatedCheck();
-  }, []);
-
-  const loginButtonHandler = async () => {
-    Keyboard.dismiss();
-    try {
-      context.setIsLoading(true);
-      const res: loginResponse = await login(loginData.email.toLowerCase(), loginData.password);
-      if (res.status === 200) {
-        const { user, token } = res;
-        if (token) {
-          await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
-        }
-        context.setIsAuthenticated(true);
-        context.setCurrentUser(user);
-        const readings = await getReadingsByUser(user._id);
-        context.setReadings(readings);
-        await checkIfSubscribed(user._id);
-        context.setIsLoading(false);
-      } else if (res.status === 409) {
-        //no user exists
-        if (res.message) {
-          context.setModalText(res.message);
-          context.setModalOpen(true);
-          console.log(res.message);
-        }
-        setTimeout(() => {
-          context.setIsLoading(false);
-        }, 1000);
-      } else if (res.status === 400) {
-        //wrong password
-        if (res.message) {
-          context.setModalText(res.message);
-          context.setModalOpen(true);
-          console.log(res.message);
-        }
-        context.setIsLoading(false);
-      } else {
-        //network connection
-        if (res.message) {
-          context.setModalText(res.message);
-          context.setModalOpen(true);
-          console.log(res.message);
-        }
-        context.setIsLoading(false);
-      }
-    } catch (err: any) {
-      context.setModalText('Network error. Please check your internet connection.');
-      context.setModalOpen(true);
-      context.setIsLoading(false);
-      console.log(err);
-    }
-  };
 
   if (!context.isLoading) {
     return (
@@ -159,8 +80,8 @@ const SignIn: React.FC = () => {
             <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
               <Text style={styles.rerouteTextPassword}>Forgot password?</Text>
             </TouchableOpacity>
+            <Text style={styles.rerouteText}>Don't have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-              <Text style={styles.rerouteText}>Don't have an account?</Text>
               <Text style={styles.rerouteText}> Sign up here.</Text>
             </TouchableOpacity>
           </View>
@@ -172,4 +93,4 @@ const SignIn: React.FC = () => {
   return <AppLoading />;
 };
 
-export default SignIn;
+export default ForgotPassword;

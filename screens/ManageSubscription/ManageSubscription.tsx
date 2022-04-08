@@ -37,10 +37,20 @@ const ManageSubscription = () => {
   };
   const { checkIfSubscribed, getDetailedSubscriptionInfo } = useIsSubscribed();
 
+  useEffect(() => {
+    getSubscriptionInfo();
+  }, []);
+
   const getSubscriptionInfo = async () => {
     const res = await getDetailedSubscriptionInfo();
-    let renewalDate = moment(new Date(res.renewsOn)).format('MMMM D, YYYY');
-    setRenewsOn(renewalDate);
+    if (res.renewsOn) {
+      let renewalDate = moment(new Date(res.renewsOn)).format('MMMM D, YYYY');
+      setRenewsOn(renewalDate);
+    }
+  };
+
+  const redirectToSubscriptions = () => {
+    Linking.openURL('https://apps.apple.com/account/subscriptions');
   };
 
   if (!context.isLoading) {
@@ -69,11 +79,14 @@ const ManageSubscription = () => {
             <Text style={styles.headerText}>Manage Subscription</Text>
           </View>
           <View style={styles.bodyContainer}>
-            <Text>{renewsOn}</Text>
+            <Text style={styles.subscriptionText}>
+              Your current subscription renews on {renewsOn} for another month.
+            </Text>
+            <Text style={styles.subscriptionText}>Click below to manage your subscription in IOS settings.</Text>
+            <TouchableOpacity style={styles.basicButton} onPress={redirectToSubscriptions}>
+              <Text style={styles.buttonText}>Subscription Settings</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.basicButton} onPress={getSubscriptionInfo}>
-            <Text style={styles.buttonText}>Subscription Info</Text>
-          </TouchableOpacity>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
