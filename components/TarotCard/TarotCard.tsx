@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TouchableWithoutFeedback, Animated, View, Text, Image } from 'react-native';
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 import FlipCard from 'react-native-flip-card';
 import { styles } from './TarotCard.style';
 import * as Images from '../../assets/images/imagesIndex';
@@ -30,13 +30,19 @@ export const TarotCard: React.FC<ITarotProps> = ({
     <FlipCard flipHorizontal={true} flipVertical={false} onFlipEnd={onCardFlip}>
       <View style={styles.card}>
         <Image
-          source={backNumber ? Images.images[backNumber] : Images.images.sunBack}
+          source={
+            backNumber ? Images.images[backNumber] : Images.images.sunBack
+          }
           width={width}
           height={width * 1.65}
           style={
             rightSideUp
               ? { ...styles.cardContainer, width: width, height: width * 1.65 }
-              : { ...styles.reverseCardContainer, width: width, height: width * 1.65 }
+              : {
+                  ...styles.reverseCardContainer,
+                  width: width,
+                  height: width * 1.65,
+                }
           }
         />
       </View>
@@ -46,7 +52,11 @@ export const TarotCard: React.FC<ITarotProps> = ({
           style={
             rightSideUp
               ? { ...styles.cardContainer, width: width, height: width * 1.65 }
-              : { ...styles.reverseCardContainer, width: width, height: width * 1.65 }
+              : {
+                  ...styles.reverseCardContainer,
+                  width: width,
+                  height: width * 1.65,
+                }
           }
           fallbackSource={Images.images.sunBack}
         />

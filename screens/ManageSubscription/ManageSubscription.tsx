@@ -4,26 +4,19 @@ import {
   Text,
   TouchableOpacity,
   Linking,
-  Image,
-  ScrollView,
-  TextInput,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
 } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './ManageSubscription.style';
 import { Context } from '../../Context';
 import AppLoading from '../AppLoading/AppLoading';
 import { COLORS } from '../../globalStyles';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { BasicModal } from '../../components/Modal/BasicModal';
 import useIsSubscribed from '../../hooks/useIsSubscribed';
-import Purchases from 'react-native-purchases';
 import moment from 'moment';
 
 const ManageSubscription = () => {
@@ -35,7 +28,7 @@ const ManageSubscription = () => {
   const goBack = () => {
     navigate.goBack();
   };
-  const { checkIfSubscribed, getDetailedSubscriptionInfo } = useIsSubscribed();
+  const { getDetailedSubscriptionInfo } = useIsSubscribed();
 
   useEffect(() => {
     getSubscriptionInfo();
@@ -82,8 +75,13 @@ const ManageSubscription = () => {
             <Text style={styles.subscriptionText}>
               Your current subscription renews on {renewsOn} for another month.
             </Text>
-            <Text style={styles.subscriptionText}>Click below to manage your subscription in IOS settings.</Text>
-            <TouchableOpacity style={styles.basicButton} onPress={redirectToSubscriptions}>
+            <Text style={styles.subscriptionText}>
+              Click below to manage your subscription in IOS settings.
+            </Text>
+            <TouchableOpacity
+              style={styles.basicButton}
+              onPress={redirectToSubscriptions}
+            >
               <Text style={styles.buttonText}>Subscription Settings</Text>
             </TouchableOpacity>
           </View>

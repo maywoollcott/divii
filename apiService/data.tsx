@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { updateUserObject } from '../types';
+import axios from "axios";
+import { updateUserObject } from "../types";
 
 const BASE_URL = `https://divii-server.herokuapp.com`;
 // const BASE_URL = `http://192.168.1.76:3002`;
@@ -39,8 +39,11 @@ export const saveReading = (reading: any) => {
   });
 };
 
-export const updateUser = async (email: string, updateObject: updateUserObject) => {
-  console.log('updating');
+export const updateUser = async (
+  email: string,
+  updateObject: updateUserObject
+) => {
+  console.log("updating");
   console.log(email);
   console.log(updateObject);
   try {

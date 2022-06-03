@@ -1,4 +1,3 @@
-import * as InAppPurchases from 'expo-in-app-purchases';
 import React from 'react';
 import Purchases from 'react-native-purchases';
 import { Context } from '../Context';
@@ -11,7 +10,10 @@ const usePurchaseSubscription = () => {
     await Purchases.setup('appl_OWPeHBZFZEkiBqpCcFrvIhHSAQx', userId);
     try {
       const offerings = await Purchases.getOfferings();
-      if (offerings.current?.availablePackages !== null && offerings.current?.availablePackages[0]) {
+      if (
+        offerings.current?.availablePackages !== null &&
+        offerings.current?.availablePackages[0]
+      ) {
         // Display current offering with offerings.current
         let packageToBuy = offerings.current?.availablePackages[0];
         try {

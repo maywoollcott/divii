@@ -1,16 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity, Image, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
-import { getAllSpreads, getCardByNumber } from '../../apiService/data';
-import { Context } from '../../Context';
+import { getAllSpreads } from '../../apiService/data';
 import { styles } from './SpreadIndex.style';
 import { SpreadTouchable } from '../../components/Spread/SpreadTouchable';
 import { COLORS } from '../../globalStyles';
 import { images } from '../../assets/images/imagesIndex';
-
-const { width, height } = Dimensions.get('window');
 
 const SpreadIndex = () => {
   const navigation = useNavigation();
@@ -37,7 +41,10 @@ const SpreadIndex = () => {
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.touchableContainer}>
-            <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
+            <TouchableOpacity
+              onPress={goBack}
+              style={styles.backArrowContainer}
+            >
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
           </View>
@@ -50,7 +57,11 @@ const SpreadIndex = () => {
             spreads.map((spread) => {
               if (spread.spreadNumber !== 8) {
                 return (
-                  <SpreadTouchable name={spread.name} onPress={() => onSpreadPress(spread)} key={spread.spreadNumber} />
+                  <SpreadTouchable
+                    name={spread.name}
+                    onPress={() => onSpreadPress(spread)}
+                    key={spread.spreadNumber}
+                  />
                 );
               }
             })}

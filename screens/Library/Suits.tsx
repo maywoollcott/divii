@@ -4,12 +4,7 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  Animated,
   TouchableOpacity,
-  TextInput,
-  FlatList,
-  ListRenderItem,
-  Image,
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -21,11 +16,10 @@ import { styles } from './Suits.style';
 import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const Suits = () => {
   const [allCardsData, setAllCardsData] = useState<Card[] | null>(null);
-  const [searchInput, setSearchInput] = useState<String>('');
   const [displayWands, setDisplayWands] = useState<boolean>(false);
   const [displayCups, setDisplayCups] = useState<boolean>(false);
   const [displaySwords, setDisplaySwords] = useState<boolean>(false);
@@ -40,7 +34,6 @@ const Suits = () => {
   useEffect(() => {
     const fetchCards = async () => {
       const cards = await getAllCards();
-      const pentacles = cards.filter((card: Card) => card.suit === 'Pentacles');
       setAllCardsData(cards);
     };
 
@@ -73,14 +66,20 @@ const Suits = () => {
           </View>
           <View style={styles.descriptionContainer}>
             <Text style={styles.headerDescription}>
-              Each Minor Arcana suit shares properties with one of the elements of the Zodiac (fire, earth, air, and
-              water). In turn, each suit is associated with the three signs ruled by their corresponding element. If
-              you're still getting familiar with the meaning behind the Minor Arcana cards (but already have the basics
-              of astrology down pat) this parallel may offer some clarity around the suits' realm of influence.
+              Each Minor Arcana suit shares properties with one of the elements
+              of the Zodiac (fire, earth, air, and water). In turn, each suit is
+              associated with the three signs ruled by their corresponding
+              element. If you're still getting familiar with the meaning behind
+              the Minor Arcana cards (but already have the basics of astrology
+              down pat) this parallel may offer some clarity around the suits'
+              realm of influence.
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.expandable} onPress={() => setDisplayWands(!displayWands)}>
+        <TouchableOpacity
+          style={styles.expandable}
+          onPress={() => setDisplayWands(!displayWands)}
+        >
           <Text style={styles.expandableText}>Wands</Text>
           {displayWands && <View style={styles.dividerLine}></View>}
           <View style={styles.rightArrowIcon}>
@@ -94,11 +93,15 @@ const Suits = () => {
             <View style={styles.cardsContainer}>
               <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>
-                  The Suit of Wands Tarot card meanings are associated with primal energy, spirituality, inspiration,
-                  determination, strength, intuition, creativity, ambition and expansion, original thought and the seeds
-                  through which life springs forth. The Suit of Wands is associated with the element of Fire. Fire is
-                  hot, wild, unpredictable, and energetic. It can be creative in helping us to cook food or build tools,
-                  or it can be destructive, like a devastating bush fire or house fire.
+                  The Suit of Wands Tarot card meanings are associated with
+                  primal energy, spirituality, inspiration, determination,
+                  strength, intuition, creativity, ambition and expansion,
+                  original thought and the seeds through which life springs
+                  forth. The Suit of Wands is associated with the element of
+                  Fire. Fire is hot, wild, unpredictable, and energetic. It can
+                  be creative in helping us to cook food or build tools, or it
+                  can be destructive, like a devastating bush fire or house
+                  fire.
                 </Text>
               </View>
               {filterBySuit('Wands')?.map((card) => {
@@ -114,7 +117,10 @@ const Suits = () => {
             </View>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.expandable} onPress={() => setDisplayCups(!displayCups)}>
+        <TouchableOpacity
+          style={styles.expandable}
+          onPress={() => setDisplayCups(!displayCups)}
+        >
           <Text style={styles.expandableText}>Cups</Text>
           {displayCups && <View style={styles.dividerLine}></View>}
           <View style={styles.rightArrowIcon}>
@@ -128,8 +134,10 @@ const Suits = () => {
             <View style={styles.cardsContainer}>
               <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>
-                  The Suit of Cups represents your feelings, emotions, intuition and creativity. The Cups cards often
-                  appear in Tarot readings about relationships and your emotional connection with yourself and others.
+                  The Suit of Cups represents your feelings, emotions, intuition
+                  and creativity. The Cups cards often appear in Tarot readings
+                  about relationships and your emotional connection with
+                  yourself and others.
                 </Text>
               </View>
               {filterBySuit('Cups')?.map((card) => {
@@ -145,7 +153,10 @@ const Suits = () => {
             </View>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.expandable} onPress={() => setDisplaySwords(!displaySwords)}>
+        <TouchableOpacity
+          style={styles.expandable}
+          onPress={() => setDisplaySwords(!displaySwords)}
+        >
           <Text style={styles.expandableText}>Swords</Text>
           {displaySwords && <View style={styles.dividerLine}></View>}
           <View style={styles.rightArrowIcon}>
@@ -159,11 +170,15 @@ const Suits = () => {
             <View style={styles.cardsContainer}>
               <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>
-                  The Suit of Swords Tarot cards deal with the mental level of consciousness that is centered around the
-                  mind and the intellect. Swords mirror the quality of mind present in your thoughts, attitudes, and
-                  beliefs. Swords are often double-edged and in this way the Suit of Swords symbolises the fine balance
-                  between intellect and power and how these two elements can be used for good or evil. As such, the
-                  Swords must be balanced by spirit (Wands) and feeling (Cups) to have the most positive effect.
+                  The Suit of Swords Tarot cards deal with the mental level of
+                  consciousness that is centered around the mind and the
+                  intellect. Swords mirror the quality of mind present in your
+                  thoughts, attitudes, and beliefs. Swords are often
+                  double-edged and in this way the Suit of Swords symbolises the
+                  fine balance between intellect and power and how these two
+                  elements can be used for good or evil. As such, the Swords
+                  must be balanced by spirit (Wands) and feeling (Cups) to have
+                  the most positive effect.
                 </Text>
               </View>
               {filterBySuit('Swords')?.map((card) => {
@@ -179,7 +194,10 @@ const Suits = () => {
             </View>
           )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.expandable} onPress={() => setDisplayPentacles(!displayPentacles)}>
+        <TouchableOpacity
+          style={styles.expandable}
+          onPress={() => setDisplayPentacles(!displayPentacles)}
+        >
           <Text style={styles.expandableText}>Pentacles</Text>
           {displayPentacles && <View style={styles.dividerLine}></View>}
           <View style={styles.rightArrowIcon}>
@@ -193,10 +211,13 @@ const Suits = () => {
             <View style={styles.cardsContainer}>
               <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>
-                  The Suit of Pentacles Tarot cards deal with the physical or external level of consciousness and thus
-                  mirror the outer situations of your health, finances, work, and creativity. They have to do with what
-                  we make of our outer surroundings – how we create it, shape it, transform it and grow it. On a more
-                  esoteric level, Pentacles are associated with the ego, self-esteem and self-image.
+                  The Suit of Pentacles Tarot cards deal with the physical or
+                  external level of consciousness and thus mirror the outer
+                  situations of your health, finances, work, and creativity.
+                  They have to do with what we make of our outer surroundings –
+                  how we create it, shape it, transform it and grow it. On a
+                  more esoteric level, Pentacles are associated with the ego,
+                  self-esteem and self-image.
                 </Text>
               </View>
               {filterBySuit('Pentacles')?.map((card) => {

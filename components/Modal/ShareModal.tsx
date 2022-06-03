@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
-  Text,
   Modal,
   Platform,
-  Button,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Linking,
   Dimensions,
 } from 'react-native';
 import { styles } from './ShareModal.style';
 import { BlurView } from 'expo-blur';
 import SharingCard from '../SharingCard/SharingCard';
-import { Card, SpreadType } from '../../types';
+import { Card } from '../../types';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { COLORS } from '../../globalStyles';
@@ -22,7 +19,7 @@ import Share from 'react-native-share';
 import { Context } from '../../Context';
 import { captureRef } from 'react-native-view-shot';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 interface IShareModalProps {
   animationType: any;
   transparent: boolean;
@@ -42,7 +39,6 @@ export const ShareModal: React.FC<IShareModalProps> = ({
   spreadName,
   upright,
 }) => {
-  const context = useContext(Context);
   const [instagramAccess, setInstagramAccess] = useState(false);
 
   const viewRef = useRef();
@@ -51,7 +47,9 @@ export const ShareModal: React.FC<IShareModalProps> = ({
     if (Platform.OS === 'ios') {
       Linking.canOpenURL('instagram://').then((val) => setInstagramAccess(val));
     } else {
-      Share.isPackageInstalled('com.instagram.android').then(({ isInstalled }) => setInstagramAccess(isInstalled));
+      Share.isPackageInstalled('com.instagram.android').then(
+        ({ isInstalled }) => setInstagramAccess(isInstalled)
+      );
     }
   }, []);
 
@@ -90,11 +88,19 @@ export const ShareModal: React.FC<IShareModalProps> = ({
   };
 
   return (
-    <Modal animationType={animationType} transparent={transparent} visible={visible} onRequestClose={onRequestClose}>
+    <Modal
+      animationType={animationType}
+      transparent={transparent}
+      visible={visible}
+      onRequestClose={onRequestClose}
+    >
       <BlurView intensity={100} tint={'dark'} style={styles.screenContainer}>
         <View style={styles.modalContainer}>
           <View style={styles.closeButtonContainer}>
-            <TouchableOpacity style={styles.basicButton} onPress={onRequestClose}>
+            <TouchableOpacity
+              style={styles.basicButton}
+              onPress={onRequestClose}
+            >
               <AntDesign name='close' size={30} color={COLORS.parchment} />
             </TouchableOpacity>
           </View>
@@ -102,12 +108,23 @@ export const ShareModal: React.FC<IShareModalProps> = ({
             <SharingCard cards={cards} spread={spreadName} upright={upright} />
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.basicButton} onPress={instagramStoryHandler}>
-              <FontAwesome name='instagram' size={width * 0.15} color={COLORS.parchment} />
+            <TouchableOpacity
+              style={styles.basicButton}
+              onPress={instagramStoryHandler}
+            >
+              <FontAwesome
+                name='instagram'
+                size={width * 0.15}
+                color={COLORS.parchment}
+              />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={generalShareHandler}>
-              <Feather name='share' size={width * 0.13} color={COLORS.parchment} />
+              <Feather
+                name='share'
+                size={width * 0.13}
+                color={COLORS.parchment}
+              />
             </TouchableOpacity>
           </View>
         </View>

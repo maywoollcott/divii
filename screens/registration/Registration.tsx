@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
@@ -25,7 +24,6 @@ import { TextInputMask } from 'react-native-masked-text';
 import { BasicModal } from '../../components/Modal/BasicModal';
 import { loginResponse } from '../../types';
 import { validateEmail } from '../../utils/emailValidation';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const Registration: React.FC = () => {
   const navigation = useNavigation();
@@ -40,14 +38,20 @@ const Registration: React.FC = () => {
   });
 
   const signUpHandler = async () => {
-    if (formData.email.length < 1 || formData.name.length < 1 || formData.birthdate.length < 1) {
+    if (
+      formData.email.length < 1 ||
+      formData.name.length < 1 ||
+      formData.birthdate.length < 1
+    ) {
       context.setModalText('Please fill in all required fields.');
       context.setModalOpen(true);
       return;
     }
 
     if (formData.password.length < 6) {
-      context.setModalText('Please choose a password of at least 6 characters.');
+      context.setModalText(
+        'Please choose a password of at least 6 characters.'
+      );
       context.setModalOpen(true);
       return;
     }
@@ -107,7 +111,9 @@ const Registration: React.FC = () => {
         context.setIsLoading(false);
       }
     } catch (err: any) {
-      context.setModalText('Network error. Please check your internet connection.');
+      context.setModalText(
+        'Network error. Please check your internet connection.'
+      );
       context.setModalOpen(true);
       context.setIsLoading(false);
     }
@@ -154,12 +160,18 @@ const Registration: React.FC = () => {
                 placeholder='Password'
                 secureTextEntry={true}
                 placeholderTextColor={COLORS.parchment}
-                onChangeText={(text) => setFormData({ ...formData, password: text })}
+                onChangeText={(text) =>
+                  setFormData({ ...formData, password: text })
+                }
                 autoCapitalize='none'
               />
               {formData.password.length >= 6 && (
                 <View style={styles.icon}>
-                  <FontAwesomeIcon color={COLORS.parchment} size={25} icon={faCheckCircle} />
+                  <FontAwesomeIcon
+                    color={COLORS.parchment}
+                    size={25}
+                    icon={faCheckCircle}
+                  />
                 </View>
               )}
             </View>
@@ -169,14 +181,21 @@ const Registration: React.FC = () => {
                 placeholder='Confirm Password'
                 secureTextEntry={true}
                 placeholderTextColor={COLORS.parchment}
-                onChangeText={(text) => setFormData({ ...formData, passwordCheck: text })}
+                onChangeText={(text) =>
+                  setFormData({ ...formData, passwordCheck: text })
+                }
                 autoCapitalize='none'
               />
-              {formData.passwordCheck === formData.password && formData.password.length >= 6 && (
-                <View style={styles.icon}>
-                  <FontAwesomeIcon color={COLORS.parchment} size={25} icon={faCheckCircle} />
-                </View>
-              )}
+              {formData.passwordCheck === formData.password &&
+                formData.password.length >= 6 && (
+                  <View style={styles.icon}>
+                    <FontAwesomeIcon
+                      color={COLORS.parchment}
+                      size={25}
+                      icon={faCheckCircle}
+                    />
+                  </View>
+                )}
             </View>
             <TextInputMask
               type={'datetime'}
@@ -192,7 +211,10 @@ const Registration: React.FC = () => {
                 setFormData({ ...formData, birthdate: text });
               }}
             />
-            <TouchableOpacity onPress={signUpHandler} style={styles.basicButton}>
+            <TouchableOpacity
+              onPress={signUpHandler}
+              style={styles.basicButton}
+            >
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>

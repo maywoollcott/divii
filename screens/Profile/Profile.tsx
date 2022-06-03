@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { logout } from '../../apiService/loginFlow';
 import { Ionicons } from '@expo/vector-icons';
-import { getReadingsByUser, getCardByNumber } from '../../apiService/data';
+import { getCardByNumber } from '../../apiService/data';
 import { styles } from './Profile.style';
 import { Context } from '../../Context';
-import { Reading } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
 import { arcanaNames } from '../../copy/Cards';
-import Share from 'react-native-share';
 import { COLORS } from '../../globalStyles';
 
 const Profile = () => {
@@ -54,11 +52,16 @@ const Profile = () => {
   }, [context.readings]);
 
   function getMostFrequent(arr: any) {
-    const hashmap = arr.reduce((acc: { [x: string]: any }, val: string | number) => {
-      acc[val] = (acc[val] || 0) + 1;
-      return acc;
-    }, {});
-    return Object.keys(hashmap).reduce((a, b) => (hashmap[a] > hashmap[b] ? a : b));
+    const hashmap = arr.reduce(
+      (acc: { [x: string]: any }, val: string | number) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+      },
+      {}
+    );
+    return Object.keys(hashmap).reduce((a, b) =>
+      hashmap[a] > hashmap[b] ? a : b
+    );
   }
 
   const fetchMostFreqCard = async (cardNumber: number) => {
@@ -78,13 +81,20 @@ const Profile = () => {
 
   const renderMostFrequentlyDrawnCard = () => {
     if (context.readings.length === 0) {
-      return <Text style={styles.bodyText}>You don't have a most frequently drawn card yet.</Text>;
+      return (
+        <Text style={styles.bodyText}>
+          You don't have a most frequently drawn card yet.
+        </Text>
+      );
     } else {
       return (
         <TouchableOpacity onPress={() => navigateToCard(mostFrequentCard)}>
           <Text style={styles.bodyText}>
             Your most frequently drawn card is the
-            <Text style={styles.bodyTextHighlight}> {arcanaNames[mostFrequentCard]}.</Text>
+            <Text style={styles.bodyTextHighlight}>
+              {' '}
+              {arcanaNames[mostFrequentCard]}.
+            </Text>
           </Text>
         </TouchableOpacity>
       );
@@ -93,7 +103,11 @@ const Profile = () => {
 
   const renderFavoriteSpread = () => {
     if (context.readings.length === 0) {
-      return <Text style={styles.bodyText}>You don't have a favorite spread yet.</Text>;
+      return (
+        <Text style={styles.bodyText}>
+          You don't have a favorite spread yet.
+        </Text>
+      );
     } else {
       return (
         <Text style={styles.bodyText}>
@@ -111,28 +125,47 @@ const Profile = () => {
         <View style={styles.screenContainer}>
           <View style={styles.touchableContainer}>
             <TouchableOpacity onPress={navigateToSettings}>
-              <Ionicons name='ios-settings-outline' size={28} color={COLORS.grayBlue} />
+              <Ionicons
+                name='ios-settings-outline'
+                size={28}
+                color={COLORS.grayBlue}
+              />
             </TouchableOpacity>
           </View>
           <View>
-            <Text style={styles.headerText}>Hi, {context.currentUser?.name}.</Text>
+            <Text style={styles.headerText}>
+              Hi, {context.currentUser?.name}.
+            </Text>
           </View>
           <View style={styles.bodyContainer}>
             <View style={styles.bodyTextSingleContainer}>
               <Text style={styles.bodyText}>
                 You’ve been divinating since
-                <Text style={styles.bodyTextHighlight}> {dateJoined.format('MMMM D, YYYY')}.</Text>
+                <Text style={styles.bodyTextHighlight}>
+                  {' '}
+                  {dateJoined.format('MMMM D, YYYY')}.
+                </Text>
               </Text>
             </View>
             <View style={styles.bodyTextSingleContainer}>
               <Text style={styles.bodyText}>You’ve completed</Text>
-              <Text style={styles.bodyTextHighlight}> {context.readings?.length} </Text>
+              <Text style={styles.bodyTextHighlight}>
+                {' '}
+                {context.readings?.length}{' '}
+              </Text>
               <Text style={styles.bodyText}> readings.</Text>
             </View>
-            <View style={styles.bodyTextSingleContainer}>{renderMostFrequentlyDrawnCard()}</View>
-            <View style={styles.bodyTextSingleContainer}>{renderFavoriteSpread()}</View>
+            <View style={styles.bodyTextSingleContainer}>
+              {renderMostFrequentlyDrawnCard()}
+            </View>
+            <View style={styles.bodyTextSingleContainer}>
+              {renderFavoriteSpread()}
+            </View>
           </View>
-          <TouchableOpacity style={styles.basicButton} onPress={logoutButtonHandler}>
+          <TouchableOpacity
+            style={styles.basicButton}
+            onPress={logoutButtonHandler}
+          >
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>
         </View>

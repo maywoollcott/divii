@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { COLORS } from '../../globalStyles';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
   screenContainer: {

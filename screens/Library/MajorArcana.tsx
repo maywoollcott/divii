@@ -3,13 +3,9 @@ import {
   View,
   Text,
   SafeAreaView,
-  ScrollView,
-  Animated,
   TouchableOpacity,
   TextInput,
   FlatList,
-  ListRenderItem,
-  Image,
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -21,7 +17,7 @@ import { styles } from './MajorArcana.style';
 import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const MajorArcana = () => {
   const [allCardsData, setAllCardsData] = useState<Card[] | null>(null);
@@ -38,7 +34,9 @@ const MajorArcana = () => {
   useEffect(() => {
     const fetchCards = async () => {
       const cards = await getAllCards();
-      const majorArcanaCards = cards.filter((card: Card) => card.arcana === 'Major');
+      const majorArcanaCards = cards.filter(
+        (card: Card) => card.arcana === 'Major'
+      );
       setAllCardsData(majorArcanaCards);
       setFilteredCards(majorArcanaCards);
     };
@@ -47,7 +45,9 @@ const MajorArcana = () => {
   }, []);
 
   useEffect(() => {
-    const tempFilteredCards = allCardsData?.filter((card) => card.name.toLowerCase().includes(searchInput.toString()));
+    const tempFilteredCards = allCardsData?.filter((card) =>
+      card.name.toLowerCase().includes(searchInput.toString())
+    );
     if (tempFilteredCards) setFilteredCards(tempFilteredCards);
   }, [searchInput]);
 
@@ -89,7 +89,12 @@ const MajorArcana = () => {
               style={styles.input}
             />
             {displaySearchIcon && searchInput === '' ? (
-              <AntDesign name='search1' size={24} color={COLORS.grayBlue} style={styles.searchIcon} />
+              <AntDesign
+                name='search1'
+                size={24}
+                color={COLORS.grayBlue}
+                style={styles.searchIcon}
+              />
             ) : null}
           </View>
         </View>
@@ -101,7 +106,12 @@ const MajorArcana = () => {
             keyExtractor={(item) => item.name}
             numColumns={2}
             renderItem={({ item, index }) => (
-              <NonFlipTarotCard card={item} width={width * 0.45} key={index} onPress={() => navigateToCard(item)} />
+              <NonFlipTarotCard
+                card={item}
+                width={width * 0.45}
+                key={index}
+                onPress={() => navigateToCard(item)}
+              />
             )}
           ></FlatList>
         )}

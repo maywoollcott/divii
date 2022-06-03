@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, Platform, StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   card: {

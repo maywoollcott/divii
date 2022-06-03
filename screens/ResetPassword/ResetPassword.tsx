@@ -1,33 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  Linking,
-  Image,
-  ScrollView,
   TextInput,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
 } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
-import { logout } from '../../apiService/loginFlow';
 import { Feather } from '@expo/vector-icons';
-import { getReadingsByUser, getCardByNumber, updateUser } from '../../apiService/data';
+import { updateUser } from '../../apiService/data';
 import { styles } from './ResetPassword.style';
 import { Context } from '../../Context';
-import { Reading, updatedUserResponse, updateUserObject } from '../../types';
+import { updatedUserResponse } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
-import { arcanaNames } from '../../copy/Cards';
-import Share from 'react-native-share';
 import { COLORS } from '../../globalStyles';
-import { TextInputMask } from 'react-native-masked-text';
-import { validateEmail } from '../../utils/emailValidation';
-import { determineAstrologicalSign } from '../registration/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { BasicModal } from '../../components/Modal/BasicModal';
@@ -35,7 +24,6 @@ const ResetPassword = () => {
   const context = React.useContext(Context);
   const navigate = useNavigation();
 
-  const [birthdate, setBirthdate] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -45,7 +33,9 @@ const ResetPassword = () => {
 
   const onSaveHandler = async () => {
     if (password.length < 6) {
-      context.setModalText('Please choose a password of at least 6 characters.');
+      context.setModalText(
+        'Please choose a password of at least 6 characters.'
+      );
       context.setModalOpen(true);
       return;
     }
@@ -63,7 +53,10 @@ const ResetPassword = () => {
     Keyboard.dismiss();
 
     try {
-      const res: updatedUserResponse = await updateUser(context.currentUser.email, updateObject);
+      const res: updatedUserResponse = await updateUser(
+        context.currentUser.email,
+        updateObject
+      );
       console.log(res);
       if (res.status === 200) {
         context.setCurrentUser(res.updatedUser);
@@ -112,7 +105,11 @@ const ResetPassword = () => {
               />
               {password.length >= 6 && (
                 <View style={styles.icon}>
-                  <FontAwesomeIcon color={COLORS.grayBlue} size={25} icon={faCheckCircle} />
+                  <FontAwesomeIcon
+                    color={COLORS.grayBlue}
+                    size={25}
+                    icon={faCheckCircle}
+                  />
                 </View>
               )}
             </View>
@@ -127,7 +124,11 @@ const ResetPassword = () => {
               />
               {confirmPassword === password && password.length >= 6 && (
                 <View style={styles.icon}>
-                  <FontAwesomeIcon color={COLORS.grayBlue} size={25} icon={faCheckCircle} />
+                  <FontAwesomeIcon
+                    color={COLORS.grayBlue}
+                    size={25}
+                    icon={faCheckCircle}
+                  />
                 </View>
               )}
             </View>

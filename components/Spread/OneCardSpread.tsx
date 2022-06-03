@@ -3,14 +3,18 @@ import { Dimensions, View } from 'react-native';
 import { styles } from './OneCardSpreadStyle';
 import { TarotCard } from '../TarotCard/TarotCard';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 interface IOneCardSpread {
   spreadData: Array<any>;
   upright: Array<any>;
   onCardFlip: (arg0: number) => void;
 }
 
-export const OneCardSpread: React.FC<IOneCardSpread> = ({ spreadData, upright, onCardFlip }) => {
+export const OneCardSpread: React.FC<IOneCardSpread> = ({
+  spreadData,
+  upright,
+  onCardFlip,
+}) => {
   return (
     <View style={styles.spreadContainer}>
       <View style={styles.cardContainer}>

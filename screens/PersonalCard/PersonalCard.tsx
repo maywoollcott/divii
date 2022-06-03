@@ -1,31 +1,25 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import {
   View,
-  Text,
   SafeAreaView,
   ScrollView,
   Animated,
   TouchableOpacity,
-  Button,
   Dimensions,
   Platform,
   Linking,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import { getCardByNumber, saveReading, getReadingsByUser } from '../../apiService/data';
-import { getCardNumbers } from '../../utils/pickRandomCard';
 import { Context } from '../../Context';
 import { styles } from './PersonalCard.style';
 import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
 import AppLoading from '../AppLoading/AppLoading';
-import { ShareModal } from '../../components/Modal/ShareModal';
 import Share from 'react-native-share';
 import { captureRef } from 'react-native-view-shot';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 interface IPersonalCardProps {
   route?: PersonalCardParams;
@@ -55,7 +49,9 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
     if (Platform.OS === 'ios') {
       Linking.canOpenURL('instagram://').then((val) => setInstagramAccess(val));
     } else {
-      Share.isPackageInstalled('com.instagram.android').then(({ isInstalled }) => setInstagramAccess(isInstalled));
+      Share.isPackageInstalled('com.instagram.android').then(
+        ({ isInstalled }) => setInstagramAccess(isInstalled)
+      );
     }
   }, []);
 
@@ -119,11 +115,21 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
       <ScrollView contentContainerStyle={styles.screenContainer}>
         <SafeAreaView style={styles.safeContainer}>
           <View style={styles.touchableContainer}>
-            <TouchableOpacity onPress={goBack} style={styles.backArrowContainer}>
+            <TouchableOpacity
+              onPress={goBack}
+              style={styles.backArrowContainer}
+            >
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
             </TouchableOpacity>
           </View>
-          <View style={{ alignItems: 'center', height: '97%', justifyContent: 'center', marginTop: 28 }}>
+          <View
+            style={{
+              alignItems: 'center',
+              height: '97%',
+              justifyContent: 'center',
+              marginTop: 28,
+            }}
+          >
             <View ref={viewRef} style={{ height: width * 1.15 }}>
               <TarotCard
                 image={`https://diviiimages.s3.us-east-2.amazonaws.com/personalcards/card${route?.params.personalCardNumber}.png`}
@@ -137,12 +143,23 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.basicButton} onPress={instagramStoryHandler}>
-                <FontAwesome name='instagram' size={width * 0.15} color={COLORS.grayBlue} />
+              <TouchableOpacity
+                style={styles.basicButton}
+                onPress={instagramStoryHandler}
+              >
+                <FontAwesome
+                  name='instagram'
+                  size={width * 0.15}
+                  color={COLORS.grayBlue}
+                />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={generalShareHandler}>
-                <Feather name='share' size={width * 0.13} color={COLORS.grayBlue} />
+                <Feather
+                  name='share'
+                  size={width * 0.13}
+                  color={COLORS.grayBlue}
+                />
               </TouchableOpacity>
             </View>
           </View>

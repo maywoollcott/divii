@@ -3,23 +3,16 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions,
-  ImageBackground,
   SafeAreaView,
-  AsyncStorage,
 } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import moment from 'moment';
 import { Context } from '../../Context';
 import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
-import * as SecureStore from 'expo-secure-store';
 import { ScrollView } from 'react-native-gesture-handler';
 import useIsSubscribed from '../../hooks/useIsSubscribed';
 
@@ -74,18 +67,30 @@ const Landing = () => {
             <View style={styles.headerContainer}>
               <Image source={images.moons} style={styles.moons} />
               <Text style={styles.morningGreeting}>
-                Good {greeting()}, {context.currentUser?.name}. Today is {day?.format('dddd, MMMM D, YYYY')}.
+                Good {greeting()}, {context.currentUser?.name}. Today is{' '}
+                {day?.format('dddd, MMMM D, YYYY')}.
               </Text>
             </View>
             <View style={styles.actionCardContainer}>
-              <TouchableOpacity style={styles.touchable} onPress={navigateToCardOfDay}>
+              <TouchableOpacity
+                style={styles.touchable}
+                onPress={navigateToCardOfDay}
+              >
                 <Text style={styles.header}>Your Card of the Day</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.touchable} onPress={navigateToSpreadIndex}>
+              <TouchableOpacity
+                style={styles.touchable}
+                onPress={navigateToSpreadIndex}
+              >
                 <Text style={styles.header}>Choose a Spread</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.touchable} onPress={navigateToPersonalCard}>
-                <Text style={styles.header}>The {context.currentUser?.name} Card</Text>
+              <TouchableOpacity
+                style={styles.touchable}
+                onPress={navigateToPersonalCard}
+              >
+                <Text style={styles.header}>
+                  The {context.currentUser?.name} Card
+                </Text>
               </TouchableOpacity>
             </View>
           </SafeAreaView>

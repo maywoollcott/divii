@@ -3,7 +3,7 @@ import { Dimensions, View } from 'react-native';
 import { styles } from './FourCardSpread.style';
 import { TarotCard } from '../TarotCard/TarotCard';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 interface IFourCardSpread {
   spreadData: Array<any>;
@@ -11,7 +11,11 @@ interface IFourCardSpread {
   onCardFlip: (arg0: number) => void;
 }
 
-export const FourCardSpread: React.FC<IFourCardSpread> = ({ spreadData, upright, onCardFlip }) => {
+export const FourCardSpread: React.FC<IFourCardSpread> = ({
+  spreadData,
+  upright,
+  onCardFlip,
+}) => {
   return (
     <View style={styles.spreadContainer}>
       <View style={styles.cardContainer}>

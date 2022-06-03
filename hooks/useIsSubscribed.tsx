@@ -1,4 +1,3 @@
-import * as InAppPurchases from 'expo-in-app-purchases';
 import { useContext } from 'react';
 import { Context } from '../Context';
 import Purchases from 'react-native-purchases';

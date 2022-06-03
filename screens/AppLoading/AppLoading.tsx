@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { View, Text, Animated, Easing } from 'react-native';
+import React from 'react';
+import { View, Animated, Easing } from 'react-native';
 import { styles } from './AppLoading.style';
 import { images } from '../../assets/images/imagesIndex';
 

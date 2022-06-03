@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Modal,
-  Platform,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import { styles } from './BasicModal.style';
 import { BlurView } from 'expo-blur';
 

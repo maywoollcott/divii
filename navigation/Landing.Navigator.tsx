@@ -4,7 +4,6 @@ import Landing from '../screens/Landing/Landing';
 import DailyCard from '../screens/DailyCard/DailyCard';
 import SpreadIndex from '../screens/SpreadIndex/SpreadIndex';
 import Spread from '../screens/Spread/Spread';
-import { COLORS } from '../globalStyles';
 import PersonalCard from '../screens/PersonalCard/PersonalCard';
 
 const LandingStack = createStackNavigator();

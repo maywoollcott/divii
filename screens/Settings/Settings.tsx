@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, Image, ScrollView, TextInput, Keyboard } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  Keyboard,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
-import { logout } from '../../apiService/loginFlow';
 import { Feather } from '@expo/vector-icons';
-import { getReadingsByUser, getCardByNumber, updateUser } from '../../apiService/data';
+import { updateUser } from '../../apiService/data';
 import { styles } from './Settings.style';
 import { Context } from '../../Context';
-import { Reading, updatedUserResponse, updateUserObject } from '../../types';
+import { updatedUserResponse } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
-import { arcanaNames } from '../../copy/Cards';
-import Share from 'react-native-share';
 import { COLORS } from '../../globalStyles';
 import { TextInputMask } from 'react-native-masked-text';
 import { validateEmail } from '../../utils/emailValidation';
@@ -55,7 +57,10 @@ const Settings = () => {
 
     if (context.currentUser[field] !== value && value.length > 1) {
       try {
-        const res: updatedUserResponse = await updateUser(context.currentUser.email, updateObject);
+        const res: updatedUserResponse = await updateUser(
+          context.currentUser.email,
+          updateObject
+        );
         console.log(res);
         if (res.status === 200) {
           context.setCurrentUser(res.updatedUser);
@@ -90,7 +95,10 @@ const Settings = () => {
                 placeholder={context.currentUser.name}
                 placeholderTextColor={COLORS.grayBlue}
               />
-              <TouchableOpacity style={styles.touchableSaveContainer} onPress={() => onSaveHandler('name', name)}>
+              <TouchableOpacity
+                style={styles.touchableSaveContainer}
+                onPress={() => onSaveHandler('name', name)}
+              >
                 <Text style={styles.bodyTextHighlight}>Save</Text>
               </TouchableOpacity>
             </View>
@@ -117,10 +125,10 @@ const Settings = () => {
                 }}
                 style={styles.bodyText}
                 keyboardType='numeric'
-                placeholder={`${context.currentUser.birthdate.slice(5, 7)}/${context.currentUser.birthdate.slice(
-                  8,
-                  10
-                )}`}
+                placeholder={`${context.currentUser.birthdate.slice(
+                  5,
+                  7
+                )}/${context.currentUser.birthdate.slice(8, 10)}`}
                 value={birthdate}
                 placeholderTextColor={COLORS.grayBlue}
                 onChangeText={(text) => {
@@ -128,16 +136,25 @@ const Settings = () => {
                 }}
               />
               <TouchableOpacity style={styles.touchableSaveContainer}>
-                <Text style={styles.bodyTextHighlight} onPress={() => onSaveHandler('birthdate', birthdate)}>
+                <Text
+                  style={styles.bodyTextHighlight}
+                  onPress={() => onSaveHandler('birthdate', birthdate)}
+                >
                   Save
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.basicButton} onPress={onChangePasswordHandler}>
+          <TouchableOpacity
+            style={styles.basicButton}
+            onPress={onChangePasswordHandler}
+          >
             <Text style={styles.buttonText}>Change Password</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.basicButton} onPress={onManageSubscriptionHandler}>
+          <TouchableOpacity
+            style={styles.basicButton}
+            onPress={onManageSubscriptionHandler}
+          >
             <Text style={styles.buttonText}>Manage Subscription</Text>
           </TouchableOpacity>
         </View>

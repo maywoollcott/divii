@@ -1,6 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, View, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { styles } from './NonFlipTarotCard.style';
 import { Card } from '../../types';
 
@@ -11,11 +10,16 @@ interface INonFlipTarotCardProps {
   height?: number;
 }
 
-const NonFlipTarotCard: React.FC<INonFlipTarotCardProps> = ({ card, width, height, onPress }) => {
-  const navigate = useNavigation();
-
+const NonFlipTarotCard: React.FC<INonFlipTarotCardProps> = ({
+  card,
+  width,
+  onPress,
+}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={{ width: '50%', justifyContent: 'center', alignItems: 'center' }}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{ width: '50%', justifyContent: 'center', alignItems: 'center' }}
+    >
       <View style={styles.card}>
         <Image
           style={{

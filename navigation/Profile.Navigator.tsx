@@ -21,7 +21,10 @@ export const ProfileNavigator = () => {
       <ProfileStack.Screen name='CardDetails' component={CardDetails} />
       <ProfileStack.Screen name='Settings' component={Settings} />
       <ProfileStack.Screen name='ResetPassword' component={ResetPassword} />
-      <ProfileStack.Screen name='ManageSubscription' component={ManageSubscription} />
+      <ProfileStack.Screen
+        name='ManageSubscription'
+        component={ManageSubscription}
+      />
     </ProfileStack.Navigator>
   );
 };
