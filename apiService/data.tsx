@@ -1,8 +1,8 @@
-import axios from "axios";
-import { updateUserObject } from "../types";
+import axios from 'axios';
+import { updateUserObject } from '../types';
 
 const BASE_URL = `https://divii-server.herokuapp.com`;
-// const BASE_URL = `http://192.168.1.76:3002`;
+// const BASE_URL = `http://10.0.0.35:3002`;
 
 export const getCardByNumber = async (deckNumber: any) => {
   const { data } = await axios.get(`${BASE_URL}/cardbynumber${deckNumber}`);
@@ -39,11 +39,20 @@ export const saveReading = (reading: any) => {
   });
 };
 
+export const sendResetEmail = async (email: string, code: string) => {
+  const response = await axios.post(`${BASE_URL}/sendresetemail`, {
+    email: email,
+    code: code,
+  });
+
+  return response;
+};
+
 export const updateUser = async (
   email: string,
   updateObject: updateUserObject
 ) => {
-  console.log("updating");
+  console.log('updating');
   console.log(email);
   console.log(updateObject);
   try {

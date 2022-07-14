@@ -36,7 +36,7 @@ const SingleSharingCard: React.FC<ISingleSharingCardProps> = ({
           <View style={upright[0] ? styles.card : styles.reversedCard}>
             <Image
               style={{ width: width * 0.34, height: width * 0.56 }}
-              source={{ uri: cards[0].image }}
+              source={{ uri: cards[0]?.image }}
             />
           </View>
           <View style={styles.keyTermsContainer}>

@@ -45,7 +45,7 @@ const SignIn: React.FC = () => {
         const readings = await getReadingsByUser(user._id);
         context.setReadings(readings);
         context.setIsLoading(false);
-        await checkIfSubscribed(user.id);
+        // await checkIfSubscribed(user.id);
       } else {
         if (res.message) {
           context.setModalText(res.message);
@@ -77,7 +77,7 @@ const SignIn: React.FC = () => {
         context.setCurrentUser(user);
         const readings = await getReadingsByUser(user._id);
         context.setReadings(readings);
-        await checkIfSubscribed(user._id);
+        // await checkIfSubscribed(user._id);
         context.setIsLoading(false);
       } else if (res.status === 409) {
         //no user exists
@@ -166,7 +166,7 @@ const SignIn: React.FC = () => {
           </View>
           <View style={styles.centeredTextContainer}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Registration')}
+              onPress={() => navigation.navigate('ForgotPassword')}
             >
               <Text style={styles.rerouteTextPassword}>Forgot password?</Text>
             </TouchableOpacity>

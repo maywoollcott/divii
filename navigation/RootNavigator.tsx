@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackView } from '@react-navigation/stack';
 import Registration from '../screens/registration/Registration';
 import SignIn from '../screens/signIn/SignIn';
+import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 import { Context } from '../Context';
 import { TabNavigator } from './TabNavigator';
 import Subscribe from '../screens/Subscribe/Subscribe';
@@ -17,6 +18,11 @@ const RootNavigator = () => {
       <PreAuthStack.Screen
         name='SignIn'
         component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <PreAuthStack.Screen
+        name='ForgotPassword'
+        component={ForgotPassword}
         options={{ headerShown: false }}
       />
       <PreAuthStack.Screen
@@ -40,19 +46,23 @@ const RootNavigator = () => {
     </SubscribeStack.Navigator>
   );
 
-  if (context.isAuthenticated && context.isSubscribed) {
+  // if (context.isAuthenticated && context.isSubscribed) {
+  if (context.isAuthenticated) {
     return (
       <NavigationContainer>
         <TabNavigator />
       </NavigationContainer>
     );
-  } else if (context.isAuthenticated && !context.isSubscribed) {
-    return (
-      <NavigationContainer>
-        <SubscribeScreen />
-      </NavigationContainer>
-    );
-  } else {
+  }
+
+  // else if (context.isAuthenticated && !context.isSubscribed) {
+  //   return (
+  //     <NavigationContainer>
+  //       <SubscribeScreen />
+  //     </NavigationContainer>
+  //   );
+  // }
+  else {
     return (
       <NavigationContainer>
         <PreAuthStackScreen />

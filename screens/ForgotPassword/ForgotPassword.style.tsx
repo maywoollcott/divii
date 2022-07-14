@@ -17,10 +17,9 @@ export const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.parchment,
-    fontSize: width * 0.13,
+    fontSize: width * 0.06,
     textAlign: 'center',
     fontFamily: 'made-dillan',
-    lineHeight: 58,
     marginBottom: '15%',
   },
   formContainer: {
@@ -37,6 +36,19 @@ export const styles = StyleSheet.create({
     paddingLeft: 15,
     marginBottom: 15,
     width: '80%',
+  },
+  inputDigit: {
+    color: COLORS.parchment,
+    borderColor: COLORS.parchment,
+    borderWidth: 3,
+    borderRadius: 10,
+    height: 50,
+    fontSize: 20,
+    paddingLeft: 15,
+    marginBottom: 15,
+    width: 50,
+    marginLeft: 5,
+    marginRight: 5,
   },
   basicButton: {
     backgroundColor: COLORS.parchment,
@@ -70,5 +82,50 @@ export const styles = StyleSheet.create({
   starImage: {
     position: 'absolute',
     zIndex: 0,
+  },
+
+  touchableContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    position: 'absolute',
+    top: '3%',
+    left: '3%',
+  },
+  bounceContainer: {
+    backgroundColor: COLORS.parchment,
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  bodyTextSingleContainer: {
+    marginBottom: '5%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    borderColor: COLORS.grayBlue,
+    borderWidth: 3,
+    borderRadius: 10,
+  },
+  touchableSaveContainer: {
+    marginLeft: 'auto',
+  },
+  bodyContainer: {
+    width: '85%',
+  },
+  passwordForm: {
+    flexDirection: 'row',
+    position: 'relative',
+    justifyContent: 'center',
+  },
+  icon: {
+    position: 'absolute',
+    right: 3,
+    marginTop: '3.3%',
+  },
+  inputCodeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 });

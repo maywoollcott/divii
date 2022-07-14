@@ -33,9 +33,9 @@ const Profile = () => {
   useEffect(() => {
     let cards: string[] = [];
     let spreads: string[] = [];
-    if (context.readings.length > 0) {
-      for (let i = 0; i < context.readings.length; i++) {
-        let singleReadingCardsObject = context.readings[i];
+    if (context?.readings?.length > 0) {
+      for (let i = 0; i < context?.readings?.length; i++) {
+        let singleReadingCardsObject = context?.readings[i];
         spreads.push(singleReadingCardsObject.spread);
         singleReadingCardsObject.cards.forEach((cardObject: any) => {
           cards.push(cardObject.deckNumber);
@@ -49,7 +49,7 @@ const Profile = () => {
         context.setIsLoading(false);
       }, 500);
     }
-  }, [context.readings]);
+  }, [context?.readings]);
 
   function getMostFrequent(arr: any) {
     const hashmap = arr.reduce(
@@ -80,7 +80,7 @@ const Profile = () => {
   };
 
   const renderMostFrequentlyDrawnCard = () => {
-    if (context.readings.length === 0) {
+    if (context?.readings?.length === 0) {
       return (
         <Text style={styles.bodyText}>
           You don't have a most frequently drawn card yet.
@@ -102,7 +102,7 @@ const Profile = () => {
   };
 
   const renderFavoriteSpread = () => {
-    if (context.readings.length === 0) {
+    if (context?.readings?.length === 0) {
       return (
         <Text style={styles.bodyText}>
           You don't have a favorite spread yet.
@@ -151,7 +151,7 @@ const Profile = () => {
               <Text style={styles.bodyText}>You’ve completed</Text>
               <Text style={styles.bodyTextHighlight}>
                 {' '}
-                {context.readings?.length}{' '}
+                {context?.readings?.length}{' '}
               </Text>
               <Text style={styles.bodyText}> readings.</Text>
             </View>

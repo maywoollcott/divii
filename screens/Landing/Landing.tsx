@@ -14,7 +14,6 @@ import { Context } from '../../Context';
 import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
 import { ScrollView } from 'react-native-gesture-handler';
-import useIsSubscribed from '../../hooks/useIsSubscribed';
 
 const Landing = () => {
   const navigation = useNavigation();
@@ -24,8 +23,6 @@ const Landing = () => {
   const hour = moment().hour();
 
   const [day, setDay] = useState<any>();
-
-  const { checkIfSubscribed } = useIsSubscribed();
 
   useEffect(() => {
     let now = moment();
