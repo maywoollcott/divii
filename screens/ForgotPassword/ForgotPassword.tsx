@@ -203,7 +203,7 @@ const ForgotPassword: React.FC = () => {
                     placeholder=''
                     placeholderTextColor={COLORS.parchment}
                     onKeyPress={({ nativeEvent }) =>
-                      changeFocusedInput(nativeEvent, digitRef2, digitRef1)
+                      changeFocusedInput(nativeEvent, digitRef2)
                     }
                     style={styles.inputDigit}
                     autoCapitalize='none'
@@ -216,7 +216,7 @@ const ForgotPassword: React.FC = () => {
                     placeholder=''
                     placeholderTextColor={COLORS.parchment}
                     onKeyPress={({ nativeEvent }) =>
-                      changeFocusedInput(nativeEvent, digitRef3, digitRef1)
+                      changeFocusedInput(nativeEvent, digitRef3)
                     }
                     style={styles.inputDigit}
                     autoCapitalize='none'
@@ -228,7 +228,7 @@ const ForgotPassword: React.FC = () => {
                     placeholder=''
                     placeholderTextColor={COLORS.parchment}
                     onKeyPress={({ nativeEvent }) =>
-                      changeFocusedInput(nativeEvent, digitRef4, digitRef2)
+                      changeFocusedInput(nativeEvent, digitRef4)
                     }
                     style={styles.inputDigit}
                     autoCapitalize='none'
@@ -240,7 +240,7 @@ const ForgotPassword: React.FC = () => {
                     placeholder=''
                     placeholderTextColor={COLORS.parchment}
                     onKeyPress={({ nativeEvent }) =>
-                      changeFocusedInput(nativeEvent, digitRef4, digitRef3)
+                      changeFocusedInput(nativeEvent, digitRef4)
                     }
                     style={styles.inputDigit}
                     autoCapitalize='none'

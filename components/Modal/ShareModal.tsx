@@ -81,7 +81,13 @@ export const ShareModal: React.FC<IShareModalProps> = ({
         format: 'png',
         quality: 1,
       });
-      await Share.open({ url: uri });
+      await Share.open({
+        url: uri,
+        message:
+          upright[0] === true
+            ? cards[0].uprightDescription
+            : cards[0].reversedDescription,
+      });
     } catch (error) {
       console.error(error);
     }
