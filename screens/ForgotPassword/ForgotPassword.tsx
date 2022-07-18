@@ -48,9 +48,17 @@ const ForgotPassword: React.FC = () => {
     setResetCode(code);
 
     const res = await sendResetEmail(email, code);
+    console.log(res);
 
-    if (res.status === 200) {
+    if (res === 200) {
       setStep(1);
+    } else if (res === 409) {
+      console.log('no user');
+      context.setModalText(
+        'That email does not belong to a registered user. Please try again.'
+      );
+      context.setModalOpen(true);
+      return;
     } else {
       context.setModalText(
         'There was an error sending your code. Please try again.'
@@ -62,10 +70,10 @@ const ForgotPassword: React.FC = () => {
 
   const checkResetCode = () => {
     if (resetCode == enteredResetCode) {
-      console.log('THEY MATCH');
+      //reset code matches
       setStep(2);
     } else {
-      console.log('THEY DONT');
+      //reset code doesn't
       context.setModalText(
         "You've entered an incorrect code. Please try again."
       );
@@ -121,12 +129,8 @@ const ForgotPassword: React.FC = () => {
 
   const changeFocusedInput = (
     text: TextInputKeyPressEventData,
-    currentlyFocusedInput: any,
-    lastFocusedInput: any
+    currentlyFocusedInput: any
   ) => {
-    console.log(text.key);
-    console.log(enteredResetCode);
-
     if (text.key === 'Backspace') {
       digitRef4.current?.clear();
       digitRef3.current?.clear();
@@ -160,7 +164,7 @@ const ForgotPassword: React.FC = () => {
           <View style={styles.headerContainer}>
             {step === 0 && (
               <Text style={styles.header}>
-                Enter your email below to receive a code to your password.
+                Enter your email below to receive a code to reset your password.
               </Text>
             )}
             {step === 1 && (

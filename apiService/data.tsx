@@ -40,12 +40,19 @@ export const saveReading = (reading: any) => {
 };
 
 export const sendResetEmail = async (email: string, code: string) => {
-  const response = await axios.post(`${BASE_URL}/sendresetemail`, {
-    email: email,
-    code: code,
-  });
+  try {
+    const { status } = await axios.post(`${BASE_URL}/sendresetemail`, {
+      email: email,
+      code: code,
+    });
 
-  return response;
+    console.log(status);
+
+    return status;
+  } catch (error: any) {
+    const { response } = error;
+    return response.status;
+  }
 };
 
 export const updateUser = async (

@@ -2,7 +2,7 @@
   "expo": {
     "name": "divii",
     "slug": "divii",
-    "version": "1.0.6",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.maycollins.divii",
-      "buildNumber": "1.0.6"
+      "buildNumber": "1.1.0"
     },
     "android": {
       "adaptiveIcon": {

@@ -151,12 +151,12 @@ const Settings = () => {
           >
             <Text style={styles.buttonText}>Change Password</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.basicButton}
             onPress={onManageSubscriptionHandler}
           >
             <Text style={styles.buttonText}>Manage Subscription</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     );
