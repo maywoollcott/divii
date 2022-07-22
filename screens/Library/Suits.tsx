@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,9 @@ import { getAllCards } from '../../apiService/data';
 import { styles } from './Suits.style';
 import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, suitsEvents } from '../../analytics/trackedEvents';
+import { Context } from '../../Context';
 
 const { width } = Dimensions.get('window');
 
@@ -25,6 +28,9 @@ const Suits = () => {
   const [displaySwords, setDisplaySwords] = useState<boolean>(false);
   const [displayPentacles, setDisplayPentacles] = useState<boolean>(false);
 
+  const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
+
   const navigation = useNavigation();
 
   const goBack = () => {
@@ -32,6 +38,13 @@ const Suits = () => {
   };
 
   useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(suitsEvents.screenName);
+
     const fetchCards = async () => {
       const cards = await getAllCards();
       setAllCardsData(cards);
@@ -41,6 +54,10 @@ const Suits = () => {
   }, []);
 
   const filterBySuit = (suit: string) => {
+    track(`${suitsEvents.expandButton} ${suit}`, {
+      type: eventTypes.buttonPress,
+      screen: suitsEvents.screenName,
+    });
     const filtered = allCardsData?.filter((card) => card.suit == suit);
     console.log(filtered);
     if (allCardsData) console.log(allCardsData[22].suit);
@@ -48,7 +65,10 @@ const Suits = () => {
   };
 
   const navigateToCard = (card: Card) => {
-    console.log(card);
+    track(suitsEvents.cardDetails, {
+      type: eventTypes.buttonPress,
+      screen: suitsEvents.screenName,
+    });
     navigation.navigate('CardDetails', card);
   };
 

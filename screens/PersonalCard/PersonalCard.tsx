@@ -67,12 +67,14 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   const goBack = () => {
     track(personalCardEvents.backButton, {
       type: eventTypes.buttonPress,
+      screen: personalCardEvents.screenName,
     });
     navigation.goBack();
   };
   const onCardFlip = () => {
     track(personalCardEvents.flip, {
       type: eventTypes.flip,
+      screen: personalCardEvents.screenName,
     });
     setDisplayInfo(true);
   };
@@ -91,8 +93,7 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   const instagramStoryHandler = async () => {
     track(personalCardEvents.instagram, {
       type: eventTypes.buttonPress,
-      email: context.currentUser.email,
-      id: context.currentUser._id,
+      screen: personalCardEvents.screenName,
     });
     try {
       const uri = await captureRef(viewRef, {
@@ -116,10 +117,9 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   };
 
   const generalShareHandler = async () => {
-    track(personalCardEvents.share, {
+    track(personalCardEvents.generalShare, {
       type: eventTypes.buttonPress,
-      email: context.currentUser.email,
-      id: context.currentUser._id,
+      screen: personalCardEvents.screenName,
     });
     try {
       const uri = await captureRef(viewRef, {

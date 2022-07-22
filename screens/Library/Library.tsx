@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -11,22 +11,33 @@ import { useNavigation } from '@react-navigation/native';
 import { getAllSpreads } from '../../apiService/data';
 import { styles } from './Library.style';
 import { images } from '../../assets/images/imagesIndex';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, libraryIndexEvents } from '../../analytics/trackedEvents';
+import { Context } from '../../Context';
 
 const Library = () => {
   const navigation = useNavigation();
   const [spreads, setSpreads] = useState<Array<any> | null>(null);
+  const context = useContext(Context);
+
+  const { track, identify, screen } = useAnalytics();
 
   const navigateTo = (screen: string) => {
+    track(screen, {
+      type: eventTypes.buttonPress,
+      screen: libraryIndexEvents.screenName,
+    });
     navigation.navigate(screen);
   };
 
   //why am i doing this?
   useEffect(() => {
-    const fetchSpreads = async () => {
-      const spreads = await getAllSpreads();
-      setSpreads(spreads);
-    };
-    fetchSpreads();
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(libraryIndexEvents.screenName);
   }, []);
 
   return (

@@ -23,6 +23,8 @@ import { TarotCard } from '../../components/TarotCard/TarotCard';
 import { COLORS } from '../../globalStyles';
 import AppLoading from '../AppLoading/AppLoading';
 import { ShareModal } from '../../components/Modal/ShareModal';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, dailyReadingEvents } from '../../analytics/trackedEvents';
 
 const { width } = Dimensions.get('window');
 
@@ -43,15 +45,24 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
   const [dailyCardData, setDailyCardData] = useState<any>(null);
   const [upright, setUpright] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const { track, identify, screen } = useAnalytics();
 
   const now = moment();
   const today = moment().format('yyyy-MM-DD');
   const context = useContext(Context);
 
   const goBack = () => {
+    track(dailyReadingEvents.backButton, {
+      type: eventTypes.buttonPress,
+      screen: dailyReadingEvents.screenName,
+    });
     navigation.goBack();
   };
   const onCardFlip = () => {
+    track(dailyReadingEvents.flip, {
+      type: eventTypes.flip,
+      screen: dailyReadingEvents.screenName,
+    });
     setDisplayInfo(true);
   };
   const animate = () => {
@@ -67,6 +78,12 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
+    identify(context.currentUser._id, {
+      name: context.currentUser.name,
+      email: context.currentUser.email,
+      dateJoined: context.currentUser.dateJoined,
+    });
+    screen(dailyReadingEvents.screenName);
     context.setIsLoading(true);
     const fetchCard = async () => {
       if (route?.params?.cards) {
@@ -117,6 +134,10 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
   }, []);
 
   const openShareModalHandler = () => {
+    track(dailyReadingEvents.shareButton, {
+      type: eventTypes.buttonPress,
+      screen: dailyReadingEvents.screenName,
+    });
     context.setModalOpen(true);
   };
 

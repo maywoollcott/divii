@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,9 @@ import { styles } from './CardDetails.style';
 import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
 import NonFlipTarotCard from '../../components/TarotCard/NonFlipTarotCard';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, cardDetailsEvents } from '../../analytics/trackedEvents';
+import { Context } from '../../Context';
 
 const { width } = Dimensions.get('window');
 interface ICardDetailsProps {
@@ -30,7 +33,14 @@ const CardDetails: React.FC<ICardDetailsProps> = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState<String>('General');
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
+  const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
+
   const goBack = () => {
+    track(cardDetailsEvents.backButton, {
+      type: eventTypes.buttonPress,
+      screen: cardDetailsEvents.screenName,
+    });
     navigation.goBack();
   };
 
@@ -43,10 +53,23 @@ const CardDetails: React.FC<ICardDetailsProps> = ({ route }) => {
   };
 
   useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(cardDetailsEvents.screenName);
+  }, []);
+
+  useEffect(() => {
     setTimeout(animate, 1000);
   }, [fadeAnim]);
 
   const onTabSelect = (tab: string) => {
+    track(`${cardDetailsEvents.selectTab} tab`, {
+      type: eventTypes.buttonPress,
+      screen: cardDetailsEvents.screenName,
+    });
     setSelectedTab(tab);
   };
 

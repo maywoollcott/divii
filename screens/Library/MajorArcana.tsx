@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,9 @@ import { getAllCards } from '../../apiService/data';
 import { styles } from './MajorArcana.style';
 import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, majorArcanaEvents } from '../../analytics/trackedEvents';
+import { Context } from '../../Context';
 
 const { width } = Dimensions.get('window');
 
@@ -25,13 +28,26 @@ const MajorArcana = () => {
   const [filteredCards, setFilteredCards] = useState<Card[] | null>(null);
   const [displaySearchIcon, setDisplaySearchIcon] = useState<boolean>(true);
 
+  const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
+
   const navigation = useNavigation();
 
   const goBack = () => {
+    track(majorArcanaEvents.backButton, {
+      type: eventTypes.buttonPress,
+      screen: majorArcanaEvents.screenName,
+    });
     navigation.goBack();
   };
 
   useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(majorArcanaEvents.screenName);
     const fetchCards = async () => {
       const cards = await getAllCards();
       const majorArcanaCards = cards.filter(
@@ -45,6 +61,10 @@ const MajorArcana = () => {
   }, []);
 
   useEffect(() => {
+    track(majorArcanaEvents.searchBar, {
+      type: eventTypes.typing,
+      screen: majorArcanaEvents.screenName,
+    });
     const tempFilteredCards = allCardsData?.filter((card) =>
       card.name.toLowerCase().includes(searchInput.toString())
     );
@@ -52,7 +72,10 @@ const MajorArcana = () => {
   }, [searchInput]);
 
   const navigateToCard = (card: Card) => {
-    console.log(card);
+    track(majorArcanaEvents.cardDetails, {
+      type: eventTypes.buttonPress,
+      screen: majorArcanaEvents.screenName,
+    });
     navigation.navigate('CardDetails', card);
   };
 

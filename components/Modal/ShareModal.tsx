@@ -18,6 +18,8 @@ import { AntDesign } from '@expo/vector-icons';
 import Share from 'react-native-share';
 import { Context } from '../../Context';
 import { captureRef } from 'react-native-view-shot';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, shareModalEvents } from '../../analytics/trackedEvents';
 
 const { width } = Dimensions.get('window');
 interface IShareModalProps {
@@ -39,11 +41,18 @@ export const ShareModal: React.FC<IShareModalProps> = ({
   spreadName,
   upright,
 }) => {
+  const { track, identify, screen } = useAnalytics();
+  const context = useContext(Context);
   const [instagramAccess, setInstagramAccess] = useState(false);
 
   const viewRef = useRef();
 
   useEffect(() => {
+    identify(context.currentUser._id, {
+      name: context.currentUser.name,
+      email: context.currentUser.email,
+      dateJoined: context.currentUser.dateJoined,
+    });
     if (Platform.OS === 'ios') {
       Linking.canOpenURL('instagram://').then((val) => setInstagramAccess(val));
     } else {
@@ -54,6 +63,10 @@ export const ShareModal: React.FC<IShareModalProps> = ({
   }, []);
 
   const instagramStoryHandler = async () => {
+    track(shareModalEvents.instagram, {
+      type: eventTypes.buttonPress,
+      screen: shareModalEvents.screenName,
+    });
     try {
       const uri = await captureRef(viewRef, {
         format: 'png',
@@ -76,6 +89,10 @@ export const ShareModal: React.FC<IShareModalProps> = ({
   };
 
   const generalShareHandler = async () => {
+    track(shareModalEvents.general, {
+      type: eventTypes.buttonPress,
+      screen: shareModalEvents.screenName,
+    });
     try {
       const uri = await captureRef(viewRef, {
         format: 'png',
@@ -93,19 +110,27 @@ export const ShareModal: React.FC<IShareModalProps> = ({
     }
   };
 
+  const onExitButtonPress = () => {
+    track(shareModalEvents.exitButton, {
+      type: eventTypes.buttonPress,
+      screen: shareModalEvents.exitButton,
+    });
+    onRequestClose();
+  };
+
   return (
     <Modal
       animationType={animationType}
       transparent={transparent}
       visible={visible}
-      onRequestClose={onRequestClose}
+      onRequestClose={onExitButtonPress}
     >
       <BlurView intensity={100} tint={'dark'} style={styles.screenContainer}>
         <View style={styles.modalContainer}>
           <View style={styles.closeButtonContainer}>
             <TouchableOpacity
               style={styles.basicButton}
-              onPress={onRequestClose}
+              onPress={onExitButtonPress}
             >
               <AntDesign name='close' size={30} color={COLORS.parchment} />
             </TouchableOpacity>

@@ -30,10 +30,10 @@ const Landing = () => {
   useEffect(() => {
     let now = moment();
     setDay(now);
-    identify(context.currentUser._id, {
-      name: context.currentUser.name,
-      email: context.currentUser.email,
-      dateJoined: context.currentUser.dateJoined,
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
     });
     screen(landingEvents.screenName);
   }, [isFocused]);
@@ -51,6 +51,7 @@ const Landing = () => {
   const navigateToCardOfDay = () => {
     track(landingEvents.cardOfTheDay, {
       type: eventTypes.buttonPress,
+      screen: landingEvents.screenName,
     });
 
     navigation.navigate('DailyCard');
@@ -59,8 +60,7 @@ const Landing = () => {
   const navigateToSpreadIndex = () => {
     track(landingEvents.chooseASpread, {
       type: eventTypes.buttonPress,
-      email: context.currentUser.email,
-      id: context.currentUser._id,
+      screen: landingEvents.screenName,
     });
 
     navigation.navigate('SpreadIndex');

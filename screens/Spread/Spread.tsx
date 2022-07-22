@@ -23,6 +23,9 @@ import { TwoCardSpread } from '../../components/Spread/TwoCardSpread';
 import { OneCardSpread } from '../../components/Spread/OneCardSpread';
 import AppLoading from '../AppLoading/AppLoading';
 import { ShareModal } from '../../components/Modal/ShareModal';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, readingEvents } from '../../analytics/trackedEvents';
+
 interface ISpreadProps {
   route: SpreadParams;
 }
@@ -40,6 +43,7 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
   const today = moment().format('yyyy-MM-DD');
 
   const goBack = () => {
@@ -47,6 +51,10 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   };
 
   const onCardFlip = (index: number) => {
+    track(`${readingEvents.flip} index ${index}`, {
+      type: eventTypes.flip,
+      screen: readingEvents.screenName,
+    });
     setCurrentCard(index);
     setDisplayInfo(true);
   };
@@ -67,6 +75,12 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
+    identify(context.currentUser._id, {
+      name: context.currentUser.name,
+      email: context.currentUser.email,
+      dateJoined: context.currentUser.dateJoined,
+    });
+    screen(readingEvents.screenName);
     let isMounted = true;
     context.setIsLoading(true);
     if (route.params.cards) {
