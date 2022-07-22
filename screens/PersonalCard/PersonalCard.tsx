@@ -18,6 +18,8 @@ import { COLORS } from '../../globalStyles';
 import AppLoading from '../AppLoading/AppLoading';
 import Share from 'react-native-share';
 import { captureRef } from 'react-native-view-shot';
+import { eventTypes, personalCardEvents } from '../../analytics/trackedEvents';
+import { useAnalytics } from '@segment/analytics-react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -40,12 +42,19 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
 
   const [instagramAccess, setInstagramAccess] = useState(false);
 
   const viewRef = useRef();
 
   useEffect(() => {
+    identify(context.currentUser._id, {
+      name: context.currentUser.name,
+      email: context.currentUser.email,
+      dateJoined: context.currentUser.dateJoined,
+    });
+    screen(personalCardEvents.screenName);
     if (Platform.OS === 'ios') {
       Linking.canOpenURL('instagram://').then((val) => setInstagramAccess(val));
     } else {
@@ -56,9 +65,15 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   }, []);
 
   const goBack = () => {
+    track(personalCardEvents.backButton, {
+      type: eventTypes.buttonPress,
+    });
     navigation.goBack();
   };
   const onCardFlip = () => {
+    track(personalCardEvents.flip, {
+      type: eventTypes.flip,
+    });
     setDisplayInfo(true);
   };
   const animate = () => {
@@ -74,6 +89,11 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   }, [fadeAnim]);
 
   const instagramStoryHandler = async () => {
+    track(personalCardEvents.instagram, {
+      type: eventTypes.buttonPress,
+      email: context.currentUser.email,
+      id: context.currentUser._id,
+    });
     try {
       const uri = await captureRef(viewRef, {
         format: 'png',
@@ -96,6 +116,11 @@ const PersonalCard: React.FC<IPersonalCardProps> = ({ route }) => {
   };
 
   const generalShareHandler = async () => {
+    track(personalCardEvents.share, {
+      type: eventTypes.buttonPress,
+      email: context.currentUser.email,
+      id: context.currentUser._id,
+    });
     try {
       const uri = await captureRef(viewRef, {
         format: 'png',

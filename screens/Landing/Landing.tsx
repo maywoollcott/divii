@@ -14,11 +14,14 @@ import { Context } from '../../Context';
 import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, landingEvents } from '../../analytics/trackedEvents';
 
 const Landing = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
   const isFocused = useIsFocused();
+  const { track, identify, screen } = useAnalytics();
 
   const hour = moment().hour();
 
@@ -27,6 +30,12 @@ const Landing = () => {
   useEffect(() => {
     let now = moment();
     setDay(now);
+    identify(context.currentUser._id, {
+      name: context.currentUser.name,
+      email: context.currentUser.email,
+      dateJoined: context.currentUser.dateJoined,
+    });
+    screen(landingEvents.screenName);
   }, [isFocused]);
 
   const greeting = () => {
@@ -40,14 +49,30 @@ const Landing = () => {
   };
 
   const navigateToCardOfDay = () => {
+    track(landingEvents.cardOfTheDay, {
+      type: eventTypes.buttonPress,
+    });
+
     navigation.navigate('DailyCard');
   };
 
   const navigateToSpreadIndex = () => {
+    track(landingEvents.chooseASpread, {
+      type: eventTypes.buttonPress,
+      email: context.currentUser.email,
+      id: context.currentUser._id,
+    });
+
     navigation.navigate('SpreadIndex');
   };
 
   const navigateToPersonalCard = () => {
+    track(landingEvents.personalCard, {
+      type: eventTypes.buttonPress,
+      email: context.currentUser.email,
+      id: context.currentUser._id,
+    });
+
     navigation.navigate('PersonalCard', {
       personalCardNumber: context.currentUser?.personalCard,
       name: context.currentUser?.name,

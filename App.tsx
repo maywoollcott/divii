@@ -5,8 +5,18 @@ import { useFonts } from 'expo-font';
 import RootNavigator from './navigation/RootNavigator';
 import AppLoading from './screens/AppLoading/AppLoading';
 import { Provider } from './Context';
+import {
+  createClient,
+  AnalyticsProvider,
+} from '@segment/analytics-react-native';
 
 export default function App() {
+  const segmentClient = createClient({
+    writeKey: 'EWdVGta6VWFVNDlkhvaHnqjpBlI9WCKq',
+    trackAppLifecycleEvents: true,
+    //additional config options
+  });
+
   let [fontsLoaded] = useFonts({
     'made-dillan': require('./assets/fonts/MADEDillan.otf'),
   });
@@ -16,7 +26,9 @@ export default function App() {
   } else {
     return (
       <Provider>
-        <RootNavigator />
+        <AnalyticsProvider client={segmentClient}>
+          <RootNavigator />
+        </AnalyticsProvider>
       </Provider>
     );
   }
