@@ -11,15 +11,23 @@ import { Context } from '../../Context';
 import AppLoading from '../AppLoading/AppLoading';
 import { arcanaNames } from '../../copy/Cards';
 import { COLORS } from '../../globalStyles';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, profileEvents } from '../../analytics/trackedEvents';
 
 const Profile = () => {
   const context = React.useContext(Context);
   const navigate = useNavigation();
+  const { track, identify, screen, reset } = useAnalytics();
 
   const [mostFrequentCard, setMostFrequentCard] = useState<number>();
   const [mostFrequentSpread, setMostFrequentSpread] = useState<string>();
 
   const logoutButtonHandler = async () => {
+    track(profileEvents.logout, {
+      type: eventTypes.buttonPress,
+      screen: profileEvents.screenName,
+    });
+    reset();
     context.setIsLoading(true);
     const token = await SecureStore.getItemAsync('DIVII_TOKEN_AUTH');
     if (token) {
@@ -31,6 +39,12 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    identify(context.currentUser._id, {
+      name: context.currentUser.name,
+      email: context.currentUser.email,
+      dateJoined: context.currentUser.dateJoined,
+    });
+    screen(profileEvents.screenName);
     let cards: string[] = [];
     let spreads: string[] = [];
     if (context?.readings?.length > 0) {
@@ -71,11 +85,19 @@ const Profile = () => {
   const dateJoined = moment(context.currentUser?.dateJoined);
 
   const navigateToCard = async (card: number) => {
+    track(profileEvents.mostFrequentlyDrawnCard, {
+      type: eventTypes.buttonPress,
+      screen: profileEvents.screenName,
+    });
     const mostFreqCardInfo = await getCardByNumber(card);
     navigate.navigate('CardDetails', mostFreqCardInfo);
   };
 
   const navigateToSettings = () => {
+    track(profileEvents.settings, {
+      type: eventTypes.buttonPress,
+      screen: profileEvents.screenName,
+    });
     navigate.navigate('Settings');
   };
 

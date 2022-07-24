@@ -66,7 +66,7 @@ const CardDetails: React.FC<ICardDetailsProps> = ({ route }) => {
   }, [fadeAnim]);
 
   const onTabSelect = (tab: string) => {
-    track(`${cardDetailsEvents.selectTab} tab`, {
+    track(`${cardDetailsEvents.selectTab} ${tab}`, {
       type: eventTypes.buttonPress,
       screen: cardDetailsEvents.screenName,
     });

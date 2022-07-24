@@ -20,10 +20,13 @@ import AppLoading from '../AppLoading/AppLoading';
 import { loginResponse } from '../../types';
 import { BasicModal } from '../../components/Modal/BasicModal';
 import useIsSubscribed from '../../hooks/useIsSubscribed';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, signInEvents } from '../../analytics/trackedEvents';
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
+  const { track, identify, screen, reset } = useAnalytics();
 
   const [loginData, setLoginData] = useState({
     email: '',
@@ -40,6 +43,16 @@ const SignIn: React.FC = () => {
       console.log(res);
       if (res.status === 200) {
         const { user } = res;
+        reset();
+        identify(user._id, {
+          name: user.name,
+          email: user.email,
+          dateJoined: user.dateJoined,
+        });
+        track(signInEvents.loginPersisted, {
+          type: eventTypes.networkEvent,
+          screen: signInEvents.screenName,
+        });
         context.setIsAuthenticated(true);
         context.setCurrentUser(user);
         const readings = await getReadingsByUser(user._id);
@@ -57,10 +70,18 @@ const SignIn: React.FC = () => {
   };
 
   useEffect(() => {
+    identify(undefined, {
+      subscriptionStatus: 'inactive',
+    });
+    screen(signInEvents.screenName);
     isAuthenticatedCheck();
   }, []);
 
   const loginButtonHandler = async () => {
+    track(signInEvents.loginButton, {
+      type: eventTypes.buttonPress,
+      screen: signInEvents.screenName,
+    });
     Keyboard.dismiss();
     try {
       context.setIsLoading(true);
@@ -69,7 +90,13 @@ const SignIn: React.FC = () => {
         loginData.password
       );
       if (res.status === 200) {
+        reset();
         const { user, token } = res;
+        identify(user._id, {
+          name: user.name,
+          email: user.email,
+          dateJoined: user.dateJoined,
+        });
         if (token) {
           await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
         }
@@ -114,6 +141,22 @@ const SignIn: React.FC = () => {
       context.setIsLoading(false);
       console.log(err);
     }
+  };
+
+  const navigateToForgotPassword = () => {
+    track(signInEvents.forgotPassword, {
+      type: eventTypes.buttonPress,
+      screen: signInEvents.screenName,
+    });
+    navigation.navigate('ForgotPassword');
+  };
+
+  const navigateToRegister = () => {
+    track(signInEvents.register, {
+      type: eventTypes.buttonPress,
+      screen: signInEvents.screenName,
+    });
+    navigation.navigate('Registration');
   };
 
   if (!context.isLoading) {
@@ -165,14 +208,10 @@ const SignIn: React.FC = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.centeredTextContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ForgotPassword')}
-            >
+            <TouchableOpacity onPress={navigateToForgotPassword}>
               <Text style={styles.rerouteTextPassword}>Forgot password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Registration')}
-            >
+            <TouchableOpacity onPress={navigateToRegister}>
               <Text style={styles.rerouteText}>Don't have an account?</Text>
               <Text style={styles.rerouteText}> Sign up here.</Text>
             </TouchableOpacity>

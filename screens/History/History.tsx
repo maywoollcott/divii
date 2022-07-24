@@ -9,6 +9,8 @@ import { Reading } from '../../types';
 import moment from 'moment';
 import AppLoading from '../AppLoading/AppLoading';
 import { useIsFocused } from '@react-navigation/native';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, historyEvents } from '../../analytics/trackedEvents';
 
 const History = () => {
   const [markedDates, setMarkedDates] = useState<any>(null);
@@ -17,10 +19,17 @@ const History = () => {
   const isFocused = useIsFocused();
 
   const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
 
   const today = moment().format('yyyy-MM-DD');
 
   useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(historyEvents.screenName);
     let tempMarkedDates = {};
     context.readings?.forEach((reading: Reading) => {
       Object.assign(tempMarkedDates, { [reading.date]: readingDateFormat });
@@ -41,6 +50,11 @@ const History = () => {
   };
 
   const onDateClick = async (day: any) => {
+    track(historyEvents.date, {
+      type: eventTypes.buttonPress,
+      screen: historyEvents.screenName,
+      date: day.dateString,
+    });
     const readingsOnThisDate = filterReadingsByDate(day.dateString);
     if (readingsOnThisDate?.length) {
       navigation.navigate('DateHistory', readingsOnThisDate);

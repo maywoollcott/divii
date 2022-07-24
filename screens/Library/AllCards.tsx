@@ -18,6 +18,8 @@ import { COLORS } from '../../globalStyles';
 import { Card } from '../../types';
 import AppLoading from '../AppLoading/AppLoading';
 import { Context } from '../../Context';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, allCardsEvents } from '../../analytics/trackedEvents';
 
 const { width } = Dimensions.get('window');
 
@@ -29,12 +31,23 @@ const AllCards = () => {
 
   const navigation = useNavigation();
   const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
 
   const goBack = () => {
+    track(allCardsEvents.backButton, {
+      type: eventTypes.buttonPress,
+      screen: allCardsEvents.screenName,
+    });
     navigation.goBack();
   };
 
   useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(allCardsEvents.screenName);
     context.setIsLoading(true);
     const fetchCards = async () => {
       const cards = await getAllCards();
@@ -49,6 +62,10 @@ const AllCards = () => {
   }, []);
 
   useEffect(() => {
+    track(allCardsEvents.searchBar, {
+      type: eventTypes.typing,
+      screen: allCardsEvents.screenName,
+    });
     const tempFilteredCards = allCardsData?.filter((card) =>
       card.name.toLowerCase().includes(searchInput.toString())
     );
@@ -56,6 +73,10 @@ const AllCards = () => {
   }, [searchInput]);
 
   const navigateToCard = (card: Card) => {
+    track(allCardsEvents.cardDetails, {
+      type: eventTypes.buttonPress,
+      screen: allCardsEvents.screenName,
+    });
     navigation.navigate('CardDetails', card);
   };
 

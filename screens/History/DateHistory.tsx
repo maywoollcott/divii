@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,12 @@ import { styles } from './DateHistory.style';
 import { SpreadTouchable } from '../../components/Spread/SpreadTouchable';
 import { COLORS } from '../../globalStyles';
 import { Reading } from '../../types';
+import { useAnalytics } from '@segment/analytics-react-native';
+import {
+  eventTypes,
+  historyDetailsEvents,
+} from '../../analytics/trackedEvents';
+import { Context } from '../../Context';
 
 interface IDateHistoryProps {
   route: DateHistoryParams;
@@ -24,12 +30,31 @@ export type DateHistoryParams = {
 
 const DateHistory: React.FC<IDateHistoryProps> = ({ route }) => {
   const navigation = useNavigation();
+  const context = useContext(Context);
+  const { track, identify, screen } = useAnalytics();
 
   const goBack = () => {
+    track(historyDetailsEvents.backButton, {
+      type: eventTypes.buttonPress,
+      screen: historyDetailsEvents.screenName,
+    });
     navigation.goBack();
   };
 
+  useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(historyDetailsEvents.screenName);
+  });
+
   const onSpreadPress = (spread: string, readingInfo: any) => {
+    track(`${historyDetailsEvents.selectReading} ${spread}`, {
+      type: eventTypes.buttonPress,
+      screen: historyDetailsEvents.screenName,
+    });
     navigation.navigate('Spread', readingInfo);
   };
 

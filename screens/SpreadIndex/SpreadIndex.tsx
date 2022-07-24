@@ -30,6 +30,7 @@ const SpreadIndex = () => {
   const goBack = () => {
     track(spreadEvents.backButton, {
       type: eventTypes.buttonPress,
+      screen: spreadEvents.screenName,
     });
     navigation.goBack();
   };
@@ -52,6 +53,7 @@ const SpreadIndex = () => {
   const onSpreadPress = (spread: any) => {
     track(spread.name, {
       type: eventTypes.buttonPress,
+      screen: spreadEvents.screenName,
     });
     navigation.navigate('Spread', spread);
   };

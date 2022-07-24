@@ -24,10 +24,13 @@ import { generateFourDigitNumber } from '../../utils/generateRandomNumber';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { updatedUserResponse } from '../../types';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, resetPasswordEvents } from '../../analytics/trackedEvents';
 
 const ForgotPassword: React.FC = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
+  const { track, screen } = useAnalytics();
 
   const [step, setStep] = useState(0);
   const [resetEmail, setResetEmail] = useState('');
@@ -105,6 +108,13 @@ const ForgotPassword: React.FC = () => {
     };
 
     Keyboard.dismiss();
+
+    screen(resetPasswordEvents.screenName);
+    track(resetPasswordEvents.update, {
+      type: eventTypes.buttonPress,
+      screen: resetPasswordEvents.screenName,
+      email: resetEmail,
+    });
 
     try {
       const res: updatedUserResponse = await updateUser(

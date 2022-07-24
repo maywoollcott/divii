@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -24,10 +24,13 @@ import { TextInputMask } from 'react-native-masked-text';
 import { BasicModal } from '../../components/Modal/BasicModal';
 import { loginResponse } from '../../types';
 import { validateEmail } from '../../utils/emailValidation';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, registrationEvents } from '../../analytics/trackedEvents';
 
 const Registration: React.FC = () => {
   const navigation = useNavigation();
   const context = useContext(Context);
+  const { track, identify, screen, reset } = useAnalytics();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -37,7 +40,18 @@ const Registration: React.FC = () => {
     birthdate: '',
   });
 
+  useEffect(() => {
+    identify(undefined, {
+      subscriptionStatus: 'inactive',
+    });
+    screen(registrationEvents.screenName);
+  }, []);
+
   const signUpHandler = async () => {
+    track(registrationEvents.signUp, {
+      type: eventTypes.buttonPress,
+      screen: registrationEvents.screenName,
+    });
     if (
       formData.email.length < 1 ||
       formData.name.length < 1 ||
@@ -85,7 +99,13 @@ const Registration: React.FC = () => {
       context.setIsLoading(true);
       const res: loginResponse = await register(userForm);
       if (res.status === 200) {
+        reset();
         const { user, token } = res;
+        identify(user._id, {
+          name: user.name,
+          email: user.email,
+          dateJoined: user.dateJoined,
+        });
         if (token) {
           await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
         }
@@ -117,6 +137,14 @@ const Registration: React.FC = () => {
       context.setModalOpen(true);
       context.setIsLoading(false);
     }
+  };
+
+  const navigateToSignIn = () => {
+    track(registrationEvents.signIn, {
+      type: eventTypes.buttonPress,
+      screen: registrationEvents.signIn,
+    });
+    navigation.navigate('SignIn');
   };
 
   if (!context.isLoading) {
@@ -217,7 +245,7 @@ const Registration: React.FC = () => {
             >
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <TouchableOpacity onPress={navigateToSignIn}>
               <Text style={styles.rerouteText}>Prefer to log in?</Text>
               <Text style={styles.rerouteText}>Sign in here.</Text>
             </TouchableOpacity>

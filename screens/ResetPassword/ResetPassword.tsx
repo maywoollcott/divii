@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -20,18 +20,43 @@ import { COLORS } from '../../globalStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { BasicModal } from '../../components/Modal/BasicModal';
+import { useAnalytics } from '@segment/analytics-react-native';
+import {
+  eventTypes,
+  changePasswordEvents,
+} from '../../analytics/trackedEvents';
+
 const ResetPassword = () => {
   const context = React.useContext(Context);
+  const { track, identify, screen } = useAnalytics();
   const navigate = useNavigation();
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(changePasswordEvents.screenName);
+  }, []);
+
   const goBack = () => {
+    track(changePasswordEvents.backButton, {
+      type: eventTypes.buttonPress,
+      screen: changePasswordEvents.screenName,
+    });
     navigate.goBack();
   };
 
   const onSaveHandler = async () => {
+    track(changePasswordEvents.updatePassword, {
+      type: eventTypes.buttonPress,
+      screen: changePasswordEvents.screenName,
+    });
+
     if (password.length < 6) {
       context.setModalText(
         'Please choose a password of at least 6 characters.'

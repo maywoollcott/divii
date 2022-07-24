@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
@@ -18,10 +20,14 @@ import { COLORS } from '../../globalStyles';
 import { TextInputMask } from 'react-native-masked-text';
 import { validateEmail } from '../../utils/emailValidation';
 import { determineAstrologicalSign } from '../registration/utils';
+import { useAnalytics } from '@segment/analytics-react-native';
+import { eventTypes, settingsEvents } from '../../analytics/trackedEvents';
+import { BasicModal } from '../../components/Modal/BasicModal';
 
 const Settings = () => {
   const context = React.useContext(Context);
   const navigate = useNavigation();
+  const { track, identify, screen } = useAnalytics();
 
   const [birthdate, setBirthdate] = useState('');
   const [name, setName] = useState('');
@@ -31,17 +37,36 @@ const Settings = () => {
     navigate.goBack();
   };
 
+  useEffect(() => {
+    identify(context.currentUser?._id, {
+      name: context.currentUser?.name,
+      email: context.currentUser?.email,
+      dateJoined: context.currentUser?.dateJoined,
+    });
+    screen(settingsEvents.screenName);
+  }, []);
+
   const onChangePasswordHandler = () => {
+    track(settingsEvents.changePassword, {
+      type: eventTypes.buttonPress,
+      screen: settingsEvents.screenName,
+    });
     navigate.navigate('ResetPassword');
   };
 
-  const onManageSubscriptionHandler = () => {
-    navigate.navigate('ManageSubscription');
-  };
+  // const onManageSubscriptionHandler = () => {
+  //   navigate.navigate('ManageSubscription');
+  // };
 
   const onSaveHandler = async (field: string, value: string) => {
+    track(`${settingsEvents.saveEditedInfo} ${field}`, {
+      type: eventTypes.buttonPress,
+      screen: settingsEvents.screenName,
+    });
     if (field === 'email') {
       if (validateEmail(value) === false) {
+        context.setModalText('Please enter a valid email address.');
+        context.setModalOpen(true);
         return;
       }
     }
@@ -77,8 +102,21 @@ const Settings = () => {
 
   if (!context.isLoading) {
     return (
-      <ScrollView contentContainerStyle={styles.bounceContainer}>
-        <View style={styles.screenContainer}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={-64}
+          style={styles.screenContainer}
+        >
+          <BasicModal
+            animationType='none'
+            transparent={true}
+            visible={context.modalOpen}
+            onRequestClose={() => {
+              context.setModalOpen(!context.modalOpen);
+            }}
+            modalText={context.modalText}
+          />
           <View style={styles.touchableContainer}>
             <TouchableOpacity onPress={goBack}>
               <Feather name='arrow-left' size={28} color={COLORS.grayBlue} />
@@ -157,8 +195,8 @@ const Settings = () => {
           >
             <Text style={styles.buttonText}>Manage Subscription</Text>
           </TouchableOpacity> */}
-        </View>
-      </ScrollView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   }
 
