@@ -75,6 +75,9 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
   }, [fadeAnim]);
 
   useEffect(() => {
+    console.log(route.params.spreadNumber);
+    console.log(route.params.spreadNumber != '5');
+    console.log(route.params.spreadNumber == '5');
     identify(context.currentUser._id, {
       name: context.currentUser.name,
       email: context.currentUser.email,
@@ -215,16 +218,17 @@ const Spread: React.FC<ISpreadProps> = ({ route }) => {
             <Animated.View
               style={{ ...styles.descriptionContainer, opacity: fadeAnim }}
             >
-              {route.params.spreadNumber !== '8' && (
-                <Text style={styles.spreadCopy}>
-                  {
-                    spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
-                      currentCard
-                    ]
-                  }
-                  :
-                </Text>
-              )}
+              {route.params.spreadNumber != '8' &&
+                route.params.spreadNumber != '5' && (
+                  <Text style={styles.spreadCopy}>
+                    {
+                      spreadCopy[parseInt(route.params.spreadNumber)].itemNames[
+                        currentCard
+                      ]
+                    }
+                    :
+                  </Text>
+                )}
               <Text style={styles.header}>{spreadData[currentCard].name}</Text>
               <Text style={styles.reversed}>
                 {upright[currentCard] ? '(Upright)' : '(Reversed)'}

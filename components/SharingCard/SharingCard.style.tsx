@@ -1,14 +1,14 @@
-import React from "react";
-import { Dimensions, Platform, StyleSheet } from "react-native";
-import { COLORS } from "../../globalStyles";
+import React from 'react';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
+import { COLORS } from '../../globalStyles';
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   card: {
     ...Platform.select({
       ios: {
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 1,
@@ -23,13 +23,13 @@ export const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     flex: 1.5,
-    alignItems: "center",
+    alignItems: 'center',
   },
 
   reversedCard: {
     ...Platform.select({
       ios: {
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 1,
@@ -44,69 +44,69 @@ export const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     flex: 1.5,
-    alignItems: "center",
-    transform: [{ rotateY: "180deg" }, { rotateX: "180deg" }],
+    alignItems: 'center',
+    transform: [{ rotateY: '180deg' }, { rotateX: '180deg' }],
   },
   headerText: {
     color: COLORS.parchment,
     fontSize: width * 0.06,
-    textAlign: "center",
-    fontFamily: "made-dillan",
-    width: "70%",
+    textAlign: 'center',
+    fontFamily: 'made-dillan',
+    width: '70%',
     marginVertical: height * 0.025,
   },
   sharingCardContainer: {
     backgroundColor: COLORS.grayBlue,
-    width: width * 0.77,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    width: width * 0.82,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   keyTermsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
   },
   keyTermsText: {
-    fontFamily: "made-dillan",
+    fontFamily: 'made-dillan',
     color: COLORS.parchment,
     marginVertical: 15,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: width * 0.042,
   },
   centralContainer: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
   },
   diviiLabelContainer: {
     backgroundColor: COLORS.parchment,
     height: height * 0.08,
-    width: width * 0.77,
+    width: width * 0.82,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   diviiText: {
     fontSize: width * 0.1,
-    fontFamily: "made-dillan",
+    fontFamily: 'made-dillan',
     color: COLORS.grayBlue,
     marginLeft: 20,
   },
   cardText: {
     color: COLORS.parchment,
     fontSize: width * 0.06,
-    textAlign: "center",
-    fontFamily: "made-dillan",
-    width: "80%",
+    textAlign: 'center',
+    fontFamily: 'made-dillan',
+    width: '80%',
     marginTop: height * 0.025,
   },
   directionalText: {
-    fontFamily: "made-dillan",
+    fontFamily: 'made-dillan',
     color: COLORS.parchment,
     marginBottom: height * 0.025,
   },

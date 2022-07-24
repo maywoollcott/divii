@@ -42,7 +42,11 @@ const SingleSharingCard: React.FC<ISingleSharingCardProps> = ({
           <View style={styles.keyTermsContainer}>
             {upright[0]
               ? cards[0].uprightKeyTerms.map((keyTerm) => (
-                  <Text style={styles.keyTermsText} key={keyTerm}>
+                  <Text
+                    style={styles.keyTermsText}
+                    key={keyTerm}
+                    textBreakStrategy={'simple'}
+                  >
                     {keyTerm}
                   </Text>
                 ))

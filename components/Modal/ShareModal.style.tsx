@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
   closeButtonContainer: {
     marginBottom: 20,
     marginTop: 35,
-    width: 300,
+    width: '82%',
     alignItems: 'flex-end',
   },
 });
