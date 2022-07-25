@@ -47,6 +47,12 @@ PODS:
   - libwebp/mux (1.2.1):
     - libwebp/demux
   - libwebp/webp (1.2.1)
+  - Mixpanel-swift (3.3.0):
+    - Mixpanel-swift/Complete (= 3.3.0)
+  - Mixpanel-swift/Complete (3.3.0)
+  - MixpanelReactNative (1.5.0):
+    - Mixpanel-swift (= 3.3.0)
+    - React
   - Purchases (3.14.1):
     - PurchasesCoreSwift (= 3.14.1)
   - PurchasesCoreSwift (3.14.1)
@@ -390,6 +396,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -433,6 +440,7 @@ SPEC REPOS:
   trunk:
     - boost-for-react-native
     - libwebp
+    - Mixpanel-swift
     - Purchases
     - PurchasesCoreSwift
     - PurchasesHybridCommon
@@ -474,6 +482,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  MixpanelReactNative:
+    :path: "../node_modules/mixpanel-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -567,6 +577,8 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 0ddbf0b201f1da4cd3ff01391b6a53dd8f88227f
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
+  Mixpanel-swift: 6ffe368bcfc3b538f540f31372bc798afd90c1ad
+  MixpanelReactNative: 53b80c245f89ea602fbdda0568900e2b69fa632a
   Purchases: b714751c386c2204d2d5aafaa903fd424a25cd59
   PurchasesCoreSwift: 2cf98c52dd4b785177539fbfd1c32f60c89eafe7
   PurchasesHybridCommon: e9bc1677cb11fe584ad29c0309f78142a8f14b5a

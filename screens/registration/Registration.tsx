@@ -178,7 +178,7 @@ const Registration: React.FC = () => {
             />
             <TextInput
               style={styles.input}
-              placeholder='Nickname'
+              placeholder='First Name'
               placeholderTextColor={COLORS.parchment}
               onChangeText={(text) => setFormData({ ...formData, name: text })}
             />

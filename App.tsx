@@ -9,6 +9,7 @@ import {
   createClient,
   AnalyticsProvider,
 } from '@segment/analytics-react-native';
+import { MixpanelPlugin } from '@segment/analytics-react-native-plugin-mixpanel';
 
 export default function App() {
   const segmentClient = createClient({
@@ -16,6 +17,8 @@ export default function App() {
     trackAppLifecycleEvents: true,
     //additional config options
   });
+
+  segmentClient.add({ plugin: new MixpanelPlugin() });
 
   let [fontsLoaded] = useFonts({
     'made-dillan': require('./assets/fonts/MADEDillan.otf'),
