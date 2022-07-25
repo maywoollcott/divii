@@ -15,7 +15,11 @@ import { styles } from './Landing.style';
 import { images } from '../../assets/images/imagesIndex';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useAnalytics } from '@segment/analytics-react-native';
-import { eventTypes, landingEvents } from '../../analytics/trackedEvents';
+import {
+  eventTypes,
+  landingEvents,
+  registrationEvents,
+} from '../../analytics/trackedEvents';
 
 const Landing = () => {
   const navigation = useNavigation();

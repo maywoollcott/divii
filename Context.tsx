@@ -1,5 +1,9 @@
-import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
-import { Reading } from './types';
+import React, {
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
 type AppContextValue = {
   isAuthenticated: boolean;

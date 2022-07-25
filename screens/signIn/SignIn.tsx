@@ -43,7 +43,6 @@ const SignIn: React.FC = () => {
       console.log(res);
       if (res.status === 200) {
         const { user } = res;
-        reset();
         identify(user._id, {
           name: user.name,
           email: user.email,
@@ -70,9 +69,6 @@ const SignIn: React.FC = () => {
   };
 
   useEffect(() => {
-    identify(undefined, {
-      subscriptionStatus: 'inactive',
-    });
     screen(signInEvents.screenName);
     isAuthenticatedCheck();
   }, []);

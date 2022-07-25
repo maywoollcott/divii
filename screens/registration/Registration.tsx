@@ -41,17 +41,10 @@ const Registration: React.FC = () => {
   });
 
   useEffect(() => {
-    identify(undefined, {
-      subscriptionStatus: 'inactive',
-    });
     screen(registrationEvents.screenName);
   }, []);
 
   const signUpHandler = async () => {
-    track(registrationEvents.signUp, {
-      type: eventTypes.buttonPress,
-      screen: registrationEvents.screenName,
-    });
     if (
       formData.email.length < 1 ||
       formData.name.length < 1 ||
@@ -99,7 +92,6 @@ const Registration: React.FC = () => {
       context.setIsLoading(true);
       const res: loginResponse = await register(userForm);
       if (res.status === 200) {
-        reset();
         const { user, token } = res;
         identify(user._id, {
           name: user.name,
@@ -110,10 +102,14 @@ const Registration: React.FC = () => {
           await SecureStore.setItemAsync('DIVII_TOKEN_AUTH', token);
         }
         context.setIsAuthenticated(true);
-        context.setIsSubscribed(false);
+        // context.setIsSubscribed(false);
         context.setCurrentUser(user);
         const readings = await getReadingsByUser(user._id);
         context.setReadings(readings);
+        track(registrationEvents.signUp, {
+          type: eventTypes.buttonPress,
+          screen: registrationEvents.screenName,
+        });
         context.setIsLoading(false);
       } else if (res.status === 409) {
         if (res.message) {
