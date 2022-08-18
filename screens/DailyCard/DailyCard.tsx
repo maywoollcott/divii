@@ -84,8 +84,8 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
       dateJoined: context.currentUser.dateJoined,
     });
     screen(dailyReadingEvents.screenName);
-    context.setIsLoading(true);
     const fetchCard = async () => {
+      context.setIsLoading(true);
       if (route?.params?.cards) {
         const card = await getCardByNumber(route.params.cards[0].deckNumber);
         setDailyCardData(card);
@@ -102,6 +102,7 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
         const card = await getCardByNumber(todaysCard[0].cards[0].deckNumber);
         setDailyCardData(card);
         setUpright(todaysCard[0].cards[0].upright);
+        context.setIsLoading(false);
       } else {
         const randomCardNumber = getCardNumbers(1);
         console.log(randomCardNumber);
@@ -124,13 +125,10 @@ const DailyCard: React.FC<IDailyCardProps> = ({ route }) => {
         saveReading(reading);
         let joined = context.readings.concat(reading);
         context.setReadings(joined);
+        context.setIsLoading(false);
       }
     };
-
     fetchCard();
-    setTimeout(() => {
-      context.setIsLoading(false);
-    }, 1000);
   }, []);
 
   const openShareModalHandler = () => {

@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
     color: COLORS.parchment,
     marginVertical: 15,
     textAlign: 'center',
-    fontSize: width * 0.042,
+    fontSize: width * 0.04,
   },
   centralContainer: {
     display: 'flex',
