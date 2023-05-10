@@ -49,9 +49,14 @@ export const login = async (email: string, password: string) => {
       token: data.authToken,
     };
 
+    console.log('success');
+
     return successResponse;
   } catch (error: any) {
     const { response } = error;
+
+    console.log('error');
+    console.log(response);
 
     const errorResponse = {
       status: response.status,

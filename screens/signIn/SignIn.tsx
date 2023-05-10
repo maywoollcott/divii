@@ -22,6 +22,7 @@ import { BasicModal } from '../../components/Modal/BasicModal';
 import useIsSubscribed from '../../hooks/useIsSubscribed';
 import { useAnalytics } from '@segment/analytics-react-native';
 import { eventTypes, signInEvents } from '../../analytics/trackedEvents';
+import * as Contacts from 'expo-contacts';
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
