@@ -16,7 +16,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.maycollins.divii",
+      "bundleIdentifier": "rstreetlabs.divii",
       "buildNumber": "1.1.0"
     },
     "android": {

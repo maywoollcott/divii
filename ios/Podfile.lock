@@ -9,8 +9,6 @@ PODS:
     - ExpoModulesCore
   - EXContacts (10.3.0):
     - ExpoModulesCore
-  - EXErrorRecovery (3.0.5):
-    - ExpoModulesCore
   - EXFileSystem (13.2.1):
     - ExpoModulesCore
   - EXFont (10.0.5):
@@ -40,15 +38,15 @@ PODS:
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
   - glog (0.3.5)
-  - libwebp (1.2.1):
-    - libwebp/demux (= 1.2.1)
-    - libwebp/mux (= 1.2.1)
-    - libwebp/webp (= 1.2.1)
-  - libwebp/demux (1.2.1):
+  - libwebp (1.2.4):
+    - libwebp/demux (= 1.2.4)
+    - libwebp/mux (= 1.2.4)
+    - libwebp/webp (= 1.2.4)
+  - libwebp/demux (1.2.4):
     - libwebp/webp
-  - libwebp/mux (1.2.1):
+  - libwebp/mux (1.2.4):
     - libwebp/demux
-  - libwebp/webp (1.2.1)
+  - libwebp/webp (1.2.4)
   - Mixpanel-swift (3.3.0):
     - Mixpanel-swift/Complete (= 3.3.0)
   - Mixpanel-swift/Complete (3.3.0)
@@ -386,7 +384,6 @@ DEPENDENCIES:
   - EXBlur (from `../node_modules/expo-blur/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXContacts (from `../node_modules/expo-contacts/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXInAppPurchases (from `../node_modules/expo-in-app-purchases/ios`)
@@ -461,8 +458,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-constants/ios"
   EXContacts:
     :path: "../node_modules/expo-contacts/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -569,7 +564,6 @@ SPEC CHECKSUMS:
   EXBlur: 82055865de17cf2cf797ff064c50fb59fcbe703f
   EXConstants: 88bf79622fbd9b476c96d8ec57fe97ca44fe8e3c
   EXContacts: 9a5d81671ae881e9f4fd082a4f1d3194f63615d3
-  EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
   EXFileSystem: bbfe3441f1f7f64942d8df2aa4264b6c7a27807c
   EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
   EXInAppPurchases: 313fcaadb87dc03797667a7185401271597e4186
@@ -582,7 +576,7 @@ SPEC CHECKSUMS:
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: 0ddbf0b201f1da4cd3ff01391b6a53dd8f88227f
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
-  libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
+  libwebp: f62cb61d0a484ba548448a4bd52aabf150ff6eef
   Mixpanel-swift: 6ffe368bcfc3b538f540f31372bc798afd90c1ad
   MixpanelReactNative: 53b80c245f89ea602fbdda0568900e2b69fa632a
   Purchases: b714751c386c2204d2d5aafaa903fd424a25cd59
@@ -627,6 +621,6 @@ SPEC CHECKSUMS:
   sovran-react-native: 81407f2b9d1171f7106e7c9a8ef34de7a412caae
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: beafd619fc9a76b118ec8fa203026bcd019ebe22
+PODFILE CHECKSUM: eb1c177f43fb375a4c14dbdc02150cdc1c264b2b
 
 COCOAPODS: 1.11.3
